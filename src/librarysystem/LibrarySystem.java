@@ -3,6 +3,7 @@ package librarysystem;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.nio.file.Paths;
 import java.util.Collections;
 import java.util.List;
 
@@ -62,9 +63,15 @@ public class LibrarySystem extends JFrame implements LibWindow {
 	}
     
     private void setPathToImage() {
-    	String currDirectory = System.getProperty("user.dir");
-    	pathToImage = currDirectory+"\\src\\librarysystem\\library.jpg";
+    	 String currDirectory = System.getProperty("user.dir");
+         pathToImage = Paths.get(currDirectory, "src", "librarysystem", "library.jpg").toString();
+         System.out.println(pathToImage);
     }
+    
+   
+       
+       
+ 
     
     private void insertSplashImage() {
         ImageIcon image = new ImageIcon(pathToImage);
