@@ -22,13 +22,14 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.border.LineBorder;
 import javax.swing.border.CompoundBorder;
+import javax.swing.JPasswordField;
 
 public class login extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private JTextField emailTextField;
-	private JTextField textField;
+	private JTextField usernameField;
+	private JPasswordField passwordField;
 
 	/**
 	 * Launch the application.
@@ -75,25 +76,20 @@ public class login extends JFrame {
 		header.setVerticalAlignment(SwingConstants.TOP);
 		header.setFont(new Font("Tahoma", Font.PLAIN, 27));
 		
-		JLabel email = new JLabel("Email address");
-		email.setBounds(391, 87, 99, 17);
-		email.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		JLabel username = new JLabel("Username");
+		username.setBounds(391, 87, 99, 17);
+		username.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		
-		emailTextField = new JTextField();
-		emailTextField.setBounds(391, 135, 319, 56);
-		emailTextField.setBackground(new Color(255, 255, 255));
-		emailTextField.setHorizontalAlignment(SwingConstants.LEFT);
-		emailTextField.setColumns(10);
+		usernameField = new JTextField();
+		usernameField.setBounds(391, 135, 319, 59);
+		usernameField.setBackground(new Color(255, 255, 255));
+		usernameField.setHorizontalAlignment(SwingConstants.LEFT);
+		usernameField.setColumns(10);
 		
 		JLabel password = new JLabel("Password");
 		password.setBounds(391, 217, 89, 27);
 		password.setBackground(new Color(255, 146, 0));
 		password.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		
-		textField = new JTextField();
-		textField.setBounds(391, 271, 319, 55);
-		textField.setOpaque(true);
-		textField.setColumns(10);
 		
 		JButton btnNewButton = new JButton("Log in");
 		btnNewButton.setBounds(391, 411, 319, 59);
@@ -102,17 +98,17 @@ public class login extends JFrame {
 		btnNewButton.setForeground(new Color(0, 0, 0));
 		btnNewButton.setBackground(new Color(170, 121, 65));
 		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 22));
-		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
+		
 		contentPane.setLayout(null);
 		contentPane.add(layout);
 		contentPane.add(header);
-		contentPane.add(email);
-		contentPane.add(emailTextField);
+		contentPane.add(username);
+		contentPane.add(usernameField);
 		contentPane.add(password);
-		contentPane.add(textField);
 		contentPane.add(btnNewButton);
+		
+		passwordField = new JPasswordField();
+		passwordField.setBounds(391, 284, 319, 59);
+		contentPane.add(passwordField);
 	}
 }
