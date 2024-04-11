@@ -10,6 +10,7 @@ final public class Address implements Serializable {
 	private String city;
 	private String state;
 	private String zip;
+
 	public Address(String street, String city, String state, String zip) {
 		this.street = street;
 		this.city = city;
@@ -18,20 +19,32 @@ final public class Address implements Serializable {
 	}
 	
 	public String getStreet() {
-		return street;
+		return this.street;
 	}
 	public String getCity() {
-		return city;
+		return this.city;
 	}
 	public String getState() {
-		return state;
+		return this.state;
 	}
 	public String getZip() {
-		return zip;
+		return this.zip;
 	}
+
 	@Override
 	public String toString() {
-		return "(" + street + ", " + city + ", " + state  + ", " + zip + ")";
-		
+		return "(" + this.street + ", " + this.city + ", "  + this.state + ", " + this.zip + ")";
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (obj.getClass() != this.getClass()){
+			return false;
+		}
+		Address address = (Address) obj;
+		return address.getState().equals(this.getState())  &&
+				address.getCity().equals(this.getCity()) &&
+				address.getZip().equals(this.getZip()) &&
+				address.getStreet().equals(this.getStreet());
 	}
 }

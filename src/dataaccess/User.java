@@ -1,6 +1,8 @@
 package dataaccess;
 
 import java.io.Serializable;
+import java.util.Arrays;
+import java.util.List;
 
 final public class User implements Serializable {
 	
@@ -9,11 +11,11 @@ final public class User implements Serializable {
 	private String id;
 	
 	private String password;
-	private Auth authorization;
-	User(String id, String pass, Auth  auth) {
+	private Auth[] authorizations = new Auth[2];
+	User(String id, String pass, Auth[] auth) {
 		this.id = id;
 		this.password = pass;
-		this.authorization = auth;
+		this.authorizations = auth;
 	}
 	
 	public String getId() {
@@ -22,12 +24,12 @@ final public class User implements Serializable {
 	public String getPassword() {
 		return password;
 	}
-	public Auth getAuthorization() {
-		return authorization;
+	public Auth[] getAuthorization() {
+		return authorizations;
 	}
 	@Override
 	public String toString() {
-		return "[" + id + ":" + password + ", " + authorization.toString() + "]";
+		return "[" + id + ":" + password + ", " + Arrays.toString(authorizations) + "]";
 	}
 	
 }

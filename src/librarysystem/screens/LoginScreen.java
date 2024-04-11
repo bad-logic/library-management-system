@@ -1,5 +1,6 @@
 package librarysystem.screens;
 
+import business.LoginException;
 import business.SystemController;
 
 import java.awt.Image;
@@ -79,7 +80,7 @@ public class LoginScreen extends JFrame implements LibWindow{
 		header.setVerticalAlignment(SwingConstants.TOP);
 		header.setFont(new Font("Tahoma", Font.PLAIN, 27));
 		
-		JLabel email = new JLabel("Email address");
+		JLabel email = new JLabel("Test");
 		email.setBounds(391, 87, 99, 17);
 		email.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		
@@ -116,7 +117,7 @@ public class LoginScreen extends JFrame implements LibWindow{
 					LoginScreen.INSTANCE.setVisible(false);
 					Util.centerFrameOnDesktop(DashBoardScreen.INSTANCE);
 					DashBoardScreen.INSTANCE.setVisible(true);
-				}catch(Exception ex) {
+				}catch(LoginException ex) {
 					JOptionPane.showMessageDialog(btnNewButton,ex.getMessage());
 				}
 			}
