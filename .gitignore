@@ -1,3 +1,8 @@
+### ignore files without extendsios ###
+*
+!/**/
+!*.*
+
 ### IntelliJ IDEA ###
 out/
 !**/src/main/**/out/
@@ -32,3 +37,4 @@ bin/
 .settings/
 .idea/
 *.iml
+
