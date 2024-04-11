@@ -7,15 +7,14 @@ import java.util.HashMap;
 import java.util.List;
 
 import business.Book;
-import business.BookCopy;
+import business.CheckoutRecord;
 import business.LibraryMember;
-import dataaccess.DataAccessFacade.StorageType;
 
 
 public class DataAccessFacade implements DataAccess {
 	
 	enum StorageType {
-		BOOKS, MEMBERS, USERS;
+		BOOKS, MEMBERS, USERS, CHECKOUTRECORDS;
 	}
 
 	public static final String OUTPUT_DIR = String.join(
@@ -55,6 +54,13 @@ public class DataAccessFacade implements DataAccess {
 		//   userId -> User
 		return (HashMap<String, User>)readFromStorage(StorageType.USERS);
 	}
+
+	@SuppressWarnings("unchecked")
+	public HashMap<String, CheckoutRecord> readCheckoutRecordMap() {
+		//Returns a Map with name/value pairs being
+		//   memberId -> CheckoutRecord
+		return (HashMap<String, CheckoutRecord>)readFromStorage(StorageType.CHECKOUTRECORDS);
+	}
 	
 	
 	/////load methods - these place test data into the storage area
@@ -66,6 +72,7 @@ public class DataAccessFacade implements DataAccess {
 		bookList.forEach(book -> books.put(book.getIsbn(), book));
 		saveToStorage(StorageType.BOOKS, books);
 	}
+
 	static void loadUserMap(List<User> userList) {
 		HashMap<String, User> users = new HashMap<String, User>();
 		userList.forEach(user -> users.put(user.getId(), user));
@@ -76,6 +83,12 @@ public class DataAccessFacade implements DataAccess {
 		HashMap<String, LibraryMember> members = new HashMap<String, LibraryMember>();
 		memberList.forEach(member -> members.put(member.getMemberId(), member));
 		saveToStorage(StorageType.MEMBERS, members);
+	}
+
+	static void loadCheckoutRecord(List<CheckoutRecord> recordList){
+		HashMap<String, CheckoutRecord> records = new HashMap<String, CheckoutRecord>();
+		recordList.forEach(record -> records.put(record.getMemberId(), record));
+		saveToStorage(StorageType.CHECKOUTRECORDS, records);
 	}
 	
 	static void saveToStorage(StorageType type, Object ob) {
@@ -116,33 +129,33 @@ public class DataAccessFacade implements DataAccess {
 	
 	
 	
-	final static class Pair<S,T> implements Serializable{
-		
-		S first;
-		T second;
-		Pair(S s, T t) {
-			first = s;
-			second = t;
-		}
-		@Override 
-		public boolean equals(Object ob) {
-			if(ob == null) return false;
-			if(this == ob) return true;
-			if(ob.getClass() != getClass()) return false;
-			@SuppressWarnings("unchecked")
-			Pair<S,T> p = (Pair<S,T>)ob;
-			return p.first.equals(first) && p.second.equals(second);
-		}
-		
-		@Override 
-		public int hashCode() {
-			return first.hashCode() + 5 * second.hashCode();
-		}
-		@Override
-		public String toString() {
-			return "(" + first.toString() + ", " + second.toString() + ")";
-		}
-		private static final long serialVersionUID = 5399827794066637059L;
-	}
+//	final static class Pair<S,T> implements Serializable{
+//
+//		S first;
+//		T second;
+//		Pair(S s, T t) {
+//			first = s;
+//			second = t;
+//		}
+//		@Override
+//		public boolean equals(Object ob) {
+//			if(ob == null) return false;
+//			if(this == ob) return true;
+//			if(ob.getClass() != getClass()) return false;
+//			@SuppressWarnings("unchecked")
+//			Pair<S,T> p = (Pair<S,T>)ob;
+//			return p.first.equals(first) && p.second.equals(second);
+//		}
+//
+//		@Override
+//		public int hashCode() {
+//			return first.hashCode() + 5 * second.hashCode();
+//		}
+//		@Override
+//		public String toString() {
+//			return "(" + first.toString() + ", " + second.toString() + ")";
+//		}
+//		private static final long serialVersionUID = 5399827794066637059L;
+//	}
 	
 }
