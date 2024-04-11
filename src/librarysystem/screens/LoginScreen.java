@@ -1,5 +1,6 @@
 package librarysystem.screens;
 
+import business.LoginException;
 import business.SystemController;
 
 import java.awt.Image;
@@ -116,7 +117,7 @@ public class LoginScreen extends JFrame implements LibWindow{
 					LoginScreen.INSTANCE.setVisible(false);
 					Util.centerFrameOnDesktop(DashBoardScreen.INSTANCE);
 					DashBoardScreen.INSTANCE.setVisible(true);
-				}catch(Exception ex) {
+				}catch(LoginException ex) {
 					JOptionPane.showMessageDialog(btnNewButton,ex.getMessage());
 				}
 			}
