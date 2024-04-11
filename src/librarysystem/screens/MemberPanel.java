@@ -187,7 +187,7 @@ public class MemberPanel {
 					
 				}
 				
-				LibraryMember libMember = new LibraryMember("104", fNameField, lNameField, mobileField, new Address(streetField, cityField, stateField, zipField));
+				LibraryMember libMember = new LibraryMember(fNameField, lNameField, mobileField, new Address(streetField, cityField, stateField, zipField));
 				daf.saveNewMember(libMember);
 				clearFields();
 				
