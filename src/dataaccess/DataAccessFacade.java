@@ -14,7 +14,7 @@ import business.LibraryMember;
 public class DataAccessFacade implements DataAccess {
 	
 	enum StorageType {
-		BOOKS, MEMBERS, USERS, CHECKOUTRECORDS;
+		BOOKS, MEMBERS, USERS, CHECKOUTRECORDS, AUTHORS;
 	}
 
 	public static final String OUTPUT_DIR = String.join(
@@ -66,13 +66,21 @@ public class DataAccessFacade implements DataAccess {
 		saveToStorage(StorageType.BOOKS,books);
 	}
 
+	// AUTHORS
+	@SuppressWarnings("unchecked")
 	@Override
-	public List<Author> getAuthorList() {
-		Set<Author> authorList = new HashSet<Author>();
-		for(Map.Entry<String, Book> entry : this.readBooksMap().entrySet()){
-			Collections.addAll(authorList,entry.getValue().getAuthors().toArray(new Author[0]));
-		}
-		return new ArrayList<Author>(authorList);
+	public HashMap<String,Author> readAuthorsMap() {
+		//Returns a Map with name/value pairs being
+		//   isbn -> Book
+		return (HashMap<String, Author>) readFromStorage(StorageType.AUTHORS);
+	}
+
+	public void addAuthor(Author author) {
+		//Returns a Map with name/value pairs being
+		//   isbn -> Book
+		HashMap<String, Author> authors = readAuthorsMap();
+		authors.put(author.getAuthorId(),author);
+		saveToStorage(StorageType.AUTHORS,authors);
 	}
 
 	//  ##### CHECKOUT RECORD
@@ -109,6 +117,12 @@ public class DataAccessFacade implements DataAccess {
 		HashMap<String, LibraryMember> members = new HashMap<String, LibraryMember>();
 		memberList.forEach(member -> members.put(member.getMemberId(), member));
 		saveToStorage(StorageType.MEMBERS, members);
+	}
+
+	static void loadAuthorMap(List<Author> authorsList) {
+		HashMap<String, Author> authors = new HashMap<String, Author>();
+		authorsList.forEach(author -> authors.put(author.getAuthorId(), author));
+		saveToStorage(StorageType.AUTHORS, authors);
 	}
 
 	static void loadCheckoutRecord(List<CheckoutRecord> recordList){
