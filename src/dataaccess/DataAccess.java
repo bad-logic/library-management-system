@@ -1,7 +1,9 @@
 package dataaccess;
 
 import java.util.HashMap;
+import java.util.List;
 
+import business.Author;
 import business.Book;
 import business.CheckoutRecord;
 import business.LibraryMember;
@@ -14,4 +16,5 @@ public interface DataAccess {
 	public void saveNewMember(LibraryMember member);
 	public void saveNewBook(Book book);
 	public void saveCheckoutRecord(CheckoutRecord checkoutRecord);
+	public List<Author> getAuthorList();
 }

@@ -2,7 +2,6 @@ package dataaccess;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 
 import business.*;
@@ -77,9 +76,9 @@ public class Seeder {
 		ArrayList<Book> allBooks = new ArrayList<Book>() {
 			{
 				add(new Book("23-11451", "The Big Fish", 21, Arrays.asList(authors.get(0), authors.get(1))));
-				add(new Book("28-12331", "Antartica", 7, Arrays.asList(authors.get(2))));
-				add(new Book("99-22223", "Thinking Java", 21, Arrays.asList(authors.get(3))));
-				add(new Book("48-56882", "Jimmy's First Day of School", 7, Arrays.asList(authors.get(4))));
+				add(new Book("28-12331", "Antartica", 7, Arrays.asList(authors.get(2),authors.get(0))));
+				add(new Book("99-22223", "Thinking Java", 21, Arrays.asList(authors.get(2),authors.get(3))));
+				add(new Book("48-56882", "Jimmy's First Day of School", 7, Arrays.asList(authors.get(4),authors.get(1))));
 			}
 		};
 		// add copies
