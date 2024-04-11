@@ -109,12 +109,9 @@ final public class Book implements Serializable {
 		}
 		return null;
 	}
+
 	public int getMaxCheckoutLength() {
 		return maxCheckoutLength;
 	}
-
-	
-	
-	
 	
 }
