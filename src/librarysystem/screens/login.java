@@ -1,5 +1,4 @@
 package librarysystem.screens;
-
 import java.awt.EventQueue;
 import java.awt.Image;
 import java.awt.Toolkit;
@@ -8,9 +7,6 @@ import java.nio.file.Paths;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
-import javax.swing.LayoutStyle.ComponentPlacement;
 import java.awt.Color;
 import javax.swing.JLabel;
 import javax.swing.ImageIcon;
@@ -30,15 +26,14 @@ public class login extends JFrame {
 	private JTextField emailTextField;
 	private JTextField textField;
 
-	/**
-	 * Launch the application.
-	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
 					login frame = new login();
 					frame.setVisible(true);
+					
+					
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -55,7 +50,8 @@ public class login extends JFrame {
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(255, 254, 255));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-
+		centerFrameOnDesktop(this);
+		setResizable(false);
 		setContentPane(contentPane);
 		
 		
@@ -104,6 +100,17 @@ public class login extends JFrame {
 		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 22));
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				dispose();
+                  dashboard dashboardFrame = new dashboard();
+                  dashboardFrame.setVisible(true);
+//                 Open the dashboard frame
+//                JFrame dashboardFrame = new JFrame("Dashboard");
+//                JLabel welcomeLabel = new JLabel("Welcome to Dashboard");
+//                welcomeLabel.setFont(new Font("Tahoma", Font.PLAIN, 27));
+//                dashboardFrame.add(welcomeLabel);
+//                dashboardFrame.setSize(400, 300);
+//                dashboardFrame.setLocationRelativeTo(null);
+//                dashboardFrame.setVisible(true);
 			}
 		});
 		contentPane.setLayout(null);
@@ -114,5 +121,16 @@ public class login extends JFrame {
 		contentPane.add(password);
 		contentPane.add(textField);
 		contentPane.add(btnNewButton);
+	}
+
+	public void centerFrameOnDesktop(JFrame frame) {
+		Toolkit toolkit = Toolkit.getDefaultToolkit();
+		int height = toolkit.getScreenSize().height;
+		int width = toolkit.getScreenSize().width;
+		int frameHeight = frame.getSize().height;
+		int frameWidth = frame.getSize().width;
+		int xpos = (width - frameWidth) / 2;
+		int ypos = (height - frameHeight) / 3;
+		frame.setLocation(xpos, ypos);
 	}
 }
