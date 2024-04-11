@@ -51,9 +51,9 @@ public class Seeder {
 	private static ArrayList<User> createUsers(){
 		return new ArrayList<User>() {
 			{
-				add(new User("101", "xyz", new Auth[] {Auth.LIBRARIAN}));
-				add(new User("102", "abc", new Auth[] {Auth.ADMIN}));
-				add(new User("103", "111", new Auth[] {Auth.LIBRARIAN,Auth.ADMIN}));
+				add(new User("101", "Librarian@101", new Auth[] {Auth.LIBRARIAN}));
+				add(new User("102", "Admin@102", new Auth[] {Auth.ADMIN}));
+				add(new User("103", "SuperAdmin@103", new Auth[] {Auth.LIBRARIAN,Auth.ADMIN}));
 			}
 		};
 	}
