@@ -1,33 +1,36 @@
 package business;
 
 import java.io.Serializable;
-import java.time.LocalDate;
 
-
-import dataaccess.DataAccess;
-import dataaccess.DataAccessFacade;
 
 final public class LibraryMember extends Person implements Serializable {
+	private static final long serialVersionUID = -2226197306790714013L;
 	private String memberId;
-	
+	private CheckoutRecord checkoutRecord;
+
 	public LibraryMember(String memberId, String fname, String lname, String tel,Address add) {
 		super(fname,lname, tel, add);
-		this.memberId = memberId;		
+		this.memberId = memberId;
 	}
-	
-	
+
 	public String getMemberId() {
 		return memberId;
 	}
-	
-	
+
+	public void addCheckoutRecord(Book book){
+		if(this.checkoutRecord == null){
+			this.checkoutRecord = new CheckoutRecord(this, book);
+		}else{
+			this.checkoutRecord.addRecord(book);
+		}
+	}
+
 	@Override
 	public String toString() {
-		return "Member Info: " + "ID: " + memberId + ", name: " + getFirstName() + " " + getLastName() + 
-				", " + getTelephone() + " " + getAddress();
+		return "Member: " + "ID: " + this.memberId + ", name: " + this.getFirstName() + " " + this.getLastName() +
+				", phone: " + this.getTelephone() + ", address: " + this.getAddress();
 	}
 	
 	
 
-	private static final long serialVersionUID = -2226197306790714013L;
 }
