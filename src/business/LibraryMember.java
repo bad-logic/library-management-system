@@ -1,6 +1,7 @@
 package business;
 
 import java.io.Serializable;
+import java.util.UUID;
 
 
 final public class LibraryMember extends Person implements Serializable {
@@ -8,9 +9,9 @@ final public class LibraryMember extends Person implements Serializable {
 	private String memberId;
 	private CheckoutRecord checkoutRecord;
 
-	public LibraryMember(String memberId, String fname, String lname, String tel,Address add) {
+	public LibraryMember(String fname, String lname, String tel,Address add) {
 		super(fname,lname, tel, add);
-		this.memberId = memberId;
+		this.memberId = UUID.randomUUID().toString();
 	}
 
 	public String getMemberId() {

@@ -59,15 +59,15 @@ public class Seeder {
 
 	private static List<LibraryMember> createMembers(List<Address> addresses){
 		List<LibraryMember> members = new ArrayList<LibraryMember>();
-		LibraryMember libraryMember = new LibraryMember("1001", "Andy", "Rogers", "641-223-2211", addresses.get(4));
+		LibraryMember libraryMember = new LibraryMember("1001", "Andy", "Rogers",  addresses.get(4));
 		members.add(libraryMember);
-		libraryMember = new LibraryMember("1002", "Drew", "Stevens", "702-998-2414", addresses.get(5));
-		members.add(libraryMember);
-
-		libraryMember = new LibraryMember("1003", "Sarah", "Eagleton", "451-234-8811", addresses.get(6));
+		libraryMember = new LibraryMember("1002", "Drew", "Stevens",  addresses.get(5));
 		members.add(libraryMember);
 
-		libraryMember = new LibraryMember("1004", "Ricardo", "Montalbahn", "641-472-2871", addresses.get(7));
+		libraryMember = new LibraryMember("1003", "Sarah", "Eagleton",  addresses.get(6));
+		members.add(libraryMember);
+
+		libraryMember = new LibraryMember("1004", "Ricardo", "Montalbahn",  addresses.get(7));
 		members.add(libraryMember);
 		return members;
 	}
@@ -109,6 +109,7 @@ public class Seeder {
 
 		DataAccessFacade.loadUserMap(users);
 		DataAccessFacade.loadMemberMap(members);
+		DataAccessFacade.loadAuthorMap(authors);
 		DataAccessFacade.loadBookMap(books);
 		DataAccessFacade.loadCheckoutRecord(checkoutRecords);
 	}
@@ -120,5 +121,6 @@ public class Seeder {
 		System.out.println(da.readBooksMap());
 		System.out.println(da.readUserMap());
 		System.out.println(da.readCheckoutRecordMap());
+		System.out.println(da.readAuthorsMap());
 	}
 }
