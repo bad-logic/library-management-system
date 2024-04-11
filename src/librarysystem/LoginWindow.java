@@ -1,36 +1,24 @@
 package librarysystem;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.Toolkit;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.nio.file.Paths;
-import java.util.Arrays;
-
-import javax.swing.Box;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
-import javax.swing.JSeparator;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
-import javax.swing.JOptionPane;
 
 import business.ControllerInterface;
-import business.LoginException;
 import business.SystemController;
-import librarysystem.screens.login;
 
 
 public class LoginWindow extends JFrame implements LibWindow {
@@ -77,7 +65,7 @@ public class LoginWindow extends JFrame implements LibWindow {
 		
 		JLabel layout = new JLabel("New label");
 		layout.setBounds(5, 5, 347, 510);
-		layout.setIcon(new ImageIcon(login.class.getResource("/librarysystem/loginbg.jpg")));
+		layout.setIcon(new ImageIcon(LoginWindow.class.getResource("/librarysystem/loginbg.jpg")));
 		
 		JLabel header = new JLabel("Log in to your account");
 		header.setBounds(391, 11, 302, 46);
@@ -131,21 +119,7 @@ public class LoginWindow extends JFrame implements LibWindow {
 	
 	private void addLoginButtonListener(JButton butn) {
 		btnNewButton.addActionListener(evt -> {
-			try {
-				String password = new String(passwordField.getPassword());
-				
-				ci.login(usernameField.getText(), password);
-					Dashboard.INSTANCE.init();
-				Util.centerFrameOnDesktop(Dashboard.INSTANCE);					
-				Dashboard.INSTANCE.setVisible(true);
-				LibrarySystem.hideAllWindows();;
-//					LoginWindow.INSTANCE.setVisible(false);
-				JOptionPane.showMessageDialog(this,"Successful Login");
-			} catch (LoginException e) {
-				// TODO Auto-generated catch block
-//					e.printStackTrace();
-				JOptionPane.showMessageDialog(this, e.getMessage());
-			}
+			// some code
 				
 		});
 	}
