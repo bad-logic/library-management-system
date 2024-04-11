@@ -23,31 +23,8 @@ public class DataAccessFacade implements DataAccess {
 	);
 	
 	public static final String DATE_PATTERN = "MM/dd/yyyy";
-	
-	//implement: other save operations
-	public void saveNewMember(LibraryMember member) {
-		HashMap<String, LibraryMember> mems = readMemberMap();
-		String memberId = member.getMemberId();
-		mems.put(memberId, member);
-		saveToStorage(StorageType.MEMBERS, mems);	
-	}
-	
-	@SuppressWarnings("unchecked")
-	public  HashMap<String,Book> readBooksMap() {
-		//Returns a Map with name/value pairs being
-		//   isbn -> Book
-		return (HashMap<String,Book>) readFromStorage(StorageType.BOOKS);
-	}
-	
-	@SuppressWarnings("unchecked")
-	public HashMap<String, LibraryMember> readMemberMap() {
-		//Returns a Map with name/value pairs being
-		//   memberId -> LibraryMember
-		return (HashMap<String, LibraryMember>) readFromStorage(
-				StorageType.MEMBERS);
-	}
-	
-	
+
+	// ##### PRIVILEGED USERS
 	@SuppressWarnings("unchecked")
 	public HashMap<String, User> readUserMap() {
 		//Returns a Map with name/value pairs being
@@ -55,17 +32,56 @@ public class DataAccessFacade implements DataAccess {
 		return (HashMap<String, User>)readFromStorage(StorageType.USERS);
 	}
 
+
+	// ##### LIBRARY MEMBERS
+	@SuppressWarnings("unchecked")
+	public HashMap<String, LibraryMember> readMemberMap() {
+		//Returns a Map with name/value pairs being
+		//   memberId -> LibraryMember
+		return (HashMap<String, LibraryMember>) readFromStorage(
+				StorageType.MEMBERS);
+	}
+
+	public void saveNewMember(LibraryMember member) {
+		HashMap<String, LibraryMember> mems = readMemberMap();
+		String memberId = member.getMemberId();
+		mems.put(memberId, member);
+		saveToStorage(StorageType.MEMBERS, mems);
+	}
+
+
+	//  ##### BOOKS
+	@SuppressWarnings("unchecked")
+	public  HashMap<String,Book> readBooksMap() {
+		//Returns a Map with name/value pairs being
+		//   isbn -> Book
+		return (HashMap<String, Book>) readFromStorage(StorageType.BOOKS);
+	}
+
+	@Override
+	public void saveNewBook(Book book) {
+		HashMap<String, Book> books = readBooksMap();
+		books.put(book.getIsbn(),book);
+		saveToStorage(StorageType.BOOKS,books);
+	}
+
+	//  ##### CHECKOUT RECORD
 	@SuppressWarnings("unchecked")
 	public HashMap<String, CheckoutRecord> readCheckoutRecordMap() {
 		//Returns a Map with name/value pairs being
 		//   memberId -> CheckoutRecord
 		return (HashMap<String, CheckoutRecord>)readFromStorage(StorageType.CHECKOUTRECORDS);
 	}
-	
+
+	@Override
+	public void saveCheckoutRecord(CheckoutRecord checkoutRecord) {
+		HashMap<String, CheckoutRecord> books = readCheckoutRecordMap();
+		books.put(checkoutRecord.getMemberId(),checkoutRecord);
+		saveToStorage(StorageType.CHECKOUTRECORDS,books);
+	}
 	
 	/////load methods - these place test data into the storage area
-	///// - used just once at startup  
-	
+	///// - used just once at startup
 		
 	static void loadBookMap(List<Book> bookList) {
 		HashMap<String, Book> books = new HashMap<String, Book>();
@@ -90,24 +106,7 @@ public class DataAccessFacade implements DataAccess {
 		recordList.forEach(record -> records.put(record.getMemberId(), record));
 		saveToStorage(StorageType.CHECKOUTRECORDS, records);
 	}
-	
-	static void saveToStorage(StorageType type, Object ob) {
-		ObjectOutputStream out = null;
-		try {
-			Path path = FileSystems.getDefault().getPath(OUTPUT_DIR, type.toString());
-			out = new ObjectOutputStream(Files.newOutputStream(path));
-			out.writeObject(ob);
-		} catch(IOException e) {
-			e.printStackTrace();
-		} finally {
-			if(out != null) {
-				try {
-					out.close();
-				} catch(Exception e) {}
-			}
-		}
-	}
-	
+
 	static Object readFromStorage(StorageType type) {
 		ObjectInputStream in = null;
 		Object retVal = null;
@@ -126,8 +125,23 @@ public class DataAccessFacade implements DataAccess {
 		}
 		return retVal;
 	}
-	
-	
+
+	static void saveToStorage(StorageType type, Object ob) {
+		ObjectOutputStream out = null;
+		try {
+			Path path = FileSystems.getDefault().getPath(OUTPUT_DIR, type.toString());
+			out = new ObjectOutputStream(Files.newOutputStream(path));
+			out.writeObject(ob);
+		} catch(IOException e) {
+			e.printStackTrace();
+		} finally {
+			if(out != null) {
+				try {
+					out.close();
+				} catch(Exception e) {}
+			}
+		}
+	}
 	
 //	final static class Pair<S,T> implements Serializable{
 //
