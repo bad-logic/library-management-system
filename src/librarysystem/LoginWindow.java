@@ -144,7 +144,6 @@ public class LoginWindow extends JFrame implements LibWindow {
 			} catch (LoginException e) {
 				// TODO Auto-generated catch block
 //					e.printStackTrace();
-				System.out.println(passwordField.getPassword());
 				JOptionPane.showMessageDialog(this, e.getMessage());
 			}
 				

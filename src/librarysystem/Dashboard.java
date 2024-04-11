@@ -5,6 +5,8 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import javax.swing.JLabel;
 import java.awt.Font;
@@ -21,8 +23,11 @@ import java.awt.Rectangle;
 public class Dashboard extends JFrame {
 	public static final Dashboard INSTANCE = new Dashboard();
 	private static final long serialVersionUID = 1L;
-	private JPanel contentPane;
-	private JTable table;
+	String[] links;
+	JList<String> linkList;
+	//context for CardLayout
+	JPanel cards;
+	JPanel buttonBar;
 
 	/**
 	 * Launch the application.
@@ -44,39 +49,57 @@ public class Dashboard extends JFrame {
 	 * Create the frame.
 	 */
 	
-//	public Dashboard() {
-	public void init() {
+	public Dashboard() {
+//	public void init() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 737, 495);
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-
-		setContentPane(contentPane);
-		contentPane.setLayout(new CardLayout(0, 0));
-		
-		JSplitPane splitPane = new JSplitPane();
-		contentPane.add(splitPane, "name_306187152501400");
-		
-		JList list = new JList();
-		list.setModel(new AbstractListModel() {
-			String[] values = new String[] {"Home", "Member", "Librarian", "Author"};
-			public int getSize() {
-				return values.length;
-			}
-			public Object getElementAt(int index) {
-				return values[index];
-			}
-		});
-		splitPane.setLeftComponent(list);
-		
-		JPanel panel = new JPanel();
-		splitPane.setRightComponent(panel);
-		panel.setLayout(null);
-		
-		table = new JTable();
-		table.setBackground(new Color(255, 128, 255));
-		table.setBorder(new LineBorder(new Color(0, 0, 0), 3));
-		table.setBounds(154, 63, 366, 51);
-		panel.add(table);
+		String[] items = {"Home", "Member", "Author", "Book"};
+		linkList = new JList<String>(items);				
+		createPanels();	
+		// set up split panes
+		// arguments are orientation, left component, right component
+		JSplitPane splitPane = new JSplitPane(
+			JSplitPane.HORIZONTAL_SPLIT, linkList, cards);
+		splitPane.setDividerLocation(50);
+		//default layout for JFrame is BorderLayout; add method 
+		//adds to contentpane
+		add(splitPane, BorderLayout.CENTER);
 	}
+	
+	/* Organize panels into a CardLayout */
+	public void createPanels() {
+
+        JPanel panel1 = new JPanel();
+        JLabel label1 = new JLabel("Item 1 Panel");
+        panel1.add(label1);
+        
+        JPanel panel2 = new JPanel();
+        JLabel label2 = new JLabel("Item 2 Panel");
+        panel2.add(label2);
+        
+        JPanel panel3 = new JPanel();
+        JLabel label3 = new JLabel("Item 3 Panel");
+        panel3.add(label3);
+        
+        JPanel panel4 = new JPanel();
+        JLabel label4 = new JLabel("Item 4 Panel");
+        panel4.add(label4);
+        
+		cards = new JPanel(new CardLayout());
+		cards.add(panel1, "Home");
+		cards.add(panel2, "Member");
+		cards.add(panel3, "Author");
+		cards.add(panel4, "Book");
+		
+		//connect JList elements to CardLayout panels
+		linkList.addListSelectionListener(event -> {
+			String value = linkList.getSelectedValue().toString();
+		/*The CardLayout class manages two or more components 
+			(usually JPanel instances) that share the same display space.*/
+			CardLayout cl = (CardLayout) (cards.getLayout());
+			cl.show(cards, value);
+		});
+
+	}
+	
 }
