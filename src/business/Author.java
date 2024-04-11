@@ -27,4 +27,9 @@ final public class Author extends Person implements Serializable {
 		Author author = (Author) obj;
 		return author.getBio().equals(this.getBio());
 	}
+
+	@Override
+	public String toString(){
+		return "Author: " + super.toString() + " Bio: " + this.getBio();
+	}
 }

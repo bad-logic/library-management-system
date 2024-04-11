@@ -50,4 +50,10 @@ public class Person implements Serializable {
 				person.getTelephone().equals(this.getTelephone()) &&
 				person.getAddress().equals(this.getAddress());
 	}
+
+	@Override
+	public String toString(){
+		return "Person( " + "name: " + this.getFirstName() + " " + this.getLastName() +
+				", phone: " + this.getTelephone() + ", address: " + this.getAddress() + " )";
+	}
 }
