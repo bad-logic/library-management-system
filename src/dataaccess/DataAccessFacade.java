@@ -3,9 +3,9 @@ import java.io.*;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
+import business.Author;
 import business.Book;
 import business.CheckoutRecord;
 import business.LibraryMember;
@@ -42,6 +42,7 @@ public class DataAccessFacade implements DataAccess {
 				StorageType.MEMBERS);
 	}
 
+	@Override
 	public void saveNewMember(LibraryMember member) {
 		HashMap<String, LibraryMember> mems = readMemberMap();
 		String memberId = member.getMemberId();
@@ -63,6 +64,15 @@ public class DataAccessFacade implements DataAccess {
 		HashMap<String, Book> books = readBooksMap();
 		books.put(book.getIsbn(),book);
 		saveToStorage(StorageType.BOOKS,books);
+	}
+
+	@Override
+	public List<Author> getAuthorList() {
+		Set<Author> authorList = new HashSet<Author>();
+		for(Map.Entry<String, Book> entry : this.readBooksMap().entrySet()){
+			Collections.addAll(authorList,entry.getValue().getAuthors().toArray(new Author[0]));
+		}
+		return new ArrayList<Author>(authorList);
 	}
 
 	//  ##### CHECKOUT RECORD
