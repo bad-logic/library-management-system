@@ -2,6 +2,7 @@ package business;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 
 import dataaccess.Auth;
@@ -33,12 +34,27 @@ public class SystemController implements ControllerInterface {
 		return retval;
 	}
 	
+	public List<LibraryMember> allMember() {
+		DataAccess da = new DataAccessFacade();
+		List<LibraryMember> memberList = new ArrayList<>();
+		Iterator<LibraryMember> it= da.readMemberMap().values().iterator();
+		while(it.hasNext()) {
+			memberList.add(it.next());
+		}
+		
+		return memberList;
+	}
+	
 	@Override
 	public List<String> allBookIds() {
 		DataAccess da = new DataAccessFacade();
 		List<String> retval = new ArrayList<>();
 		retval.addAll(da.readBooksMap().keySet());
 		return retval;
+	}
+	
+	public static void main(String[] args) {
+//		System.out.println(allMember());
 	}
 	
 	

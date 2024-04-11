@@ -2,6 +2,7 @@ package librarysystem.screens;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 
 import librarysystem.LibWindow;
  
@@ -9,7 +10,23 @@ import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import javax.swing.JLabel;
 import javax.swing.JSplitPane;
+import javax.swing.JTable;
 import javax.swing.JList;
+import javax.swing.JButton;
+
+import java.awt.Font;
+import java.util.Arrays;
+import java.util.List;
+
+import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.table.DefaultTableModel;
+
+import business.ControllerInterface;
+import business.LibraryMember;
+import business.SystemController;
  
 public class DashBoardScreen extends JFrame implements LibWindow {
 	
@@ -22,6 +39,7 @@ public class DashBoardScreen extends JFrame implements LibWindow {
 	JList<String> linkList;
 	JPanel cards;
 	JPanel buttonBar;
+	
 	
 	public DashBoardScreen() {
 		init();
@@ -50,33 +68,36 @@ public class DashBoardScreen extends JFrame implements LibWindow {
 		splitPane.setDividerLocation(50);
 		//default layout for JFrame is BorderLayout; add method
 		//adds to contentpane
-		add(splitPane, BorderLayout.CENTER);
+		getContentPane().add(splitPane, BorderLayout.CENTER);
 	}
 	
 	/* Organize panels into a CardLayout */
 	public void createPanels() {
  
-        JPanel panel1 = new JPanel();
+        JPanel home = new JPanel();
         JLabel label1 = new JLabel("Item 1 Panel");
-        panel1.add(label1);
+        home.add(label1);
         
-        JPanel panel2 = new JPanel();
-        JLabel label2 = new JLabel("Item 2 Panel");
-        panel2.add(label2);
+        JPanel member = new JPanel();
+        member.setLayout(null);
+        JLabel label2 = new JLabel("Member");
+        label2.setBounds(259, 9, 38, 13);
+        member.add(label2);
         
-        JPanel panel3 = new JPanel();
+        JPanel author = new JPanel();
         JLabel label3 = new JLabel("Item 3 Panel");
-        panel3.add(label3);
+        author.add(label3);
         
-        JPanel panel4 = new JPanel();
+        JPanel book = new JPanel();
         JLabel label4 = new JLabel("Item 4 Panel");
-        panel4.add(label4);
+        book.add(label4);
         
 		cards = new JPanel(new CardLayout());
-		cards.add(panel1, "Home");
-		cards.add(panel2, "Member");
-		cards.add(panel3, "Author");
-		cards.add(panel4, "Book");
+		cards.add(home, "Home");
+		cards.add(member, "Member");
+		new MemberPanel().memberView(member);
+		cards.add(author, "Author");
+		cards.add(book, "Book");
 		
 		//connect JList elements to CardLayout panels
 		linkList.addListSelectionListener(event -> {
@@ -88,6 +109,7 @@ public class DashBoardScreen extends JFrame implements LibWindow {
 		});
  
 	}
+
 	
 }
  

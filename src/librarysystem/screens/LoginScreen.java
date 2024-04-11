@@ -80,7 +80,7 @@ public class LoginScreen extends JFrame implements LibWindow{
 		header.setVerticalAlignment(SwingConstants.TOP);
 		header.setFont(new Font("Tahoma", Font.PLAIN, 27));
 		
-		JLabel email = new JLabel("Email address");
+		JLabel email = new JLabel("Test");
 		email.setBounds(391, 87, 99, 17);
 		email.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		

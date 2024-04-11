@@ -31,5 +31,7 @@ final public class LibraryMember extends Person implements Serializable {
 		return "Member: " + "ID: " + this.memberId + ", name: " + this.getFirstName() + " " + this.getLastName() +
 				", phone: " + this.getTelephone() + ", address: " + this.getAddress();
 	}
+	
+	
 
 }
