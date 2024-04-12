@@ -89,13 +89,6 @@ public class Seeder {
 		return allBooks;
 	}
 
-	private static ArrayList<CheckoutRecord> createCheckoutRecord(List<LibraryMember> members, List<Book> books){
-		ArrayList<CheckoutRecord> checkoutRecord = new ArrayList<CheckoutRecord>();
-		checkoutRecord.add(new CheckoutRecord(members.get(0),books.get(0)));
-		checkoutRecord.add(new CheckoutRecord(members.get(1),books.get(1)));
-		checkoutRecord.get(0).addRecord(books.get(3));
-		return checkoutRecord;
-	}
 
 	public static void seed(){
 		List<Address> addresses = createAddresses();
@@ -103,13 +96,11 @@ public class Seeder {
 		List<User> users = createUsers();
 		List<Author> authors = createAuthors(addresses);
 		List<Book> books = createBooks(authors);
-		List<CheckoutRecord> checkoutRecords = createCheckoutRecord(members,books);
 
 		DataAccessFacade.loadUserMap(users);
 		DataAccessFacade.loadMemberMap(members);
 		DataAccessFacade.loadAuthorMap(authors);
 		DataAccessFacade.loadBookMap(books);
-		DataAccessFacade.loadCheckoutRecord(checkoutRecords);
 	}
 
 	
@@ -118,7 +109,6 @@ public class Seeder {
 		DataAccess da = new DataAccessFacade();
 		System.out.println(da.readBooksMap());
 		System.out.println(da.readUserMap());
-		System.out.println(da.readCheckoutRecordMap());
 		System.out.println(da.readAuthorsMap());
 	}
 }
