@@ -24,20 +24,18 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.border.LineBorder;
 
-import librarysystem.LibWindow;
 import librarysystem.Util;
 
 import javax.swing.border.CompoundBorder;
 
-public class LoginScreen extends JFrame implements LibWindow {
+public class LoginScreen extends JFrame {
 
 	public final static LoginScreen INSTANCE = new LoginScreen();
 	
 	private static final long serialVersionUID = 1L;
 	
-	private boolean isInitialized = false;
-	
-	private JPanel contentPane;
+//	private boolean isInitialized = false;
+
 	private JTextField emailTextField;
 	private JPasswordField passwordField;
 	
@@ -45,21 +43,21 @@ public class LoginScreen extends JFrame implements LibWindow {
 //		init();
 	}
 
-	@Override
-	public boolean isInitialized() {
-		return isInitialized;
-	}
-	
-	@Override
-	public void isInitialized(boolean val) {
-		isInitialized = val;
-	}
-	
-	@Override
+//	@Override
+//	public boolean isInitialized() {
+//		return isInitialized;
+//	}
+//
+//	@Override
+//	public void isInitialized(boolean val) {
+//		isInitialized = val;
+//	}
+//
 	public void init() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 753, 548);
-		contentPane = new JPanel();
+
+		JPanel contentPane = new JPanel();
 		contentPane.setBackground(new Color(255, 254, 255));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		this.setResizable(false);
