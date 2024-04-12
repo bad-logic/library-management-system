@@ -4,15 +4,22 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map.Entry;
 
 import dataaccess.Auth;
 import dataaccess.DataAccess;
 import dataaccess.DataAccessFacade;
 import dataaccess.User;
 
+
 public class SystemController implements ControllerInterface {
 	public static Auth[] currentAuth = null;
 	
+	public static void main(String[] args) {
+//		System.out.println(allMember());
+	}
+
+	@Override
 	public void login(String id, String password) throws LoginException {
 		DataAccess da = new DataAccessFacade();
 		HashMap<String, User> map = da.readUserMap();
@@ -24,8 +31,13 @@ public class SystemController implements ControllerInterface {
 			throw new LoginException("Password incorrect");
 		}
 		currentAuth = map.get(id).getAuthorization();
-		
 	}
+
+	@Override
+	public void logout() {
+		currentAuth = null;
+	}
+	
 	@Override
 	public List<String> allMemberIds() {
 		DataAccess da = new DataAccessFacade();
@@ -53,9 +65,71 @@ public class SystemController implements ControllerInterface {
 		return retval;
 	}
 	
-	public static void main(String[] args) {
-//		System.out.println(allMember());
+	@Override
+	public List<Author> allAuthors() {
+		List<Author> ath = new ArrayList<Author>();
+		Iterator<Author> it = new DataAccessFacade().readAuthorsMap().values().iterator();
+		while(it.hasNext()) {
+			ath.add(it.next());
+		}
+		return ath;
 	}
 	
+	@Override
+	public void createAuthor(String firstName, String lastName, String contact, String bio,String street, String city,String state, int zipCode) {
+		DataAccess da = new DataAccessFacade();
+		Address add = new Address(street,city,state, Integer.toString(zipCode));
+		Author au = new Author(firstName, lastName,contact, add, bio);
+		da.addAuthor(au);
+	}
+	
+	@Override
+	public void createMember(String firstName, String lastName, String contact,String street, String city,String state, int zipCode) {
+		DataAccess da = new DataAccessFacade();
+		Address add = new Address(street,city,state, Integer.toString(zipCode));
+		LibraryMember mem = new LibraryMember(firstName, lastName,contact, add);
+		da.addMember(mem);
+	}
+	
+	@Override
+	public void createBook(String isbn, String title, int maxCheckoutLength, List<String> authorId) {
+		DataAccess da = new DataAccessFacade();
+		List<Author> aths = new ArrayList<>();
+		HashMap<String,Author> aMap = da.readAuthorsMap();
+		for(String id: authorId) {
+			if(aMap.containsKey(id)) {
+				aths.add(aMap.get(id));
+			}
+		}
+		
+		Book book = new Book(isbn, title,maxCheckoutLength, aths);
+		da.addBook(book);
+	}
+	
+	@Override
+	public void createBookCopies(String isbn, int copyCount) {
+		DataAccess da = new DataAccessFacade();
+		HashMap<String,Book> mp = da.readBooksMap();
+		if(mp.containsKey(isbn)){
+			Book book = mp.get(isbn);
+			book.addCopy(copyCount);			
+			da.addBook(book);
+		}
+		
+		
+	}
+	
+	@Override
+	public void addCheckoutRecord(String isbn,String memberId) {
+		DataAccess da = new DataAccessFacade();
+		HashMap<String, LibraryMember> mem = da.readMemberMap();
+		HashMap<String,Book> books = da.readBooksMap();
+		if(mem.containsKey(memberId) && books.containsKey(isbn)) {
+			Book book = books.get(isbn);
+			LibraryMember memb = mem.get(memberId);
+			CheckoutRecord cr = memb.addCheckoutRecord(book);
+			da.addCheckoutRecord(cr);
+		}
+	}
 	
 }

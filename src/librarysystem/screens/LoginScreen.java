@@ -116,7 +116,7 @@ public class LoginScreen extends JFrame implements LibWindow{
 					new SystemController().login(userId, password);
 					LoginScreen.INSTANCE.setVisible(false);
 					Util.centerFrameOnDesktop(DashBoardScreenPast.INSTANCE);
-					DashboardScreen.INSTANCE.setVisible(true);
+					DashBoardScreen.INSTANCE.setVisible(true);
 				}catch(LoginException ex) {
 					JOptionPane.showMessageDialog(btnNewButton,ex.getMessage());
 				}

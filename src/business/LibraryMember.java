@@ -18,14 +18,15 @@ final public class LibraryMember extends Person implements Serializable {
 		return memberId;
 	}
 
-	public void addCheckoutRecord(Book book){
+	public CheckoutRecord addCheckoutRecord(Book book){
 		if(this.checkoutRecord == null){
 			this.checkoutRecord = new CheckoutRecord(this, book);
 		}else{
 			this.checkoutRecord.addRecord(book);
 		}
+		return this.checkoutRecord;
 	}
-
+	
 	@Override
 	public String toString() {
 		return "Member: " + "ID: " + this.memberId + ", name: " + this.getFirstName() + " " + this.getLastName() +
