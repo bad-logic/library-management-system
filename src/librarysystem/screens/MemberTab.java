@@ -3,6 +3,7 @@ package librarysystem.screens;
 import business.Address;
 import business.LibraryMember;
 import business.SystemController;
+import librarysystem.Util;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -42,7 +43,7 @@ public class MemberTab extends JPanel {
 
     void setTable(){
         tablePanel = new JPanel();
-        tablePanel.setBounds(10, 193, 774, 422);
+        tablePanel.setBounds(10, 80, 774, 422);
         tablePanel.setLayout(null);
 
         JScrollPane scrollPane = new JScrollPane();
@@ -62,12 +63,12 @@ public class MemberTab extends JPanel {
 
     void init(){
         JButton addMemberButton = new JButton("Add Member");
-        addMemberButton.setBounds(350, 10, 130, 21);
+        addMemberButton.setBounds(514, 31, 130, 21);
         addMemberButton.setFont(new Font("Tahoma", Font.PLAIN, 14));
         this.add(addMemberButton);
 
         JButton reloadButton = new JButton("Reload");
-        reloadButton.setBounds(500, 10, 130, 21);
+        reloadButton.setBounds(654, 31, 130, 21);
         reloadButton.setFont(new Font("Tahoma", Font.PLAIN, 14));
         this.add(reloadButton);
 
@@ -75,6 +76,7 @@ public class MemberTab extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 AddMemberModal.INSTANCE.init();
+                Util.centerFrameOnDesktop(AddMemberModal.INSTANCE);
                 AddMemberModal.INSTANCE.setVisible(true);
             }
         });
