@@ -93,7 +93,7 @@ public class AddMemberModal extends JFrame {
 
 			}catch(ValidationException ex){
 				JTextField field = ex.getField();
-				field.setBorder(new LineBorder(Util.ERROR_MESSAGE_COLOR,1));
+				field.setBorder(new LineBorder(Util.ERROR_MESSAGE_COLOR,2));
 				field.requestFocus();
 				field.addKeyListener(new KeyAdapter() {
 					@Override
