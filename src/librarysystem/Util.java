@@ -18,6 +18,10 @@ public class Util {
 	public static final Color LINK_NOT_AVAILABLE = Color.gray;
 	//rgb(18, 75, 14)
 	
+	public static final String[] states = new String[] {
+			"AL","AK","AS","AZ","AR","CA","CO","CT","DE","DC","FL","GA","GU","HI","ID","IL","IN","IA","KS","KY","LA","ME","MD","MA","MI","MN","MS","MO","MT","NE","NV","NH","NJ","NM","NY","NC","ND","MP","OH","OK","OR","PA","PR","RI","SC","SD","TN","TX","UT","VT","VA","VI","WA","WV","WI"
+	};
+	
 	public static Font makeSmallFont(Font f) {
         return new Font(f.getName(), f.getStyle(), (f.getSize()-2));
     }
@@ -63,6 +67,7 @@ public class Util {
 			return false;
 		}
 	}
+	
 	public static void centerFrameOnDesktop(Component f) {
 		Toolkit toolkit = Toolkit.getDefaultToolkit();
 		int height = toolkit.getScreenSize().height;

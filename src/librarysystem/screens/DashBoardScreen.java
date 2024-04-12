@@ -7,7 +7,6 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import java.awt.Color;
 import javax.swing.JLabel;
-import com.jgoodies.forms.factories.DefaultComponentFactory;
 import java.awt.Font;
 import javax.swing.JSplitPane;
 import javax.swing.SwingConstants;
@@ -27,8 +26,10 @@ import java.awt.event.ActionEvent;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
-public class DashboardScreen extends JFrame {
-	public static final DashboardScreen INSTANCE = new DashboardScreen();
+ 
+public class DashBoardScreen extends JFrame {
+	
+	public static final DashBoardScreen INSTANCE = new DashBoardScreen();
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JList linkList;
@@ -41,6 +42,10 @@ public class DashboardScreen extends JFrame {
 	private JTextField stateField;
 	private JTextField zipField;
 
+	public DashBoardScreen() {
+		init();
+	}
+
 	/**
 	 * Launch the application.
 	 */
@@ -48,7 +53,7 @@ public class DashboardScreen extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					DashboardScreen frame = new DashboardScreen();
+					DashBoardScreen frame = new DashBoardScreen();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -57,9 +62,7 @@ public class DashboardScreen extends JFrame {
 		});
 	}
 	
-	public DashboardScreen() {
-		init();
-	}
+	
 
 	/**
 	 * Create the frame.
@@ -79,10 +82,10 @@ public class DashboardScreen extends JFrame {
 		contentPane.add(topPanel);
 		topPanel.setLayout(null);
 		
-		JLabel dashboardTitle = DefaultComponentFactory.getInstance().createTitle("MIU Library");
-		dashboardTitle.setFont(new Font("Tahoma", Font.BOLD, 20));
-		dashboardTitle.setBounds(419, 10, 134, 23);
-		topPanel.add(dashboardTitle);
+		// JLabel dashboardTitle = DefaultComponentFactory.getInstance().createTitle("MIU Library");
+		// dashboardTitle.setFont(new Font("Tahoma", Font.BOLD, 20));
+		// dashboardTitle.setBounds(419, 10, 134, 23);
+		// topPanel.add(dashboardTitle);
 		
 		JPanel leftPanel = new JPanel();
 		leftPanel.setBackground(new Color(255, 255, 255));
