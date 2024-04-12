@@ -89,6 +89,16 @@ public class SystemController implements ControllerInterface {
 		return da.readBooksMap();
 	}
 	
+	public List<Book> allBook() {
+		DataAccess da = new DataAccessFacade();
+		List<Book> bookList = new ArrayList<>();
+		Iterator<Book> it= da.readBooksMap().values().iterator();
+		while(it.hasNext()) {
+			bookList.add(it.next());
+		}
+		return bookList;
+	}
+	
 	@Override
 	public List<Author> allAuthors() {
 		List<Author> ath = new ArrayList<Author>();

@@ -73,12 +73,12 @@ public class AddMemberModal extends JFrame {
 
 			try{
 
-				validateInputField("first name",fName,iFirstName);
-				validateInputField("last name",lName,ilastName);
-				validateContactInputField("contact",contact,iContact);
-				validateInputField("street",street,iStreet);
-				validateInputField("city",city,iCity);
-				validateInputField("zipcode",zip,iZipCode,true);
+				validateInputField("First Name",fName,iFirstName);
+				validateInputField("Last Name",lName,ilastName);
+				validateContactInputField("Contact",contact,iContact);
+				validateInputField("Street",street,iStreet);
+				validateInputField("City",city,iCity);
+				validateInputField("Zipcode",zip,iZipCode,true);
 
 			}catch(ValidationException ex){
 				JTextField field = ex.getField();
