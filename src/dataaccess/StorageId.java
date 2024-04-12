@@ -22,7 +22,7 @@ public class StorageId {
         if(m == null){
             return 101;
         }
-        List<Integer> arr = new ArrayList<>(m.keySet());
+        ArrayList<Integer> arr = new ArrayList<>(m.keySet());
         Collections.sort(arr);
         return arr.getLast() + 1;
     }
@@ -32,7 +32,7 @@ public class StorageId {
         if(m == null){
             return 101;
         }
-        List<Integer> arr = new ArrayList<>(m.keySet());
+        ArrayList<Integer> arr = new ArrayList<>(m.keySet());
         Collections.sort(arr);
         return arr.getLast() + 1;
     }
