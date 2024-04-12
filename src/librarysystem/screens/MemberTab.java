@@ -14,6 +14,7 @@ import java.util.List;
 public class MemberTab extends JPanel {
     private SystemController controller;
     private List<LibraryMember> members;
+    private JPanel tablePanel;
 
     private static final String[] headers = new String[] {
         "ID","Name", "Mobile", "City", "State"
@@ -36,12 +37,41 @@ public class MemberTab extends JPanel {
         return rows;
     }
 
+    void reload(){
+        System.out.println("reload");
+        this.tablePanel.repaint();
+    }
+
+    void setTable(){
+        tablePanel = new JPanel();
+        tablePanel.setBounds(10, 193, 774, 422);
+        tablePanel.setLayout(null);
+
+        JScrollPane scrollPane = new JScrollPane();
+        scrollPane.setBounds(0, 0, 774, 422);
+        tablePanel.add(scrollPane);
+
+        JTable table = new JTable();
+        table.setModel(new DefaultTableModel(
+                this.getTableRows(),
+                MemberTab.headers
+        ));
+
+        scrollPane.setViewportView(table);
+        this.add(tablePanel);
+    }
+
 
     void init(){
         JButton addMemberButton = new JButton("Add Member");
-        addMemberButton.setBounds(654, 10, 130, 21);
+        addMemberButton.setBounds(350, 10, 130, 21);
         addMemberButton.setFont(new Font("Tahoma", Font.PLAIN, 14));
         this.add(addMemberButton);
+
+        JButton reloadButton = new JButton("Reload");
+        reloadButton.setBounds(500, 10, 130, 21);
+        reloadButton.setFont(new Font("Tahoma", Font.PLAIN, 14));
+        this.add(reloadButton);
 
         addMemberButton.addActionListener(new ActionListener() {
             @Override
@@ -51,21 +81,10 @@ public class MemberTab extends JPanel {
             }
         });
 
-        JPanel panel = new JPanel();
-        panel.setBounds(10, 193, 774, 422);
-        panel.setLayout(null);
+        reloadButton.addActionListener((ActionEvent e) -> {
+                this.reload();
+        });
 
-        JScrollPane scrollPane = new JScrollPane();
-        scrollPane.setBounds(0, 0, 774, 422);
-        panel.add(scrollPane);
-
-        JTable table = new JTable();
-        table.setModel(new DefaultTableModel(
-                this.getTableRows(),
-                MemberTab.headers
-        ));
-
-        scrollPane.setViewportView(table);
-        this.add(panel);
+        this.setTable();
     }
 }
