@@ -2,7 +2,6 @@ package librarysystem.screens;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 
 import librarysystem.LibWindow;
  
@@ -10,23 +9,8 @@ import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import javax.swing.JLabel;
 import javax.swing.JSplitPane;
-import javax.swing.JTable;
 import javax.swing.JList;
-import javax.swing.JButton;
 
-import java.awt.Font;
-import java.util.Arrays;
-import java.util.List;
-
-import javax.swing.JTextField;
-import javax.swing.ListSelectionModel;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
-import javax.swing.table.DefaultTableModel;
-
-import business.ControllerInterface;
-import business.LibraryMember;
-import business.SystemController;
  
 public class DashBoardScreen extends JFrame implements LibWindow {
 	
