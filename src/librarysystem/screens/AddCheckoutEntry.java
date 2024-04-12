@@ -120,19 +120,7 @@ public class AddCheckoutEntry extends JFrame {
 				return;
 			}
 			this.controller.addCheckoutRecord(isbn, Integer.parseInt(memberId));
-		});
-	}
-
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					AddCheckoutEntry frame = new AddCheckoutEntry();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
+			this.dispose();
 		});
 	}
 }

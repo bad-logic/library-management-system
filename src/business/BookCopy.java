@@ -24,19 +24,19 @@ final public class BookCopy implements Serializable {
 	
 	
 	public boolean isAvailable() {
-		return isAvailable;
+		return this.isAvailable;
 	}
 
 	public int getCopyNum() {
-		return copyNum;
+		return this.copyNum;
 	}
 	
 	public Book getBook() {
-		return book;
+		return this.book;
 	}
 	
 	public void changeAvailability() {
-		isAvailable = !isAvailable;
+		this.isAvailable = !isAvailable;
 	}
 	
 	@Override
@@ -44,7 +44,7 @@ final public class BookCopy implements Serializable {
 		if(ob == null) return false;
 		if(!(ob instanceof BookCopy)) return false;
 		BookCopy copy = (BookCopy)ob;
-		return copy.book.getIsbn().equals(book.getIsbn()) && copy.copyNum == copyNum;
+		return copy.book.getIsbn().equals(this.book.getIsbn()) && copy.copyNum == this.copyNum;
 	}
 	
 }

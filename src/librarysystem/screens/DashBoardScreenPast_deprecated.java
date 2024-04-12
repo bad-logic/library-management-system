@@ -1,10 +1,10 @@
 package librarysystem.screens;
 
+import librarysystem.LibWindow;
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import librarysystem.LibWindow;
- 
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import javax.swing.JLabel;

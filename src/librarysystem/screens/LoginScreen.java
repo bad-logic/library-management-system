@@ -29,7 +29,7 @@ import librarysystem.Util;
 
 import javax.swing.border.CompoundBorder;
 
-public class LoginScreen extends JFrame implements LibWindow{
+public class LoginScreen extends JFrame implements LibWindow {
 
 	public final static LoginScreen INSTANCE = new LoginScreen();
 	
