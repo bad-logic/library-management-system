@@ -67,7 +67,11 @@ public class BookCheckoutTab extends JPanel {
         scrollPane.setBounds(0, 0, 774, 422);
         tablePanel.add(scrollPane);
 
-        table = new JTable();
+        table = new JTable() {
+        	public boolean editCellAt(int row, int column, java.util.EventObject e) {
+                return false;
+             }
+        };
         table.setModel(new DefaultTableModel(
                 new Object[][]{},
                 BookCheckoutTab.headers
