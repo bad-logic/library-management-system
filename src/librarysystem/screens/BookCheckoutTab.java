@@ -61,7 +61,7 @@ public class BookCheckoutTab extends JPanel {
 
     private void setUpTable(){
         JPanel tablePanel = new JPanel();
-        tablePanel.setBounds(10, 80, 774, 422);
+        tablePanel.setBounds(10, 100, 774, 422);
         tablePanel.setLayout(null);
 
         JScrollPane scrollPane = new JScrollPane();
@@ -79,7 +79,6 @@ public class BookCheckoutTab extends JPanel {
     }
 
     private void reloadTable(int memberId){
-//        table = new JTable();
         table.setModel(new DefaultTableModel(
                 this.getTableRows(memberId),
                 BookCheckoutTab.headers
@@ -93,7 +92,7 @@ public class BookCheckoutTab extends JPanel {
         this.add(checkoutButton);
 
         JLabel lblMember = new JLabel("Select Member");
-        lblMember.setBounds(20, 50,150, 35);
+        lblMember.setBounds(20, 40,150, 35);
         this.add(lblMember);
 
         DefaultComboBoxModel<String> defaultComboBox = new DefaultComboBoxModel<String>(this.getMembersId());
@@ -101,12 +100,12 @@ public class BookCheckoutTab extends JPanel {
         membersSelectBox.setMaximumSize(new Dimension(150, 35));
         membersSelectBox.setModel(defaultComboBox);
         membersSelectBox.setSelectedIndex(-1);
-        membersSelectBox.setBounds(170, 50, 150, 35);
+        membersSelectBox.setBounds(170, 40, 150, 35);
         this.add(membersSelectBox);
 
         membersSelectBox.addActionListener((ActionEvent e) ->{
             int memberId = Integer.parseInt(String.valueOf(membersSelectBox.getSelectedItem()).split("->")[0]);
-            System.out.println(memberId);
+            System.out.println("member: " + memberId);
             this.reloadTable(memberId);
         });
 
