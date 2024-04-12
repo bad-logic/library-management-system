@@ -128,9 +128,10 @@ public class DashBoardScreen extends JFrame {
 		bookPanel.setBounds(0, 0, 794, 625);
 
 		// CHECKOUT TAB CONTENT
-		JPanel historyPanel = new BookCheckoutTab();
-		historyPanel.setBackground(new Color(255, 255, 255));
-		historyPanel.setBounds(0, 0, 794, 625);
+		JPanel checkoutHistoryPanel = new BookCheckoutTab();
+		checkoutHistoryPanel.setBackground(new Color(255, 255, 255));
+		checkoutHistoryPanel.setBounds(0, 0, 794, 625);
+		checkoutHistoryPanel.setLayout(null);
 		
 		// adding tabs to the card
 		cards = new JPanel(new CardLayout());
@@ -143,7 +144,7 @@ public class DashBoardScreen extends JFrame {
 		
 		cards.add(authorPanel, "Author");
 		cards.add(bookPanel, "Book");
-		cards.add(historyPanel, "Checkout");
+		cards.add(checkoutHistoryPanel, "Checkout");
 		
 		//connect JList elements to CardLayout panels
 		linkList.addListSelectionListener(event -> {

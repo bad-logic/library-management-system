@@ -16,6 +16,7 @@ public class Util {
 	public static final Color INFO_MESSAGE_COLOR = new Color(24, 98, 19); //dark green
 	public static final Color LINK_AVAILABLE = DARK_BLUE;
 	public static final Color LINK_NOT_AVAILABLE = Color.gray;
+	public static final String DATE_PATTERN = "MM/dd/yyyy";
 	//rgb(18, 75, 14)
 	
 	public static final String[] states = new String[] {
