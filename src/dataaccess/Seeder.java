@@ -38,11 +38,11 @@ public class Seeder {
 	private static List<Author> createAuthors(List<Address> addresses){
 		 return new ArrayList<Author>() {
 			{
-				add(new Author("Joe", "Thomas", "641-445-2123", addresses.get(0), "A happy man is he."));
-				add(new Author("Sandra", "Thomas", "641-445-2123", addresses.get(0), "A happy wife is she."));
-				add(new Author("Nirmal", "Pugh", "641-919-3223", addresses.get(1), "Thinker of thoughts."));
-				add(new Author("Andrew", "Cleveland", "976-445-2232", addresses.get(2), "Author of childrens' books."));
-				add(new Author("Sarah", "Connor", "123-422-2663", addresses.get(3), "Known for her clever style."));
+				add(new Author(101,"Joe", "Thomas", "641-445-2123", addresses.get(0), "A happy man is he."));
+				add(new Author(102,"Sandra", "Thomas", "641-445-2123", addresses.get(0), "A happy wife is she."));
+				add(new Author(103,"Nirmal", "Pugh", "641-919-3223", addresses.get(1), "Thinker of thoughts."));
+				add(new Author(104,"Andrew", "Cleveland", "976-445-2232", addresses.get(2), "Author of childrens' books."));
+				add(new Author(105,"Sarah", "Connor", "123-422-2663", addresses.get(3), "Known for her clever style."));
 			}
 		};
 	}
@@ -50,24 +50,24 @@ public class Seeder {
 	private static ArrayList<User> createUsers(){
 		return new ArrayList<User>() {
 			{
-				add(new User("101", "Librarian@101", new Auth[] {Auth.LIBRARIAN}));
-				add(new User("102", "Admin@102", new Auth[] {Auth.ADMIN}));
-				add(new User("103", "SuperAdmin@103", new Auth[] {Auth.LIBRARIAN,Auth.ADMIN}));
+				add(new User(101, "Librarian@101", new Auth[] {Auth.LIBRARIAN}));
+				add(new User(102, "Admin@102", new Auth[] {Auth.ADMIN}));
+				add(new User(103, "SuperAdmin@103", new Auth[] {Auth.LIBRARIAN,Auth.ADMIN}));
 			}
 		};
 	}
 
 	private static List<LibraryMember> createMembers(List<Address> addresses){
 		List<LibraryMember> members = new ArrayList<LibraryMember>();
-		LibraryMember libraryMember = new LibraryMember("1001", "Andy", "Rogers",  addresses.get(4));
+		LibraryMember libraryMember = new LibraryMember( 100,"Andy", "Rogers", "641-445-2123", addresses.get(4));
 		members.add(libraryMember);
-		libraryMember = new LibraryMember("1002", "Drew", "Stevens",  addresses.get(5));
-		members.add(libraryMember);
-
-		libraryMember = new LibraryMember("1003", "Sarah", "Eagleton",  addresses.get(6));
+		libraryMember = new LibraryMember( 101, "Drew", "Stevens",  "641-445-2123", addresses.get(5));
 		members.add(libraryMember);
 
-		libraryMember = new LibraryMember("1004", "Ricardo", "Montalbahn",  addresses.get(7));
+		libraryMember = new LibraryMember( 102,"Sarah", "Eagleton", "641-445-2123", addresses.get(6));
+		members.add(libraryMember);
+
+		libraryMember = new LibraryMember( 103,"Ricardo", "Montalbahn", "641-445-2123", addresses.get(7));
 		members.add(libraryMember);
 		return members;
 	}

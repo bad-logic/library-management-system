@@ -1,24 +1,28 @@
 package business;
 
 import java.io.Serializable;
-import java.util.UUID;
+import dataaccess.StorageId;
 
 final public class Author extends Person implements Serializable {
 	private String bio;
-	private String authorId;
+	private int authorId;
 	public String getBio() {
 		return this.bio;
 	}
-	
-	public Author(String f, String l, String t, Address a, String bio) {
+
+	public Author(int id,String f, String l, String t, Address a, String bio) {
 		super(f, l, t, a);
-		this.authorId = UUID.randomUUID().toString();
+		this.authorId = id;
 		this.bio = bio;
+	}
+
+	public Author(String f, String l, String t, Address a, String bio) {
+		this(StorageId.getAuthorID(),f, l, t, a,bio);
 	}
 
 	private static final long serialVersionUID = 7508481940058530471L;
 
-	public String getAuthorId() {
+	public int getAuthorId() {
 		return this.authorId;
 	}
 
