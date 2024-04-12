@@ -10,7 +10,7 @@ public interface ControllerInterface {
 	public void createBook(String isbn, String title, int maxCheckoutLength, List<String> authorId);
 	public void createBookCopies(String isbn, int copyCount);
 	public void addCheckoutRecord(String isbn,String memberId);
-	public List<String> allMemberIds();
+	public List<Integer> allMemberIds();
 	public List<String> allBookIds();
 	public List<Author> allAuthors();
 }

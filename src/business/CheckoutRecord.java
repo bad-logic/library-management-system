@@ -15,7 +15,7 @@ public class CheckoutRecord implements Serializable{
         addRecord(book);
     }
 
-    public String getMemberId(){
+    public int getMemberId(){
         return member.getMemberId();
     }
 

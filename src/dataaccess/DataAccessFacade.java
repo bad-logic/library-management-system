@@ -26,26 +26,26 @@ public class DataAccessFacade implements DataAccess {
 
 	// ##### PRIVILEGED USERS
 	@SuppressWarnings("unchecked")
-	public HashMap<String, User> readUserMap() {
+	public HashMap<Integer, User> readUserMap() {
 		//Returns a Map with name/value pairs being
 		//   userId -> User
-		return (HashMap<String, User>)readFromStorage(StorageType.USERS);
+		return (HashMap<Integer, User>)readFromStorage(StorageType.USERS);
 	}
 
 
 	// ##### LIBRARY MEMBERS
 	@SuppressWarnings("unchecked")
-	public HashMap<String, LibraryMember> readMemberMap() {
+	public HashMap<Integer, LibraryMember> readMemberMap() {
 		//Returns a Map with name/value pairs being
 		//   memberId -> LibraryMember
-		return (HashMap<String, LibraryMember>) readFromStorage(
+		return (HashMap<Integer, LibraryMember>) readFromStorage(
 				StorageType.MEMBERS);
 	}
 
 	@Override
 	public void addMember(LibraryMember member) {
-		HashMap<String, LibraryMember> mems = readMemberMap();
-		String memberId = member.getMemberId();
+		HashMap<Integer, LibraryMember> mems = readMemberMap();
+		int memberId = member.getMemberId();
 		mems.put(memberId, member);
 		saveToStorage(StorageType.MEMBERS, mems);
 	}
@@ -69,31 +69,31 @@ public class DataAccessFacade implements DataAccess {
 	// AUTHORS
 	@SuppressWarnings("unchecked")
 	@Override
-	public HashMap<String,Author> readAuthorsMap() {
+	public HashMap<Integer,Author> readAuthorsMap() {
 		//Returns a Map with name/value pairs being
 		//   isbn -> Book
-		return (HashMap<String, Author>) readFromStorage(StorageType.AUTHORS);
+		return (HashMap<Integer, Author>) readFromStorage(StorageType.AUTHORS);
 	}
 
 	public void addAuthor(Author author) {
 		//Returns a Map with name/value pairs being
 		//   isbn -> Book
-		HashMap<String, Author> authors = readAuthorsMap();
+		HashMap<Integer, Author> authors = readAuthorsMap();
 		authors.put(author.getAuthorId(),author);
 		saveToStorage(StorageType.AUTHORS,authors);
 	}
 
 	//  ##### CHECKOUT RECORD
 	@SuppressWarnings("unchecked")
-	public HashMap<String, CheckoutRecord> readCheckoutRecordMap() {
+	public HashMap<Integer, CheckoutRecord> readCheckoutRecordMap() {
 		//Returns a Map with name/value pairs being
 		//   memberId -> CheckoutRecord
-		return (HashMap<String, CheckoutRecord>)readFromStorage(StorageType.CHECKOUTRECORDS);
+		return (HashMap<Integer, CheckoutRecord>)readFromStorage(StorageType.CHECKOUTRECORDS);
 	}
 
 	@Override
 	public void addCheckoutRecord(CheckoutRecord checkoutRecord) {
-		HashMap<String, CheckoutRecord> books = readCheckoutRecordMap();
+		HashMap<Integer, CheckoutRecord> books = readCheckoutRecordMap();
 		books.put(checkoutRecord.getMemberId(),checkoutRecord);
 		saveToStorage(StorageType.CHECKOUTRECORDS,books);
 	}
@@ -108,25 +108,25 @@ public class DataAccessFacade implements DataAccess {
 	}
 
 	static void loadUserMap(List<User> userList) {
-		HashMap<String, User> users = new HashMap<String, User>();
+		HashMap<Integer, User> users = new HashMap<Integer, User>();
 		userList.forEach(user -> users.put(user.getId(), user));
 		saveToStorage(StorageType.USERS, users);
 	}
  
 	static void loadMemberMap(List<LibraryMember> memberList) {
-		HashMap<String, LibraryMember> members = new HashMap<String, LibraryMember>();
+		HashMap<Integer, LibraryMember> members = new HashMap<Integer, LibraryMember>();
 		memberList.forEach(member -> members.put(member.getMemberId(), member));
 		saveToStorage(StorageType.MEMBERS, members);
 	}
 
 	static void loadAuthorMap(List<Author> authorsList) {
-		HashMap<String, Author> authors = new HashMap<String, Author>();
+		HashMap<Integer, Author> authors = new HashMap<Integer, Author>();
 		authorsList.forEach(author -> authors.put(author.getAuthorId(), author));
 		saveToStorage(StorageType.AUTHORS, authors);
 	}
 
 	static void loadCheckoutRecord(List<CheckoutRecord> recordList){
-		HashMap<String, CheckoutRecord> records = new HashMap<String, CheckoutRecord>();
+		HashMap<Integer, CheckoutRecord> records = new HashMap<Integer, CheckoutRecord>();
 		recordList.forEach(record -> records.put(record.getMemberId(), record));
 		saveToStorage(StorageType.CHECKOUTRECORDS, records);
 	}
