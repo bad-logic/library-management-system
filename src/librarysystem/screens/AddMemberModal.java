@@ -12,9 +12,9 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
 
-public class MemberScreen extends JFrame {
+public class AddMemberModal extends JFrame {
 
-	public final static MemberScreen INSTANCE = new MemberScreen();
+	public final static AddMemberModal INSTANCE = new AddMemberModal();
 	private static final long serialVersionUID = 1L;
 	private JTextField iFirstName;
 	private JTextField ilastName;
@@ -29,7 +29,7 @@ public class MemberScreen extends JFrame {
 	Color defaultBorderColor = Color.WHITE;
 	Color errorBorderColor = Color.red;
 
-	private MemberScreen(){
+	private AddMemberModal(){
 //		init();
 	}
 
@@ -206,7 +206,7 @@ public class MemberScreen extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					MemberScreen frame = new MemberScreen();
+					AddMemberModal frame = new AddMemberModal();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
