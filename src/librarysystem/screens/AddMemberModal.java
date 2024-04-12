@@ -1,6 +1,7 @@
 package librarysystem.screens;
 
 import business.SystemController;
+import business.ValidationException;
 import librarysystem.Util;
 
 import javax.swing.*;
@@ -35,49 +36,39 @@ public class AddMemberModal extends JFrame {
 		this.controller = new SystemController();
 	}
 
-	private boolean setInputError(String value,JTextField field){
-		boolean isErrorSet = false;
+	private void validateInputField(String key, String value,JTextField field) throws ValidationException{
 		if(value == null || value.isEmpty() || value.isBlank()) {
-			isErrorSet = true;
-			field.setBorder(new LineBorder(Util.ERROR_MESSAGE_COLOR,1));
-			field.requestFocus();
+//			field.setBorder(new LineBorder(Util.ERROR_MESSAGE_COLOR,1));
+//			field.requestFocus();
+			throw new ValidationException(key + " is empty", field);
 		}
-		field.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyTyped(KeyEvent e) {
-				field.setBorder(new LineBorder(Util.BORDER_COLOR,1));
-			}
-		});
-		return isErrorSet;
+
+//		field.addKeyListener(new KeyAdapter() {
+//			@Override
+//			public void keyTyped(KeyEvent e) {
+//				field.setBorder(new LineBorder(Util.BORDER_COLOR,1));
+//			}
+//		});
 	}
 
-	private boolean setInputError(String value, JTextField field, boolean parseInteger) {
-		boolean isErrorSet = setInputError(value,field);
-		if(!isErrorSet) {
-			try {
-				Integer.parseInt(value);
-			}catch(NumberFormatException ex) {
-				isErrorSet = true;
-				field.setBorder(new LineBorder(Util.ERROR_MESSAGE_COLOR,1));
-			}
+	private void validateInputField(String key,String value, JTextField field, boolean parseInteger)throws ValidationException {
+		try {
+			validateInputField(key,value, field);
+			Integer.parseInt(value);
+		} catch(NumberFormatException ex) {
+//			field.setBorder(new LineBorder(Util.ERROR_MESSAGE_COLOR,1));
+			throw new ValidationException(key + " must be a number",field);
 		}
-
-		return isErrorSet;
 	}
 
-	private boolean setContactError(String value, JTextField field){
-		boolean isErrorSet = setInputError(value,field);
-		if(!isErrorSet) {
-			Pattern pattern = Pattern.compile("\\b\\d{3}-?\\d{3}-?\\d{4}\\b");
-			Matcher matcher = pattern.matcher(value);
+	private void validateContactInputField(String key, String value, JTextField field) throws ValidationException {
+		validateInputField(key,value, field);
+		String pattern = "\\d{10}|(?:\\d{3}-){2}\\d{4}|\\(\\d{3}\\)\\d{3}-?\\d{4}";
 
-			if(!matcher.find()){
-				isErrorSet = true;
-				field.setBorder(new LineBorder(Util.ERROR_MESSAGE_COLOR,1));
-			}
+		if(!value.matches(pattern)){
+//			field.setBorder(new LineBorder(Util.ERROR_MESSAGE_COLOR,1));
+			throw new ValidationException(key + " must be in a valid 10 digit format",field);
 		}
-		return isErrorSet;
-
 	}
 
 	private void setEventListener() {
@@ -92,23 +83,34 @@ public class AddMemberModal extends JFrame {
 			String street = iStreet.getText();
 			String city = iCity.getText();
 			String zip = iZipCode.getText();
-			if(
-					setInputError(fName,iFirstName) ||
-					setInputError(lName,ilastName) ||
-					setContactError(contact,iContact) ||
-					setInputError(street,iStreet) ||
-					setInputError(city,iCity) ||
-					setInputError(zip,iZipCode,true)
-			){
-				JOptionPane.showMessageDialog(saveButton,"Invalid Data");
-			}else{
-				String state = String.valueOf(iState.getSelectedItem());
-				this.controller.createMember(fName,lName,contact,street,city,state,Integer.parseInt(zip));
-				// close the modal
-				this.dispose();
+
+			try{
+
+				validateInputField("first name",fName,iFirstName);
+				validateInputField("last name",lName,ilastName);
+				validateContactInputField("contact",contact,iContact);
+				validateInputField("street",street,iStreet);
+				validateInputField("city",city,iCity);
+				validateInputField("zipcode",zip,iZipCode,true);
+
+			}catch(ValidationException ex){
+				JTextField field = ex.getField();
+				field.setBorder(new LineBorder(Util.ERROR_MESSAGE_COLOR,1));
+				field.requestFocus();
+				field.addKeyListener(new KeyAdapter() {
+					@Override
+					public void keyTyped(KeyEvent e) {
+						field.setBorder(new LineBorder(Util.BORDER_COLOR,1));
+					}
+				});
+				JOptionPane.showMessageDialog(saveButton,ex.getMessage());
+				return;
 			}
 
-
+			String state = String.valueOf(iState.getSelectedItem());
+			this.controller.createMember(fName,lName,contact,street,city,state,Integer.parseInt(zip));
+			// close the modal
+			this.dispose();
 		});
 		
 	}
