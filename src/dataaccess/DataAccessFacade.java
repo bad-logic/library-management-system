@@ -43,7 +43,7 @@ public class DataAccessFacade implements DataAccess {
 	}
 
 	@Override
-	public void saveNewMember(LibraryMember member) {
+	public void addMember(LibraryMember member) {
 		HashMap<String, LibraryMember> mems = readMemberMap();
 		String memberId = member.getMemberId();
 		mems.put(memberId, member);
@@ -60,7 +60,7 @@ public class DataAccessFacade implements DataAccess {
 	}
 
 	@Override
-	public void saveNewBook(Book book) {
+	public void addBook(Book book) {
 		HashMap<String, Book> books = readBooksMap();
 		books.put(book.getIsbn(),book);
 		saveToStorage(StorageType.BOOKS,books);
@@ -92,7 +92,7 @@ public class DataAccessFacade implements DataAccess {
 	}
 
 	@Override
-	public void saveCheckoutRecord(CheckoutRecord checkoutRecord) {
+	public void addCheckoutRecord(CheckoutRecord checkoutRecord) {
 		HashMap<String, CheckoutRecord> books = readCheckoutRecordMap();
 		books.put(checkoutRecord.getMemberId(),checkoutRecord);
 		saveToStorage(StorageType.CHECKOUTRECORDS,books);
