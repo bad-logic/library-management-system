@@ -82,12 +82,10 @@ public class Seeder {
 			}
 		};
 		// add copies
-		allBooks.get(0).addCopy();
-		allBooks.get(0).addCopy();
-		allBooks.get(1).addCopy();
-		allBooks.get(3).addCopy();
-		allBooks.get(2).addCopy();
-		allBooks.get(2).addCopy();
+		allBooks.get(0).addCopy(2);
+		allBooks.get(1).addCopy(1);
+		allBooks.get(3).addCopy(1);
+		allBooks.get(2).addCopy(2);
 		return allBooks;
 	}
 
@@ -95,7 +93,7 @@ public class Seeder {
 		ArrayList<CheckoutRecord> checkoutRecord = new ArrayList<CheckoutRecord>();
 		checkoutRecord.add(new CheckoutRecord(members.get(0),books.get(0)));
 		checkoutRecord.add(new CheckoutRecord(members.get(1),books.get(1)));
-		checkoutRecord.getFirst().addRecord(books.get(3));
+		checkoutRecord.get(0).addRecord(books.get(3));
 		return checkoutRecord;
 	}
 
