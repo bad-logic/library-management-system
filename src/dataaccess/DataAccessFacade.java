@@ -14,15 +14,13 @@ import business.LibraryMember;
 public class DataAccessFacade implements DataAccess {
 	
 	enum StorageType {
-		BOOKS, MEMBERS, USERS, CHECKOUTRECORDS, AUTHORS;
+		BOOKS, MEMBERS, USERS, AUTHORS;
 	}
 
 	public static final String OUTPUT_DIR = String.join(
 			File.separator,
 			new String[]{System.getProperty("user.dir"),"src","dataaccess","storage"}
 	);
-	
-	public static final String DATE_PATTERN = "MM/dd/yyyy";
 
 	// ##### PRIVILEGED USERS
 	@SuppressWarnings("unchecked")
@@ -82,21 +80,6 @@ public class DataAccessFacade implements DataAccess {
 		authors.put(author.getAuthorId(),author);
 		saveToStorage(StorageType.AUTHORS,authors);
 	}
-
-	//  ##### CHECKOUT RECORD
-	@SuppressWarnings("unchecked")
-	public HashMap<Integer, CheckoutRecord> readCheckoutRecordMap() {
-		//Returns a Map with name/value pairs being
-		//   memberId -> CheckoutRecord
-		return (HashMap<Integer, CheckoutRecord>)readFromStorage(StorageType.CHECKOUTRECORDS);
-	}
-
-	@Override
-	public void addCheckoutRecord(CheckoutRecord checkoutRecord) {
-		HashMap<Integer, CheckoutRecord> books = readCheckoutRecordMap();
-		books.put(checkoutRecord.getMemberId(),checkoutRecord);
-		saveToStorage(StorageType.CHECKOUTRECORDS,books);
-	}
 	
 	/////load methods - these place test data into the storage area
 	///// - used just once at startup
@@ -123,12 +106,6 @@ public class DataAccessFacade implements DataAccess {
 		HashMap<Integer, Author> authors = new HashMap<Integer, Author>();
 		authorsList.forEach(author -> authors.put(author.getAuthorId(), author));
 		saveToStorage(StorageType.AUTHORS, authors);
-	}
-
-	static void loadCheckoutRecord(List<CheckoutRecord> recordList){
-		HashMap<Integer, CheckoutRecord> records = new HashMap<Integer, CheckoutRecord>();
-		recordList.forEach(record -> records.put(record.getMemberId(), record));
-		saveToStorage(StorageType.CHECKOUTRECORDS, records);
 	}
 
 	static Object readFromStorage(StorageType type) {
