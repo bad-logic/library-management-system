@@ -1,6 +1,6 @@
 
 #### Populate with some seed data
-- Run Seeder [File](/src/dataaccess/Seeder) .
+- Run Seeder [File](/src/dataaccess/Seeder.java) .
 
 
 ### USERS
