@@ -11,6 +11,8 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 public class AddMemberModal extends JFrame {
@@ -28,9 +30,6 @@ public class AddMemberModal extends JFrame {
 	private JButton cancelButton;
 
 	private SystemController controller;
-	
-	Color defaultBorderColor = Color.WHITE;
-	Color errorBorderColor = Color.red;
 
 	private AddMemberModal(){
 		this.controller = new SystemController();
@@ -40,12 +39,13 @@ public class AddMemberModal extends JFrame {
 		boolean isErrorSet = false;
 		if(value == null || value.isEmpty() || value.isBlank()) {
 			isErrorSet = true;
-			field.setBorder(new LineBorder(errorBorderColor,1));
+			field.setBorder(new LineBorder(Util.ERROR_MESSAGE_COLOR,1));
+			field.requestFocus();
 		}
 		field.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {
-				field.setBorder(new LineBorder(defaultBorderColor,1));
+				field.setBorder(new LineBorder(Util.BORDER_COLOR,1));
 			}
 		});
 		return isErrorSet;
@@ -58,11 +58,26 @@ public class AddMemberModal extends JFrame {
 				Integer.parseInt(value);
 			}catch(NumberFormatException ex) {
 				isErrorSet = true;
-				field.setBorder(new LineBorder(errorBorderColor,1));
+				field.setBorder(new LineBorder(Util.ERROR_MESSAGE_COLOR,1));
 			}
 		}
 
 		return isErrorSet;
+	}
+
+	private boolean setContactError(String value, JTextField field){
+		boolean isErrorSet = setInputError(value,field);
+		if(!isErrorSet) {
+			Pattern pattern = Pattern.compile("\\b\\d{3}-?\\d{3}-?\\d{4}\\b");
+			Matcher matcher = pattern.matcher(value);
+
+			if(!matcher.find()){
+				isErrorSet = true;
+				field.setBorder(new LineBorder(Util.ERROR_MESSAGE_COLOR,1));
+			}
+		}
+		return isErrorSet;
+
 	}
 
 	private void setEventListener() {
@@ -80,16 +95,16 @@ public class AddMemberModal extends JFrame {
 			if(
 					setInputError(fName,iFirstName) ||
 					setInputError(lName,ilastName) ||
-					setInputError(contact,iContact) ||
+					setContactError(contact,iContact) ||
 					setInputError(street,iStreet) ||
 					setInputError(city,iCity) ||
 					setInputError(zip,iZipCode,true)
 			){
 				JOptionPane.showMessageDialog(saveButton,"Invalid Data");
 			}else{
-				//@TODO create Member using system controller
 				String state = String.valueOf(iState.getSelectedItem());
 				this.controller.createMember(fName,lName,contact,street,city,state,Integer.parseInt(zip));
+				// close the modal
 				this.dispose();
 			}
 
