@@ -17,11 +17,9 @@ public class AddCheckoutEntry extends JFrame {
 	private static final long serialVersionUID = 1L;
 
 	private SystemController controller;
-	private HashMap<String,Book> books;
 
 	private AddCheckoutEntry(){
 		this.controller = new SystemController();
-		this.books = this.controller.booksHashMap();
 	}
 
 	private String[] getMemberOptions(){
@@ -35,8 +33,9 @@ public class AddCheckoutEntry extends JFrame {
 	}
 
 	private String[] getBookOptions(){
-		String[] bookOptions = new String[this.books.size()];
-		Iterator<Book> it = this.books.values().iterator();
+		HashMap<String,Book> books = this.controller.booksHashMap();
+		String[] bookOptions = new String[books.size()];
+		Iterator<Book> it = books.values().iterator();
 		int count = 0;
 		while(it.hasNext()) {
 			Book book = it.next();
@@ -115,7 +114,7 @@ public class AddCheckoutEntry extends JFrame {
 
 			System.out.println("isbn: " +isbn + " memberId: " +memberId);
 
-			if(!this.books.get(isbn).isAvailable()){
+			if(!this.controller.booksHashMap().get(isbn).isAvailable()){
 				JOptionPane.showMessageDialog(this, "This book is not available for checkout");
 				return;
 			}

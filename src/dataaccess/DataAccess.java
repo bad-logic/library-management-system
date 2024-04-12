@@ -4,7 +4,6 @@ import java.util.HashMap;
 
 import business.Author;
 import business.Book;
-import business.CheckoutRecord;
 import business.LibraryMember;
 
 public interface DataAccess { 
