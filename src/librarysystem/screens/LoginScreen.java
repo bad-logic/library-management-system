@@ -62,7 +62,7 @@ public class LoginScreen extends JFrame implements LibWindow{
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(255, 254, 255));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-
+		this.setResizable(false);
 		setContentPane(contentPane);
 		
 		
@@ -115,6 +115,7 @@ public class LoginScreen extends JFrame implements LibWindow{
 					String password = new String(passwordField.getPassword());
 					new SystemController().login(userId, password);
 					LoginScreen.INSTANCE.setVisible(false);
+					Util.centerFrameOnDesktop(DashBoardScreen.INSTANCE);
 					DashBoardScreen.INSTANCE.setVisible(true);
 				}catch(LoginException ex) {
 					JOptionPane.showMessageDialog(btnNewButton,ex.getMessage());
