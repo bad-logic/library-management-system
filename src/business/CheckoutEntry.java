@@ -16,8 +16,24 @@ public class CheckoutEntry implements Serializable {
         this.dueDate = this.dateOfCheckout.plusDays(book.getMaxCheckoutLength());
     }
 
+    public Book getBook() {
+        return this.book;
+    }
+
+    public LocalDate   getDueDate(){
+        return this.dueDate;
+    }
+
+    public LocalDate getDateOfCheckout() {
+        return this.dateOfCheckout;
+    }
+
     public void setFine(double fine){
         this.fine = fine;
+    }
+
+    public double getFine(){
+        return this.fine;
     }
 
     public String toString(){

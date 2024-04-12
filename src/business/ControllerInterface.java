@@ -1,5 +1,6 @@
 package business;
 
+import java.util.HashMap;
 import java.util.List;
 
 public interface ControllerInterface {
@@ -9,8 +10,11 @@ public interface ControllerInterface {
 	public void createMember(String firstName, String lastName, String contact,String street, String city,String state, int zipCode);
 	public void createBook(String isbn, String title, int maxCheckoutLength, List<String> authorId);
 	public void createBookCopies(String isbn, int copyCount);
-	public void addCheckoutRecord(String isbn,String memberId);
+	public void addCheckoutRecord(String isbn,int memberId);
 	public List<Integer> allMemberIds();
 	public List<String> allBookIds();
+	public List<Book> allBooks();
+	public HashMap<String,Book> booksHashMap();
 	public List<Author> allAuthors();
+	public CheckoutRecord getMembersCheckoutRecord(int memberId);
 }
