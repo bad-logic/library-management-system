@@ -36,17 +36,8 @@ public class AddMemberModal extends JFrame {
 
 	private void validateInputField(String key, String value,JTextField field) throws ValidationException{
 		if(value == null || value.isEmpty() || value.isBlank()) {
-//			field.setBorder(new LineBorder(Util.ERROR_MESSAGE_COLOR,1));
-//			field.requestFocus();
 			throw new ValidationException(key + " is empty", field);
 		}
-
-//		field.addKeyListener(new KeyAdapter() {
-//			@Override
-//			public void keyTyped(KeyEvent e) {
-//				field.setBorder(new LineBorder(Util.BORDER_COLOR,1));
-//			}
-//		});
 	}
 
 	private void validateInputField(String key,String value, JTextField field, boolean parseInteger)throws ValidationException {
@@ -54,7 +45,6 @@ public class AddMemberModal extends JFrame {
 			validateInputField(key,value, field);
 			Integer.parseInt(value);
 		} catch(NumberFormatException ex) {
-//			field.setBorder(new LineBorder(Util.ERROR_MESSAGE_COLOR,1));
 			throw new ValidationException(key + " must be a number",field);
 		}
 	}
@@ -64,7 +54,6 @@ public class AddMemberModal extends JFrame {
 		String pattern = "\\d{10}|(?:\\d{3}-){2}\\d{4}|\\(\\d{3}\\)\\d{3}-?\\d{4}";
 
 		if(!value.matches(pattern)){
-//			field.setBorder(new LineBorder(Util.ERROR_MESSAGE_COLOR,1));
 			throw new ValidationException(key + " must be in a valid 10 digit format",field);
 		}
 	}

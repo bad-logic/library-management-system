@@ -70,6 +70,24 @@ public class SystemController implements ControllerInterface {
 		retval.addAll(da.readBooksMap().keySet());
 		return retval;
 	}
+
+	@Override
+	public List<Book> allBooks() {
+		DataAccess da = new DataAccessFacade();
+		List<Book> booksList = new ArrayList<>();
+		Iterator<Book> it= da.readBooksMap().values().iterator();
+		while(it.hasNext()) {
+			booksList.add(it.next());
+		}
+
+		return booksList;
+	}
+
+	@Override
+	public HashMap<String,Book> booksHashMap() {
+		DataAccess da = new DataAccessFacade();
+		return da.readBooksMap();
+	}
 	
 	@Override
 	public List<Author> allAuthors() {
@@ -80,7 +98,13 @@ public class SystemController implements ControllerInterface {
 		}
 		return ath;
 	}
-	
+
+	@Override
+	public CheckoutRecord getMembersCheckoutRecord(int memberId) {
+		LibraryMember rec = new DataAccessFacade().readMemberMap().get(memberId);
+		return rec.getCheckoutRecord();
+	}
+
 	@Override
 	public void createAuthor(String firstName, String lastName, String contact, String bio,String street, String city,String state, int zipCode) {
 		DataAccess da = new DataAccessFacade();
@@ -126,15 +150,27 @@ public class SystemController implements ControllerInterface {
 	}
 	
 	@Override
-	public void addCheckoutRecord(String isbn,String memberId) {
+	public void addCheckoutRecord(String isbn,int memberId) {
 		DataAccess da = new DataAccessFacade();
 		HashMap<Integer, LibraryMember> mem = da.readMemberMap();
 		HashMap<String,Book> books = da.readBooksMap();
 		if(mem.containsKey(memberId) && books.containsKey(isbn)) {
 			Book book = books.get(isbn);
 			LibraryMember memb = mem.get(memberId);
-			CheckoutRecord cr = memb.addCheckoutRecord(book);
-			da.addCheckoutRecord(cr);
+			memb.addCheckoutRecord(book);
+			// update the member with checkout record
+			da.addMember(memb);
+			// set isAvailable false to one of the copies of the book
+			// and update the book
+			int count = 0;
+			for (BookCopy b : book.getCopies()){
+				if(count>0) return;
+				if(b.isAvailable()){
+					b.changeAvailability();
+					count++;
+				}
+			}
+			da.addBook(book);
 		}
 	}
 	
