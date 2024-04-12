@@ -3,7 +3,6 @@ package librarysystem.screens;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
-import business.Author;
 import business.Book;
 import business.BookCopy;
 import business.SystemController;
@@ -17,6 +16,7 @@ import java.util.List;
 public class BookTab extends JPanel {
 	private SystemController controller;
 	private JPanel tablePanel;
+    private JTable table;
 	
 	 private static final String[] headers = new String[] {
 		        "ISBN","Title", "Checkout Length", "Copies", "Available"};
@@ -43,9 +43,12 @@ public class BookTab extends JPanel {
         }
         return rows;
     }
-    
-    void reload() {
-    	this.setTable();
+
+    private void reloadTable(){
+        table.setModel(new DefaultTableModel(
+                this.getTableRows(),
+                BookTab.headers
+        ));
     }
     
     void setTable(){
@@ -57,7 +60,7 @@ public class BookTab extends JPanel {
         scrollPane.setBounds(0, 0, 774, 422);
         tablePanel.add(scrollPane);
         System.out.println(this.getTableRows());
-        JTable table = new JTable();
+        table = new JTable();
         table.setModel(new DefaultTableModel(
                 this.getTableRows(),
                 this.headers
@@ -92,7 +95,7 @@ public class BookTab extends JPanel {
         });
 
         reloadButton.addActionListener((ActionEvent e) -> {
-                this.reload();
+                this.reloadTable();
         });
 
         this.setTable();

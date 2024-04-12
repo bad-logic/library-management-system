@@ -38,7 +38,6 @@ public class BookCheckoutTab extends JPanel {
     private Object[][] getTableRows(int memberId){
         CheckoutRecord record = this.controller.getMembersCheckoutRecord(memberId);
 
-        System.out.println(record);
         if(record == null){
             return new Object[0][0];
         }

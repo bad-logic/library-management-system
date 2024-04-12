@@ -166,12 +166,7 @@ public class SystemController implements ControllerInterface {
 		HashMap<String,Book> books = da.readBooksMap();
 		if(mem.containsKey(memberId) && books.containsKey(isbn)) {
 			Book book = books.get(isbn);
-			LibraryMember memb = mem.get(memberId);
-			memb.addCheckoutRecord(book);
-			// update the member with checkout record
-			da.addMember(memb);
 			// set isAvailable false to one of the copies of the book
-			// and update the book
 			int count = 0;
 			for (BookCopy b : book.getCopies()){
 				if(count>0) return;
@@ -180,7 +175,14 @@ public class SystemController implements ControllerInterface {
 					count++;
 				}
 			}
+
+			LibraryMember memb = mem.get(memberId);
+			memb.addCheckoutRecord(book);
+
+			// update the book
 			da.addBook(book);
+			// update the member with checkout record
+			da.addMember(memb);
 		}
 	}
 	
