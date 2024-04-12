@@ -37,4 +37,5 @@ bin/
 .settings/
 .idea/
 *.iml
+*.jar
 
