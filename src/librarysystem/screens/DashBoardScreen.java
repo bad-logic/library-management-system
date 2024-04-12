@@ -167,7 +167,8 @@ public class DashBoardScreen extends JFrame {
 		homePanel.setLayout(null);
 		
 		
-		
+
+		// MEMBER PANEL CONTENT
 		cards.add(memberPanel, "Member");
 		memberPanel.setLayout(null);
 		
@@ -175,7 +176,15 @@ public class DashBoardScreen extends JFrame {
 		addMemberButton.setBounds(654, 10, 130, 21);
 		addMemberButton.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		memberPanel.add(addMemberButton);
-		
+
+		addMemberButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				MemberScreen.INSTANCE.init();
+				MemberScreen.INSTANCE.setVisible(true);
+			}
+		});
+
 		JPanel formPanel = new JPanel();
 		formPanel.setBounds(10, 41, 774, 142);
 		memberPanel.add(formPanel);
