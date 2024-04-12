@@ -18,7 +18,7 @@ import business.LibraryMember;
 import business.SystemController;
 import dataaccess.DataAccessFacade;
 
-public class AuthorPanel {
+public class AuthorPanel_deprecated {
 	SystemController sc = new SystemController();
 	DataAccessFacade daf = new DataAccessFacade();
 	JTable tblAuthor;
