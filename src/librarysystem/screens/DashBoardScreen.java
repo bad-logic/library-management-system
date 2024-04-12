@@ -5,6 +5,11 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import business.SystemController;
+import dataaccess.Auth;
+import librarysystem.Util;
+
 import java.awt.Color;
 import javax.swing.JLabel;
 import java.awt.Font;
@@ -13,11 +18,12 @@ import javax.swing.ListSelectionModel;
 import javax.swing.AbstractListModel;
 import java.awt.CardLayout;
 import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 
 public class DashBoardScreen extends JFrame {
 	
-	public static final DashBoardScreen INSTANCE = new DashBoardScreen();
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JList linkList;
@@ -71,6 +77,17 @@ public class DashBoardScreen extends JFrame {
 		topPanel.add(mainLabel);
 		
 		JButton logoutButton = new JButton("Logout");
+		logoutButton.addActionListener((ActionEvent e) -> {
+				SystemController.currentAuth = null;
+				this.dispose();
+				LoginScreen loginScreen = new LoginScreen();
+            	loginScreen.setTitle("Library Application");
+            	loginScreen.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+            	loginScreen.init();
+                Util.centerFrameOnDesktop(loginScreen);
+                loginScreen.setVisible(true);
+		});
 		logoutButton.setForeground(new Color(255, 255, 255));
 		logoutButton.setBackground(new Color(255, 0, 0));
 		logoutButton.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -84,10 +101,13 @@ public class DashBoardScreen extends JFrame {
 		contentPane.add(leftPanel);
 		leftPanel.setLayout(null);
 		
+		
+		
 		linkList = new JList();
 		linkList.setFont(new Font("Tahoma", Font.BOLD, 14));
 		linkList.setModel(new AbstractListModel() {
-			String[] values = new String[] {"Home", "Member", "Author", "Book", "Checkout"};
+			
+			String[] values = getMenus();
 			public int getSize() {
 				return values.length;
 			}
@@ -118,9 +138,10 @@ public class DashBoardScreen extends JFrame {
 		memberTab.setLayout(null);
 
 		// AUTHOR TAB CONTENT
-		JPanel authorPanel = new AuthorTab();
-		authorPanel.setBackground(new Color(255, 255, 255));
-		authorPanel.setBounds(0, 0, 794, 625);
+		JPanel authorTab = new AuthorTab();
+		authorTab.setBackground(new Color(255, 255, 255));
+		authorTab.setBounds(0, 0, 794, 625);
+		authorTab.setLayout(null);
 
 		// BOOK TAB CONTENT
 		JPanel bookTab= new BookTab();
@@ -143,7 +164,7 @@ public class DashBoardScreen extends JFrame {
 		cards.add(homePanel, "Home");
 		cards.add(memberTab, "Member");
 		
-		cards.add(authorPanel, "Author");
+		cards.add(authorTab, "Author");
 		cards.add(bookTab, "Book");
 		cards.add(checkoutHistoryPanel, "Checkout");
 		
@@ -155,5 +176,19 @@ public class DashBoardScreen extends JFrame {
 			CardLayout cl = (CardLayout) (cards.getLayout());
 			cl.show(cards, value);
 		});
+	}
+	
+	private String[] getMenus() {
+		Auth[] auth= SystemController.currentAuth;
+		
+		if (auth.length == 2) {
+			return new String[] {"Home", "Member", "Author", "Book", "Checkout"};
+		}
+		
+		if(auth[0] == Auth.LIBRARIAN) {
+			return new String[] {"Home", "Checkout"};
+		}
+		
+		return new String[] {"Home", "Member", "Author", "Book"}; 
 	}
 }

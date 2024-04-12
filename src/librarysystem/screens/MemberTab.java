@@ -50,7 +50,11 @@ public class MemberTab extends JPanel {
         scrollPane.setBounds(0, 0, 774, 422);
         tablePanel.add(scrollPane);
 
-        JTable table = new JTable();
+        JTable table = new JTable() {
+        	public boolean editCellAt(int row, int column, java.util.EventObject e) {
+                return false;
+             }
+        };
         table.setModel(new DefaultTableModel(
                 this.getTableRows(),
                 MemberTab.headers
