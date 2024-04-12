@@ -9,12 +9,13 @@ public class Main {
         public static void main(String[] args) {
             EventQueue.invokeLater(() ->
             {
-                LoginScreen.INSTANCE.setTitle("Library Application");
-                LoginScreen.INSTANCE.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            	LoginScreen loginScreen = new LoginScreen();
+            	loginScreen.setTitle("Library Application");
+            	loginScreen.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-                LoginScreen.INSTANCE.init();
-                centerFrameOnDesktop(LoginScreen.INSTANCE);
-                LoginScreen.INSTANCE.setVisible(true);
+            	loginScreen.init();
+                centerFrameOnDesktop(loginScreen);
+                loginScreen.setVisible(true);
             });
         }
 

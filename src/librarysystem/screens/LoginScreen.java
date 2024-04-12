@@ -20,7 +20,6 @@ import java.awt.Font;
 import javax.swing.SwingConstants;
 import javax.swing.JTextField;
 import javax.swing.JButton;
-import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.border.LineBorder;
 
@@ -33,26 +32,12 @@ public class LoginScreen extends JFrame {
 	public final static LoginScreen INSTANCE = new LoginScreen();
 	
 	private static final long serialVersionUID = 1L;
-	
-//	private boolean isInitialized = false;
 
 	private JTextField emailTextField;
 	private JPasswordField passwordField;
 	
-	private LoginScreen() {
-//		init();
-	}
+	public LoginScreen() {}
 
-//	@Override
-//	public boolean isInitialized() {
-//		return isInitialized;
-//	}
-//
-//	@Override
-//	public void isInitialized(boolean val) {
-//		isInitialized = val;
-//	}
-//
 	public void init() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 753, 548);
@@ -106,19 +91,18 @@ public class LoginScreen extends JFrame {
 		btnNewButton.setBackground(new Color(170, 121, 65));
 		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 22));
 		
-		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+		btnNewButton.addActionListener((ActionEvent e) ->{
 				try {
 					String userId = emailTextField.getText();
-					String password = new String(passwordField.getPassword());
-					new SystemController().login(userId, password);
-					LoginScreen.INSTANCE.setVisible(false);
-					Util.centerFrameOnDesktop(DashBoardScreen.INSTANCE);
-					DashBoardScreen.INSTANCE.setVisible(true);
+					String user_password = new String(passwordField.getPassword());
+					new SystemController().login(userId, user_password);
+					this.dispose();
+					DashBoardScreen dashboard= new DashBoardScreen();
+					Util.centerFrameOnDesktop(dashboard);
+					dashboard.setVisible(true);
 				}catch(LoginException ex) {
 					JOptionPane.showMessageDialog(btnNewButton,ex.getMessage());
 				}
-			}
 		});
 		contentPane.setLayout(null);
 		contentPane.add(layout);
