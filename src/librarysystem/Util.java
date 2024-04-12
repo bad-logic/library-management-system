@@ -12,7 +12,7 @@ import javax.swing.JLabel;
 public class Util {
 	public static final Color BORDER_COLOR = Color.WHITE;
 	public static final Color DARK_BLUE = Color.BLUE.darker();
-	public static final Color ERROR_MESSAGE_COLOR = Color.RED.darker(); //dark red
+	public static final Color ERROR_MESSAGE_COLOR = Color.RED; 
 	public static final Color INFO_MESSAGE_COLOR = new Color(24, 98, 19); //dark green
 	public static final Color LINK_AVAILABLE = DARK_BLUE;
 	public static final Color LINK_NOT_AVAILABLE = Color.gray;

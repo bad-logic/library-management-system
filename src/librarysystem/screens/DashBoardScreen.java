@@ -52,6 +52,7 @@ public class DashBoardScreen extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 984, 752);
 		contentPane = new JPanel();
+		this.setResizable(false);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		setContentPane(contentPane);
