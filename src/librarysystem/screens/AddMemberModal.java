@@ -1,5 +1,6 @@
 package librarysystem.screens;
 
+import business.SystemController;
 import librarysystem.Util;
 
 import javax.swing.*;
@@ -25,12 +26,14 @@ public class AddMemberModal extends JFrame {
 	private JComboBox<String> iState;
 	private JButton saveButton;
 	private JButton cancelButton;
+
+	private SystemController controller;
 	
 	Color defaultBorderColor = Color.WHITE;
 	Color errorBorderColor = Color.red;
 
 	private AddMemberModal(){
-//		init();
+		this.controller = new SystemController();
 	}
 
 	private boolean setInputError(String value,JTextField field){
@@ -64,7 +67,6 @@ public class AddMemberModal extends JFrame {
 
 	private void setEventListener() {
 		cancelButton.addActionListener((ActionEvent e)-> {
-//			this.setVisible(false);
 			this.dispose();
 		});
 		
@@ -78,7 +80,7 @@ public class AddMemberModal extends JFrame {
 			if(
 					setInputError(fName,iFirstName) ||
 					setInputError(lName,ilastName) ||
-					setInputError(contact,iContact,true) ||
+					setInputError(contact,iContact) ||
 					setInputError(street,iStreet) ||
 					setInputError(city,iCity) ||
 					setInputError(zip,iZipCode,true)
@@ -87,14 +89,14 @@ public class AddMemberModal extends JFrame {
 			}else{
 				//@TODO create Member using system controller
 				String state = String.valueOf(iState.getSelectedItem());
+				this.controller.createMember(fName,lName,contact,street,city,state,Integer.parseInt(zip));
+				this.dispose();
 			}
 
 
 		});
 		
 	}
-
-
 
 	/**
 	 * Create the frame.
