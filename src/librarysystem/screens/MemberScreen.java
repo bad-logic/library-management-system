@@ -2,31 +2,19 @@ package librarysystem.screens;
 
 import librarysystem.Util;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
+import javax.swing.*;
 
-import javax.swing.JLabel;
-import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
-import javax.swing.plaf.basic.BasicButtonUI;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JComboBox;
-import javax.swing.JComponent;
 
 import java.awt.*;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
-import javax.swing.JButton;
-import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import java.awt.event.InputMethodListener;
-import java.awt.event.InputMethodEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
 
 public class MemberScreen extends JFrame {
 
+	public final static MemberScreen INSTANCE = new MemberScreen();
 	private static final long serialVersionUID = 1L;
 	private JTextField iFirstName;
 	private JTextField ilastName;
@@ -41,22 +29,40 @@ public class MemberScreen extends JFrame {
 	Color defaultBorderColor = Color.WHITE;
 	Color errorBorderColor = Color.red;
 
-	
-	private void setEventListener() {	
-		for(JTextField f: new JTextField[] {iFirstName,ilastName,iContact,iStreet,iCity,iZipCode,}) {
-			f.addKeyListener(new KeyAdapter() {
-				@Override
-				public void keyTyped(KeyEvent e) {
-					iFirstName.setBorder(new LineBorder(defaultBorderColor,1));
-					ilastName.setBorder(new LineBorder(defaultBorderColor,1));
-					iContact.setBorder(new LineBorder(defaultBorderColor,1));
-					iStreet.setBorder(new LineBorder(defaultBorderColor,1));
-					iCity.setBorder(new LineBorder(defaultBorderColor,1));
-					iZipCode.setBorder(new LineBorder(defaultBorderColor,1));
-				}
-			});
+	private MemberScreen(){
+//		init();
+	}
+
+	private boolean setInputError(String value,JTextField field){
+		boolean isErrorSet = false;
+		if(value == null || value.isEmpty() || value.isBlank()) {
+			isErrorSet = true;
+			field.setBorder(new LineBorder(errorBorderColor,1));
 		}
-		
+		field.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				field.setBorder(new LineBorder(defaultBorderColor,1));
+			}
+		});
+		return isErrorSet;
+	}
+
+	private boolean setInputError(String value, JTextField field, boolean parseInteger) {
+		boolean isErrorSet = setInputError(value,field);
+		if(!isErrorSet) {
+			try {
+				Integer.parseInt(value);
+			}catch(NumberFormatException ex) {
+				isErrorSet = true;
+				field.setBorder(new LineBorder(errorBorderColor,1));
+			}
+		}
+
+		return isErrorSet;
+	}
+
+	private void setEventListener() {
 		cancelButton.addActionListener((ActionEvent e)-> {
 //			this.setVisible(false);
 			this.dispose();
@@ -69,47 +75,31 @@ public class MemberScreen extends JFrame {
 			String street = iStreet.getText();
 			String city = iCity.getText();
 			String zip = iZipCode.getText();
-			String state = String.valueOf(iState.getSelectedItem());
-			
-			
-			if(fName == null || fName.isEmpty() || fName.isBlank()) {
-				iFirstName.setBorder(new LineBorder(errorBorderColor,1));
+			if(
+					setInputError(fName,iFirstName) ||
+					setInputError(lName,ilastName) ||
+					setInputError(contact,iContact,true) ||
+					setInputError(street,iStreet) ||
+					setInputError(city,iCity) ||
+					setInputError(zip,iZipCode,true)
+			){
+				JOptionPane.showMessageDialog(saveButton,"Invalid Data");
+			}else{
+				//@TODO create Member using system controller
+				String state = String.valueOf(iState.getSelectedItem());
 			}
-			if(lName == null || lName.isEmpty() || lName.isBlank()) {
-				ilastName.setBorder(new LineBorder(errorBorderColor,1));
-			}
-			if(contact == null || contact.isEmpty() || contact.isBlank()) {
-				iContact.setBorder(new LineBorder(errorBorderColor,1));
-			}
-			try {
-				Integer.parseInt(contact);
-			}catch(NumberFormatException ex) {
-				iContact.setBorder(new LineBorder(errorBorderColor,1));
-			}
-			if(street == null || street.isEmpty() || street.isBlank()) {
-				iStreet.setBorder(new LineBorder(errorBorderColor,1));
-			}
-			if(city == null || city.isEmpty() || city.isBlank()) {
-				iCity.setBorder(new LineBorder(errorBorderColor,1));
-			}
-			if(zip == null || zip.isEmpty() || zip.isBlank()) {
-				iZipCode.setBorder(new LineBorder(errorBorderColor,1));
-			}
-			if(state == null || state.isEmpty() || state.isBlank()) {
-				iState.setBorder(new LineBorder(errorBorderColor,1));
-			}
-			
-			//@TODO create Member using system controller
+
+
 		});
 		
 	}
 
+
+
 	/**
 	 * Create the frame.
 	 */
-	public MemberScreen() {
-		
-		
+	public void init() {
 		this.setResizable(false);
 		this.setLocationRelativeTo(null);
 		
@@ -210,8 +200,6 @@ public class MemberScreen extends JFrame {
 		contentPane.add(saveButton);
 		
 		this.setEventListener();
-		
-		
 	}
 
 	public static void main(String[] args) {
