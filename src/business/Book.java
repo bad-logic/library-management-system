@@ -45,10 +45,12 @@ final public class Book implements Serializable {
 		
 	}
 	
-	public void addCopy() {
-		BookCopy[] newArr = new BookCopy[copies.length + 1];
+	public void addCopy(int count) {
+		BookCopy[] newArr = new BookCopy[copies.length + count];
 		System.arraycopy(copies, 0, newArr, 0, copies.length);
-		newArr[copies.length] = new BookCopy(this, copies.length +1, true);
+		for(int i=copies.length;i<copies.length + count;i++) {
+			newArr[i] = new BookCopy(this, i + 1, true);
+		}
 		copies = newArr;
 	}
 	
@@ -109,12 +111,9 @@ final public class Book implements Serializable {
 		}
 		return null;
 	}
+
 	public int getMaxCheckoutLength() {
 		return maxCheckoutLength;
 	}
-
-	
-	
-	
 	
 }
