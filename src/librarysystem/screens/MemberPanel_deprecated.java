@@ -15,12 +15,10 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
-import business.Address;
 import business.LibraryMember;
 import business.SystemController;
-import dataaccess.DataAccessFacade;
 
-public class MemberPanel {
+public class MemberPanel_deprecated {
 	SystemController sc = new SystemController();
 
 	JTable tblMember;

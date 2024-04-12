@@ -1,5 +1,6 @@
 package librarysystem.screens;
 
+import business.SystemController;
 import librarysystem.Util;
 
 import javax.swing.*;
@@ -12,9 +13,9 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
 
-public class MemberScreen extends JFrame {
+public class AddMemberModal extends JFrame {
 
-	public final static MemberScreen INSTANCE = new MemberScreen();
+	public final static AddMemberModal INSTANCE = new AddMemberModal();
 	private static final long serialVersionUID = 1L;
 	private JTextField iFirstName;
 	private JTextField ilastName;
@@ -25,12 +26,14 @@ public class MemberScreen extends JFrame {
 	private JComboBox<String> iState;
 	private JButton saveButton;
 	private JButton cancelButton;
+
+	private SystemController controller;
 	
 	Color defaultBorderColor = Color.WHITE;
 	Color errorBorderColor = Color.red;
 
-	private MemberScreen(){
-//		init();
+	private AddMemberModal(){
+		this.controller = new SystemController();
 	}
 
 	private boolean setInputError(String value,JTextField field){
@@ -64,7 +67,6 @@ public class MemberScreen extends JFrame {
 
 	private void setEventListener() {
 		cancelButton.addActionListener((ActionEvent e)-> {
-//			this.setVisible(false);
 			this.dispose();
 		});
 		
@@ -78,7 +80,7 @@ public class MemberScreen extends JFrame {
 			if(
 					setInputError(fName,iFirstName) ||
 					setInputError(lName,ilastName) ||
-					setInputError(contact,iContact,true) ||
+					setInputError(contact,iContact) ||
 					setInputError(street,iStreet) ||
 					setInputError(city,iCity) ||
 					setInputError(zip,iZipCode,true)
@@ -87,14 +89,14 @@ public class MemberScreen extends JFrame {
 			}else{
 				//@TODO create Member using system controller
 				String state = String.valueOf(iState.getSelectedItem());
+				this.controller.createMember(fName,lName,contact,street,city,state,Integer.parseInt(zip));
+				this.dispose();
 			}
 
 
 		});
 		
 	}
-
-
 
 	/**
 	 * Create the frame.
@@ -206,7 +208,7 @@ public class MemberScreen extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					MemberScreen frame = new MemberScreen();
+					AddMemberModal frame = new AddMemberModal();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();

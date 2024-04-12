@@ -2,7 +2,6 @@ package librarysystem.screens;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 
 import librarysystem.LibWindow;
  
@@ -10,27 +9,11 @@ import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import javax.swing.JLabel;
 import javax.swing.JSplitPane;
-import javax.swing.JTable;
 import javax.swing.JList;
-import javax.swing.JButton;
 
-import java.awt.Font;
-import java.util.Arrays;
-import java.util.List;
-
-import javax.swing.JTextField;
-import javax.swing.ListSelectionModel;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
-import javax.swing.table.DefaultTableModel;
-
-import business.ControllerInterface;
-import business.LibraryMember;
-import business.SystemController;
- 
-public class DashBoardScreenPast extends JFrame implements LibWindow {
+public class DashBoardScreenPast_deprecated extends JFrame implements LibWindow {
 	
-	public static final DashBoardScreenPast INSTANCE = new DashBoardScreenPast();
+	public static final DashBoardScreenPast_deprecated INSTANCE = new DashBoardScreenPast_deprecated();
 	private static final long serialVersionUID = 1L;
 	
 	private boolean isInitialized = false;
@@ -41,7 +24,7 @@ public class DashBoardScreenPast extends JFrame implements LibWindow {
 	JPanel buttonBar;
 	
 	
-	public DashBoardScreenPast() {
+	public DashBoardScreenPast_deprecated() {
 		init();
 	}
 	
@@ -95,7 +78,7 @@ public class DashBoardScreenPast extends JFrame implements LibWindow {
 		cards = new JPanel(new CardLayout());
 		cards.add(home, "Home");
 		cards.add(member, "Member");
-		new MemberPanel().memberView(member);
+		new MemberPanel_deprecated().memberView(member);
 		cards.add(author, "Author");
 		cards.add(book, "Book");
 		
