@@ -25,6 +25,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.JScrollPane;
 
  
 public class DashBoardScreen extends JFrame {
@@ -41,6 +42,7 @@ public class DashBoardScreen extends JFrame {
 	private JTextField cityField;
 	private JTextField stateField;
 	private JTextField zipField;
+	private JTable table;
 
 	public DashBoardScreen() {
 		init();
@@ -81,6 +83,19 @@ public class DashBoardScreen extends JFrame {
 		topPanel.setBackground(new Color(233, 185, 22));
 		contentPane.add(topPanel);
 		topPanel.setLayout(null);
+		
+		JLabel mainLabel = new JLabel("MIU Library");
+		mainLabel.setBounds(375, 10, 196, 40);
+		mainLabel.setForeground(new Color(0, 0, 0));
+		mainLabel.setFont(new Font("Tahoma", Font.BOLD, 32));
+		topPanel.add(mainLabel);
+		
+		JButton logoutButton = new JButton("Logout");
+		logoutButton.setForeground(new Color(255, 255, 255));
+		logoutButton.setBackground(new Color(255, 0, 0));
+		logoutButton.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		logoutButton.setBounds(866, 20, 85, 21);
+		topPanel.add(logoutButton);
 		
 		// JLabel dashboardTitle = DefaultComponentFactory.getInstance().createTitle("MIU Library");
 		// dashboardTitle.setFont(new Font("Tahoma", Font.BOLD, 20));
@@ -247,6 +262,28 @@ public class DashBoardScreen extends JFrame {
 		JButton deleteButton = new JButton("Delete");
 		deleteButton.setBounds(396, 111, 85, 21);
 		formPanel.add(deleteButton);		
+		
+		JPanel panel = new JPanel();
+		panel.setBounds(10, 193, 774, 422);
+		memberPanel.add(panel);
+		panel.setLayout(null);
+		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(0, 0, 774, 422);
+		panel.add(scrollPane);
+		
+		table = new JTable();
+		table.setModel(new DefaultTableModel(
+			new Object[][] {
+				{"Folah Bademoshi", "641-122-122", "Fairfield", "101"},
+				{"Roshan Bhattarai", "641-122-122", "Fairfield", "102"},
+				{"Kush Raj Rimal", "641-122-122", "Fairfield", "103"},
+			},
+			new String[] {
+				"Name", "Mobile", "Address", "MemberID"
+			}
+		));
+		scrollPane.setViewportView(table);
 		
 		cards.add(authorPanel, "Author");
 		cards.add(bookPanel, "Book");
