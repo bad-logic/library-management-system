@@ -6,7 +6,7 @@ import java.awt.Font;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import com.jgoodies.forms.factories.DefaultComponentFactory;
+
 
 public class HomePanel {
 	public void homeView(JPanel homePanel) {
@@ -22,7 +22,7 @@ public class HomePanel {
 		memberSubLabel.setBounds(60, 121, 104, 19);
 		memberStatPanel.add(memberSubLabel);
 		
-		JLabel memberMainTitle = DefaultComponentFactory.getInstance().createTitle("9999");
+		JLabel memberMainTitle = new JLabel("9999");
 		memberMainTitle.setFont(new Font("Tahoma", Font.BOLD, 40));
 		memberMainTitle.setBackground(new Color(240, 240, 240));
 		memberMainTitle.setForeground(new Color(255, 255, 255));
@@ -41,7 +41,7 @@ public class HomePanel {
 		authorSubLabel.setFont(new Font("Tahoma", Font.BOLD, 20));
 		authorStatPanel.add(authorSubLabel);
 		
-		JLabel authorMainTitle = DefaultComponentFactory.getInstance().createTitle("9999");
+		JLabel authorMainTitle = new JLabel("9999");
 		authorMainTitle.setForeground(new Color(255, 255, 255));
 		authorMainTitle.setFont(new Font("Tahoma", Font.BOLD, 40));
 		authorMainTitle.setBounds(66, 51, 102, 35);
@@ -59,7 +59,7 @@ public class HomePanel {
 		bookSubLabel.setFont(new Font("Tahoma", Font.BOLD, 20));
 		bookStatPanel.add(bookSubLabel);
 		
-		JLabel bookMainTitle = DefaultComponentFactory.getInstance().createTitle("9999");
+		JLabel bookMainTitle = new JLabel("9999");
 		bookMainTitle.setForeground(new Color(255, 255, 255));
 		bookMainTitle.setFont(new Font("Tahoma", Font.BOLD, 40));
 		bookMainTitle.setBounds(62, 53, 102, 36);
