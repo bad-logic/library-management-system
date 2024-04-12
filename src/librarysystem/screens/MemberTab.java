@@ -13,7 +13,6 @@ import java.util.List;
 
 public class MemberTab extends JPanel {
     private SystemController controller;
-    private List<LibraryMember> members;
     private JPanel tablePanel;
 
     private static final String[] headers = new String[] {
@@ -22,14 +21,14 @@ public class MemberTab extends JPanel {
 
     MemberTab(){
         this.controller = new SystemController();
-        this.members = this.controller.allMember();
         this.init();
     }
 
     private Object[][] getTableRows(){
-        Object[][] rows = new Object[this.members.size()][5];
+        List<LibraryMember> members = this.controller.allMember();
+        Object[][] rows = new Object[members.size()][5];
         int count = 0;
-        for(LibraryMember member : this.members){
+        for(LibraryMember member : members){
             Address add  = member.getAddress();
             rows[count] = new String[] {String.valueOf(member.getMemberId()), member.fullName(), member.getTelephone(), add.getCity(), add.getState()};
             count++;
@@ -38,8 +37,7 @@ public class MemberTab extends JPanel {
     }
 
     void reload(){
-        System.out.println("reload");
-        this.tablePanel.repaint();
+        this.setTable();
     }
 
     void setTable(){
