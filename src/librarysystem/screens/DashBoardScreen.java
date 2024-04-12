@@ -8,26 +8,13 @@ import javax.swing.border.EmptyBorder;
 import java.awt.Color;
 import javax.swing.JLabel;
 import java.awt.Font;
-import javax.swing.JSplitPane;
-import javax.swing.SwingConstants;
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
-import java.awt.Rectangle;
 import javax.swing.JList;
-import java.awt.List;
 import javax.swing.ListSelectionModel;
 import javax.swing.AbstractListModel;
 import java.awt.CardLayout;
 import javax.swing.JButton;
-import javax.swing.JTextField;
-import java.awt.Button;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import javax.swing.JTable;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.JScrollPane;
 
- 
+
 public class DashBoardScreen extends JFrame {
 	
 	public static final DashBoardScreen INSTANCE = new DashBoardScreen();
@@ -35,14 +22,6 @@ public class DashBoardScreen extends JFrame {
 	private JPanel contentPane;
 	private JList linkList;
 	private JPanel cards;
-	private JTextField fNameField;
-	private JTextField lNameField;
-	private JTextField mobileField;
-	private JTextField streetField;
-	private JTextField cityField;
-	private JTextField stateField;
-	private JTextField zipField;
-	private JTable table;
 
 	public DashBoardScreen() {
 		init();
@@ -96,11 +75,7 @@ public class DashBoardScreen extends JFrame {
 		logoutButton.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		logoutButton.setBounds(866, 20, 85, 21);
 		topPanel.add(logoutButton);
-		
-		// JLabel dashboardTitle = DefaultComponentFactory.getInstance().createTitle("MIU Library");
-		// dashboardTitle.setFont(new Font("Tahoma", Font.BOLD, 20));
-		// dashboardTitle.setBounds(419, 10, 134, 23);
-		// topPanel.add(dashboardTitle);
+
 		
 		JPanel leftPanel = new JPanel();
 		leftPanel.setBackground(new Color(255, 255, 255));
@@ -111,7 +86,7 @@ public class DashBoardScreen extends JFrame {
 		linkList = new JList();
 		linkList.setFont(new Font("Tahoma", Font.BOLD, 14));
 		linkList.setModel(new AbstractListModel() {
-			String[] values = new String[] {"Home", "Member", "Author", "Book", "Checkout History", "Logout"};
+			String[] values = new String[] {"Home", "Member", "Author", "Book", "Checkout"};
 			public int getSize() {
 				return values.length;
 			}
@@ -125,178 +100,49 @@ public class DashBoardScreen extends JFrame {
 		leftPanel.add(linkList);
 		
 		createPanels();
-		
-		
-		
 	}
 	
 	public void createPanels() {
-//		JPanel cards = new JPanel();
-//		cards.setBackground(new Color(255, 255, 255));
-//		cards.setBounds(176, 80, 794, 625);
-//		contentPane.add(cards);
-//		cards.setLayout(null);
-		
-		JPanel homePanel = new JPanel();
+
+		// HOME TAB CONTENT
+		JPanel homePanel = new HomeTab();
 		homePanel.setBackground(new Color(255, 255, 255));
 		homePanel.setBounds(0, 0, 794, 625);
-		new HomePanel().homeView(homePanel);
-		
-		
-		JPanel memberPanel = new JPanel();
-		memberPanel.setBackground(new Color(255, 255, 255));
-		memberPanel.setBounds(0, 0, 794, 625);
-		
-		JPanel authorPanel = new JPanel();
+		homePanel.setLayout(null);
+
+		// MEMBER TAB CONTENT
+		JPanel memberTab = new MemberTab();
+		memberTab.setBackground(new Color(255, 255, 255));
+		memberTab.setBounds(0, 0, 794, 625);
+		memberTab.setLayout(null);
+
+		// AUTHOR TAB CONTENT
+		JPanel authorPanel = new AuthorTab();
 		authorPanel.setBackground(new Color(255, 255, 255));
 		authorPanel.setBounds(0, 0, 794, 625);
-		
-		JPanel bookPanel = new JPanel();
+
+		// BOOK TAB CONTENT
+		JPanel bookPanel = new BookTab();
 		bookPanel.setBackground(new Color(255, 255, 255));
 		bookPanel.setBounds(0, 0, 794, 625);
-		
-		JPanel historyPanel = new JPanel();
+
+		// CHECKOUT TAB CONTENT
+		JPanel historyPanel = new BookCheckoutTab();
 		historyPanel.setBackground(new Color(255, 255, 255));
 		historyPanel.setBounds(0, 0, 794, 625);
 		
+		// adding tabs to the card
 		cards = new JPanel(new CardLayout());
 		cards.setBackground(new Color(255, 255, 255));
 		cards.setBounds(176, 80, 794, 625);
 		contentPane.add(cards);
+
 		cards.add(homePanel, "Home");
-		homePanel.setLayout(null);
-		
-		
-
-		// MEMBER PANEL CONTENT
-		cards.add(memberPanel, "Member");
-		memberPanel.setLayout(null);
-		
-		JButton addMemberButton = new JButton("Add Member");
-		addMemberButton.setBounds(654, 10, 130, 21);
-		addMemberButton.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		memberPanel.add(addMemberButton);
-
-		addMemberButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				MemberScreen.INSTANCE.init();
-				MemberScreen.INSTANCE.setVisible(true);
-			}
-		});
-
-		JPanel formPanel = new JPanel();
-		formPanel.setBounds(10, 41, 774, 142);
-		memberPanel.add(formPanel);
-		formPanel.setLayout(null);
-		
-		JLabel fNameLabel = new JLabel("First Name");
-		fNameLabel.setBounds(10, 10, 75, 13);
-		fNameLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		formPanel.add(fNameLabel);
-		
-		fNameField = new JTextField();
-		fNameField.setBounds(10, 25, 114, 28);
-		formPanel.add(fNameField);
-		fNameField.setColumns(10);
-		
-		JLabel lNameLabel = new JLabel("Last Name");
-		lNameLabel.setBounds(134, 10, 75, 13);
-		lNameLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		formPanel.add(lNameLabel);
-		
-		lNameField = new JTextField();
-		lNameField.setBounds(134, 25, 114, 28);
-		lNameField.setColumns(10);
-		formPanel.add(lNameField);
-		
-		JLabel mobileLabel = new JLabel("Mobile");
-		mobileLabel.setBounds(258, 10, 75, 13);
-		mobileLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		formPanel.add(mobileLabel);
-		
-		mobileField = new JTextField();
-		mobileField.setBounds(258, 25, 114, 28);
-		mobileField.setColumns(10);
-		formPanel.add(mobileField);
-		
-		JLabel streetLabel = new JLabel("Street");
-		streetLabel.setBounds(382, 10, 75, 13);
-		streetLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		formPanel.add(streetLabel);
-		
-		streetField = new JTextField();
-		streetField.setBounds(382, 25, 114, 28);
-		streetField.setColumns(10);
-		formPanel.add(streetField);
-		
-		JLabel cityLabel = new JLabel("City");
-		cityLabel.setBounds(506, 10, 75, 13);
-		cityLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		formPanel.add(cityLabel);
-		
-		cityField = new JTextField();
-		cityField.setBounds(506, 25, 114, 28);
-		cityField.setColumns(10);
-		formPanel.add(cityField);
-		
-		JLabel stateLabel = new JLabel("State");
-		stateLabel.setBounds(630, 10, 75, 13);
-		stateLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		formPanel.add(stateLabel);
-		
-		stateField = new JTextField();
-		stateField.setBounds(630, 25, 114, 28);
-		stateField.setColumns(10);
-		formPanel.add(stateField);
-		
-		JLabel zipLabel = new JLabel("Zip");
-		zipLabel.setBounds(10, 67, 75, 13);
-		zipLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		formPanel.add(zipLabel);
-		
-		zipField = new JTextField();
-		zipField.setBounds(10, 82, 114, 28);
-		zipField.setColumns(10);
-		formPanel.add(zipField);
-		
-		JButton addButton = new JButton("Add");
-		addButton.setBounds(206, 111, 85, 21);
-		formPanel.add(addButton);
-		
-		JButton editButton = new JButton("Edit");
-		editButton.setBounds(301, 111, 85, 21);
-		formPanel.add(editButton);
-		
-		JButton deleteButton = new JButton("Delete");
-		deleteButton.setBounds(396, 111, 85, 21);
-		formPanel.add(deleteButton);		
-		
-		JPanel panel = new JPanel();
-		panel.setBounds(10, 193, 774, 422);
-		memberPanel.add(panel);
-		panel.setLayout(null);
-		
-		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(0, 0, 774, 422);
-		panel.add(scrollPane);
-		
-		table = new JTable();
-		table.setModel(new DefaultTableModel(
-			new Object[][] {
-				{"Folah Bademoshi", "641-122-122", "Fairfield", "101"},
-				{"Roshan Bhattarai", "641-122-122", "Fairfield", "102"},
-				{"Kush Raj Rimal", "641-122-122", "Fairfield", "103"},
-			},
-			new String[] {
-				"Name", "Mobile", "Address", "MemberID"
-			}
-		));
-		scrollPane.setViewportView(table);
+		cards.add(memberTab, "Member");
 		
 		cards.add(authorPanel, "Author");
 		cards.add(bookPanel, "Book");
-		cards.add(historyPanel, "Checkout History");
+		cards.add(historyPanel, "Checkout");
 		
 		//connect JList elements to CardLayout panels
 		linkList.addListSelectionListener(event -> {
