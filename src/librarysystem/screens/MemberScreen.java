@@ -103,7 +103,7 @@ public class MemberScreen extends JFrame {
 		this.setResizable(false);
 		this.setLocationRelativeTo(null);
 		
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		
 		this.setBounds(300,300, 450, 450);
 		
