@@ -1,8 +1,6 @@
 package librarysystem.screens;
 
 import java.awt.Font;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.List;
 
 import javax.swing.JButton;
@@ -24,7 +22,7 @@ import dataaccess.DataAccessFacade;
 
 public class MemberPanel {
 	SystemController sc = new SystemController();
-	DataAccessFacade daf = new DataAccessFacade();
+
 	JTable tblMember;
 	private JTextField fName;
 	private JTextField lName;
@@ -186,9 +184,8 @@ public class MemberPanel {
 					return;
 					
 				}
-				
-				LibraryMember libMember = new LibraryMember(fNameField, lNameField, mobileField, new Address(streetField, cityField, stateField, zipField));
-				daf.saveNewMember(libMember);
+
+				sc.createMember(fNameField,lNameField,mobileField,streetField,cityField,stateField,Integer.parseInt(zipField));
 				clearFields();
 				
 		});
