@@ -18,7 +18,8 @@ public class SystemController implements ControllerInterface {
 	public static void main(String[] args) {
 //		System.out.println(allMember());
 	}
-	
+
+	@Override
 	public void login(String id, String password) throws LoginException {
 		DataAccess da = new DataAccessFacade();
 		HashMap<String, User> map = da.readUserMap();
@@ -30,7 +31,11 @@ public class SystemController implements ControllerInterface {
 			throw new LoginException("Password incorrect");
 		}
 		currentAuth = map.get(id).getAuthorization();
-		
+	}
+
+	@Override
+	public void logout() {
+		currentAuth = null;
 	}
 	
 	@Override

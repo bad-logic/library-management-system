@@ -4,6 +4,7 @@ import java.util.List;
 
 public interface ControllerInterface {
 	public void login(String id, String password) throws LoginException;
+	public void logout();
 	public void createAuthor(String firstName, String lastName, String contact, String bio,String street, String city,String state, int zipCode);
 	public void createMember(String firstName, String lastName, String contact,String street, String city,String state, int zipCode);
 	public void createBook(String isbn, String title, int maxCheckoutLength, List<String> authorId);
