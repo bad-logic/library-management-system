@@ -8,7 +8,7 @@ import javax.swing.JPanel;
 
 
 
-public class HomePanel {
+public class HomePanel_deprecated {
 	public void homeView(JPanel homePanel) {
 		JPanel memberStatPanel = new JPanel();
 		memberStatPanel.setBackground(new Color(121, 76, 138));
