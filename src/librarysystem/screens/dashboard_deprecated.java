@@ -8,7 +8,7 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-public class dashboard extends JFrame {
+public class dashboard_deprecated extends JFrame {
     private static final long serialVersionUID = 1L;
     private JPanel topPanel;
     private JPanel leftPanel;
@@ -22,7 +22,7 @@ public class dashboard extends JFrame {
     public static void main(String[] args) {
         EventQueue.invokeLater(() -> {
             try {
-            	dashboard frame = new dashboard();
+            	dashboard_deprecated frame = new dashboard_deprecated();
                 frame.setVisible(true);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -30,7 +30,7 @@ public class dashboard extends JFrame {
         });
     }
 
-    public dashboard() {
+    public dashboard_deprecated() {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(1000, 700);
         setLocationRelativeTo(null);
