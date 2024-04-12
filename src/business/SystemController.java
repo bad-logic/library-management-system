@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map.Entry;
 
 import dataaccess.Auth;
 import dataaccess.DataAccess;
@@ -22,15 +21,22 @@ public class SystemController implements ControllerInterface {
 	@Override
 	public void login(String id, String password) throws LoginException {
 		DataAccess da = new DataAccessFacade();
-		HashMap<String, User> map = da.readUserMap();
-		if(!map.containsKey(id)) {
+		HashMap<Integer, User> map = da.readUserMap();
+		Integer key;
+		try{
+			key = Integer.parseInt(id);
+		}catch (Exception ex){
 			throw new LoginException("ID " + id + " not found");
 		}
-		String passwordFound = map.get(id).getPassword();
+
+		if(!map.containsKey(key)) {
+			throw new LoginException("ID " + id + " not found");
+		}
+		String passwordFound = map.get(key).getPassword();
 		if(!passwordFound.equals(password)) {
 			throw new LoginException("Password incorrect");
 		}
-		currentAuth = map.get(id).getAuthorization();
+		currentAuth = map.get(key).getAuthorization();
 	}
 
 	@Override
@@ -39,9 +45,9 @@ public class SystemController implements ControllerInterface {
 	}
 	
 	@Override
-	public List<String> allMemberIds() {
+	public List<Integer> allMemberIds() {
 		DataAccess da = new DataAccessFacade();
-		List<String> retval = new ArrayList<>();
+		List<Integer> retval = new ArrayList<>();
 		retval.addAll(da.readMemberMap().keySet());
 		return retval;
 	}
@@ -95,7 +101,7 @@ public class SystemController implements ControllerInterface {
 	public void createBook(String isbn, String title, int maxCheckoutLength, List<String> authorId) {
 		DataAccess da = new DataAccessFacade();
 		List<Author> aths = new ArrayList<>();
-		HashMap<String,Author> aMap = da.readAuthorsMap();
+		HashMap<Integer,Author> aMap = da.readAuthorsMap();
 		for(String id: authorId) {
 			if(aMap.containsKey(id)) {
 				aths.add(aMap.get(id));
@@ -122,7 +128,7 @@ public class SystemController implements ControllerInterface {
 	@Override
 	public void addCheckoutRecord(String isbn,String memberId) {
 		DataAccess da = new DataAccessFacade();
-		HashMap<String, LibraryMember> mem = da.readMemberMap();
+		HashMap<Integer, LibraryMember> mem = da.readMemberMap();
 		HashMap<String,Book> books = da.readBooksMap();
 		if(mem.containsKey(memberId) && books.containsKey(isbn)) {
 			Book book = books.get(isbn);

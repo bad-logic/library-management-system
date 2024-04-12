@@ -31,7 +31,7 @@ public class MemberTab extends JPanel {
         int count = 0;
         for(LibraryMember member : this.members){
             Address add  = member.getAddress();
-            rows[count] = new String[] {member.getMemberId(), member.fullName(), member.getTelephone(), add.getCity(), add.getState()};
+            rows[count] = new String[] {String.valueOf(member.getMemberId()), member.fullName(), member.getTelephone(), add.getCity(), add.getState()};
             count++;
         }
         return rows;

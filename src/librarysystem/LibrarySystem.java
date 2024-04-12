@@ -147,10 +147,10 @@ public class LibrarySystem extends JFrame implements LibWindow {
 			LibrarySystem.hideAllWindows();
 			AllBookIdsWindow.INSTANCE.init();
 			
-			List<String> ids = ci.allMemberIds();
+			List<Integer> ids = ci.allMemberIds();
 			Collections.sort(ids);
 			StringBuilder sb = new StringBuilder();
-			for(String s: ids) {
+			for(Integer s: ids) {
 				sb.append(s + "\n");
 			}
 			System.out.println(sb.toString());
