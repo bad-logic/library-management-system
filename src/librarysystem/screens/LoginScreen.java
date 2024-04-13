@@ -5,6 +5,8 @@ import business.SystemController;
 
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.nio.file.Paths;
 
 import javax.swing.JFrame;
@@ -23,6 +25,7 @@ import javax.swing.JButton;
 import java.awt.event.ActionEvent;
 import javax.swing.border.LineBorder;
 
+import business.ValidationException;
 import librarysystem.Util;
 
 import javax.swing.border.CompoundBorder;
@@ -37,6 +40,12 @@ public class LoginScreen extends JFrame {
 	private JPasswordField passwordField;
 	
 	public LoginScreen() {}
+
+	private void validateInputField(String key, String value,JTextField field) throws ValidationException {
+		if(value == null || value.isEmpty() || value.isBlank()) {
+			throw new ValidationException(key + " is empty", field);
+		}
+	}
 
 	public void init() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -63,7 +72,7 @@ public class LoginScreen extends JFrame {
 		header.setVerticalAlignment(SwingConstants.TOP);
 		header.setFont(new Font("Tahoma", Font.PLAIN, 27));
 		
-		JLabel email = new JLabel("Username");
+		JLabel email = new JLabel("User ID");
 		email.setBounds(391, 87, 99, 17);
 		email.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		
@@ -93,14 +102,35 @@ public class LoginScreen extends JFrame {
 		
 		btnNewButton.addActionListener((ActionEvent e) ->{
 				try {
+
 					String userId = emailTextField.getText();
 					String user_password = new String(passwordField.getPassword());
+
+					// validation
+					validateInputField("User ID",userId,emailTextField);
+					validateInputField("Password", user_password,passwordField);
+
 					new SystemController().login(userId, user_password);
 					this.dispose();
 					DashBoardScreen dashboard= new DashBoardScreen();
 					Util.centerFrameOnDesktop(dashboard);
 					dashboard.setVisible(true);
-				}catch(LoginException ex) {
+
+				}catch(ValidationException ex) {
+
+					JTextField field = ex.getField();
+					field.setBorder(new LineBorder(Util.ERROR_MESSAGE_COLOR,2));
+					field.requestFocus();
+					JOptionPane.showMessageDialog(btnNewButton,ex.getMessage());
+
+					field.addKeyListener(new KeyAdapter() {
+						@Override
+						public void keyTyped(KeyEvent e) {
+							field.setBorder(new LineBorder(Util.BORDER_COLOR,1));
+						}
+					});
+
+				} catch(LoginException ex) {
 					JOptionPane.showMessageDialog(btnNewButton,ex.getMessage());
 				}
 		});
