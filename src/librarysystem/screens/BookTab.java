@@ -80,9 +80,14 @@ public class BookTab extends JPanel {
 //        this.add(memberMainTitle);
         
         JButton addBookButton = new JButton("Add Book");
-        addBookButton.setBounds(514, 31, 130, 21);
+        addBookButton.setBounds(374, 31, 130, 21);
         addBookButton.setFont(new Font("Tahoma", Font.PLAIN, 14));
         this.add(addBookButton);
+        
+        JButton addCopyBookButton = new JButton("Add Book Copy");
+        addCopyBookButton.setBounds(514, 31, 130, 21);
+        addCopyBookButton.setFont(new Font("Tahoma", Font.PLAIN, 14));
+        this.add(addCopyBookButton);
 
         JButton reloadButton = new JButton("Reload");
         reloadButton.setBounds(654, 31, 130, 21);
@@ -95,6 +100,15 @@ public class BookTab extends JPanel {
                 AddBookModal.INSTANCE.init();
                 Util.centerFrameOnDesktop(AddBookModal.INSTANCE);
                 AddBookModal.INSTANCE.setVisible(true);
+            }
+        });
+        
+        addCopyBookButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                AddBookCopyModal.INSTANCE.init();
+                Util.centerFrameOnDesktop(AddBookCopyModal.INSTANCE);
+                AddBookCopyModal.INSTANCE.setVisible(true);
             }
         });
 

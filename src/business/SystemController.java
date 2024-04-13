@@ -132,7 +132,7 @@ public class SystemController implements ControllerInterface {
 	}
 	
 	@Override
-	public void createBook(String isbn, String title, int maxCheckoutLength, List<String> authorId) {
+	public void createBook(String isbn, String title, int maxCheckoutLength, int copyCount, List<String> authorId) {
 		DataAccess da = new DataAccessFacade();
 		List<Author> aths = new ArrayList<>();
 		HashMap<Integer,Author> aMap = da.readAuthorsMap();
@@ -142,7 +142,7 @@ public class SystemController implements ControllerInterface {
 			}
 		}
 		
-		Book book = new Book(isbn, title,maxCheckoutLength, aths);
+		Book book = new Book(isbn, title,maxCheckoutLength, copyCount, aths);
 		da.addBook(book);
 	}
 	

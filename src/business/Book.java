@@ -13,17 +13,22 @@ import java.util.Optional;
 final public class Book implements Serializable {
 	
 	private static final long serialVersionUID = 6110690276685962829L;
-	private BookCopy[] copies;
+	private BookCopy[] copies = new BookCopy[0];
 	private List<Author> authors;
 	private String isbn;
 	private String title;
 	private int maxCheckoutLength;
 	public Book(String isbn, String title, int maxCheckoutLength, List<Author> authors) {
+		
+		this(isbn, title, maxCheckoutLength, 1 ,authors);	
+	}
+	
+	public Book(String isbn, String title, int maxCheckoutLength, int copyCount, List<Author> authors) {
 		this.isbn = isbn;
 		this.title = title;
 		this.maxCheckoutLength = maxCheckoutLength;
 		this.authors = Collections.unmodifiableList(authors);
-		copies = new BookCopy[]{new BookCopy(this, 1, true)};	
+		this.addCopy(copyCount);
 	}
 	
 	public void updateCopies(BookCopy copy) {
@@ -46,11 +51,14 @@ final public class Book implements Serializable {
 	}
 	
 	public void addCopy(int count) {
+		System.out.println("From add copy method: " + count);
 		BookCopy[] newArr = new BookCopy[copies.length + count];
 		System.arraycopy(copies, 0, newArr, 0, copies.length);
+		System.out.println("From add copy method array length: " + newArr.length);
 		for(int i=copies.length;i<copies.length + count;i++) {
 			newArr[i] = new BookCopy(this, i + 1, true);
 		}
+		System.out.println(newArr);
 		copies = newArr;
 	}
 	
