@@ -14,8 +14,7 @@ import java.awt.event.ActionListener;
 import java.util.List;
 
 public class BookTab extends JPanel {
-	private SystemController controller;
-	private JPanel tablePanel;
+	private final SystemController controller;
     private JTable table;
 	
 	 private static final String[] headers = new String[] {
@@ -52,7 +51,7 @@ public class BookTab extends JPanel {
     }
     
     void setTable(){
-        tablePanel = new JPanel();
+        JPanel tablePanel = new JPanel();
         tablePanel.setBounds(10, 80, 774, 422);
         tablePanel.setLayout(null);
 
@@ -60,14 +59,14 @@ public class BookTab extends JPanel {
         scrollPane.setBounds(0, 0, 774, 422);
         tablePanel.add(scrollPane);
         System.out.println(this.getTableRows());
-        JTable table = new JTable() {
+        table = new JTable() {
         	public boolean editCellAt(int row, int column, java.util.EventObject e) {
                 return false;
              }
         };
         table.setModel(new DefaultTableModel(
                 this.getTableRows(),
-                this.headers
+                BookTab.headers
         ));
 
         scrollPane.setViewportView(table);
@@ -80,9 +79,14 @@ public class BookTab extends JPanel {
 //        this.add(memberMainTitle);
         
         JButton addBookButton = new JButton("Add Book");
-        addBookButton.setBounds(514, 31, 130, 21);
+        addBookButton.setBounds(374, 31, 130, 21);
         addBookButton.setFont(new Font("Tahoma", Font.PLAIN, 14));
         this.add(addBookButton);
+        
+        JButton addCopyBookButton = new JButton("Add Book Copy");
+        addCopyBookButton.setBounds(514, 31, 130, 21);
+        addCopyBookButton.setFont(new Font("Tahoma", Font.PLAIN, 14));
+        this.add(addCopyBookButton);
 
         JButton reloadButton = new JButton("Reload");
         reloadButton.setBounds(654, 31, 130, 21);
@@ -95,6 +99,15 @@ public class BookTab extends JPanel {
                 AddBookModal.INSTANCE.init();
                 Util.centerFrameOnDesktop(AddBookModal.INSTANCE);
                 AddBookModal.INSTANCE.setVisible(true);
+            }
+        });
+        
+        addCopyBookButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                AddBookCopyModal.INSTANCE.init();
+                Util.centerFrameOnDesktop(AddBookCopyModal.INSTANCE);
+                AddBookCopyModal.INSTANCE.setVisible(true);
             }
         });
 

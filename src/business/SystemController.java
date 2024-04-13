@@ -127,12 +127,12 @@ public class SystemController implements ControllerInterface {
 	public void createMember(String firstName, String lastName, String contact,String street, String city,String state, int zipCode) {
 		DataAccess da = new DataAccessFacade();
 		Address add = new Address(street,city,state, Integer.toString(zipCode));
-		LibraryMember mem = new LibraryMember(firstName, lastName,contact, add);
+		LibraryMember mem = new LibraryMember(firstName, lastName, contact, add);
 		da.addMember(mem);
 	}
 	
 	@Override
-	public void createBook(String isbn, String title, int maxCheckoutLength, List<String> authorId) {
+	public void createBook(String isbn, String title, int maxCheckoutLength, int copyCount, List<String> authorId) {
 		DataAccess da = new DataAccessFacade();
 		List<Author> aths = new ArrayList<>();
 		HashMap<Integer,Author> aMap = da.readAuthorsMap();
@@ -142,7 +142,7 @@ public class SystemController implements ControllerInterface {
 			}
 		}
 		
-		Book book = new Book(isbn, title,maxCheckoutLength, aths);
+		Book book = new Book(isbn, title,maxCheckoutLength, copyCount, aths);
 		da.addBook(book);
 	}
 	
@@ -155,7 +155,6 @@ public class SystemController implements ControllerInterface {
 			book.addCopy(copyCount);			
 			da.addBook(book);
 		}
-		
 		
 	}
 	
