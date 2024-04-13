@@ -2,6 +2,7 @@ package librarysystem.screens;
 
 import business.Book;
 import business.LibraryMember;
+import business.LoginException;
 import business.SystemController;
 
 import javax.swing.*;
@@ -118,7 +119,12 @@ public class AddCheckoutEntry extends JFrame {
 				JOptionPane.showMessageDialog(this, "This book is not available for checkout");
 				return;
 			}
-			this.controller.addCheckoutRecord(isbn, Integer.parseInt(memberId));
+			try{
+				this.controller.addCheckoutRecord(isbn, Integer.parseInt(memberId));
+			}catch (LoginException ex){
+				JOptionPane.showMessageDialog(this, ex.getMessage());
+				return;
+			}
 			this.dispose();
 		});
 	}
