@@ -5,19 +5,19 @@ import java.time.LocalDate;
 
 public class CheckoutEntry implements Serializable {
     private static final long serialVersionUID = -78463974084869815L;
-    private Book book;
     private LocalDate dueDate;
     private LocalDate dateOfCheckout;
+    private BookCopy bookCopy;
     double fine;
 
-    CheckoutEntry(Book book) {
-        this.book = book;
+    CheckoutEntry(BookCopy book) {
+        this.bookCopy = book;
         this.dateOfCheckout = LocalDate.now();
-        this.dueDate = this.dateOfCheckout.plusDays(book.getMaxCheckoutLength());
+        this.dueDate = this.dateOfCheckout.plusDays(book.getBook().getMaxCheckoutLength());
     }
 
-    public Book getBook() {
-        return this.book;
+    public BookCopy getBookCopy() {
+        return this.bookCopy;
     }
 
     public LocalDate   getDueDate(){
@@ -36,8 +36,9 @@ public class CheckoutEntry implements Serializable {
         return this.fine;
     }
 
+    @Override
     public String toString(){
-        return "CheckoutEntry: " + this.book.toString() +", Checkout Date:" + this.dateOfCheckout + ", Due Date: " + this.dueDate.toString() + ", Fine: " + this.fine;
+        return "CheckoutEntry: " + this.bookCopy.toString() +", Checkout Date:" + this.dateOfCheckout + ", Due Date: " + this.dueDate.toString() + ", Fine: " + this.fine;
     }
 
 }
