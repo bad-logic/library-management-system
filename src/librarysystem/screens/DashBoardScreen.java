@@ -70,7 +70,7 @@ public class DashBoardScreen extends JFrame {
 		contentPane.add(topPanel);
 		topPanel.setLayout(null);
 		
-		JLabel mainLabel = new JLabel("MIU Library");
+		JLabel mainLabel = new JLabel("Library MS");
 		mainLabel.setBounds(375, 10, 196, 40);
 		mainLabel.setForeground(new Color(0, 0, 0));
 		mainLabel.setFont(new Font("Tahoma", Font.BOLD, 32));
@@ -88,8 +88,8 @@ public class DashBoardScreen extends JFrame {
                 Util.centerFrameOnDesktop(loginScreen);
                 loginScreen.setVisible(true);
 		});
-		logoutButton.setForeground(new Color(255, 255, 255));
-		logoutButton.setBackground(new Color(255, 0, 0));
+		logoutButton.setForeground(new Color(96, 66, 66));
+		logoutButton.setBackground(new Color(218, 51, 51));
 		logoutButton.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		logoutButton.setBounds(866, 20, 85, 21);
 		topPanel.add(logoutButton);
