@@ -73,18 +73,14 @@ public class BookTab extends JPanel {
         this.add(tablePanel);
     }
 
-    void init(){    	
-//        JLabel memberMainTitle = new JLabel("Book Tab");
-//        memberMainTitle.setFont(new Font("Tahoma", Font.BOLD, 40));
-//        this.add(memberMainTitle);
-        
+    void init(){        
         JButton addBookButton = new JButton("Add Book");
-        addBookButton.setBounds(374, 31, 130, 21);
+        addBookButton.setBounds(354, 31, 130, 21);
         addBookButton.setFont(new Font("Tahoma", Font.PLAIN, 14));
         this.add(addBookButton);
         
         JButton addCopyBookButton = new JButton("Add Book Copy");
-        addCopyBookButton.setBounds(514, 31, 130, 21);
+        addCopyBookButton.setBounds(494, 31, 150, 21);
         addCopyBookButton.setFont(new Font("Tahoma", Font.PLAIN, 14));
         this.add(addCopyBookButton);
 

@@ -1,12 +1,16 @@
 package librarysystem.screens;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.List;
 
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -14,6 +18,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
 
+import business.Book;
 import business.SystemController;
 import business.ValidationException;
 import librarysystem.Util;
@@ -21,15 +26,28 @@ import librarysystem.Util;
 public class AddBookCopyModal extends JFrame {
 	public final static AddBookCopyModal INSTANCE = new AddBookCopyModal();
 	private static final long serialVersionUID = 1L;
-	private JTextField iIsbn;
+	private JComboBox<String> iIsbn;
 	private JTextField iNumOfCopies;
 	private JButton saveButton;
 	private JButton cancelButton;
+	
 
 	private SystemController controller;
 
 	private AddBookCopyModal(){
 		this.controller = new SystemController();
+		
+	}
+	
+	private String[] getIsbn() {
+		List<Book> books = this.controller.allBook();
+		String[] arr = new String[books.size()];
+		
+		for(int i = 0; i < arr.length; i++) {
+			arr[i] = books.get(i).getIsbn();
+		}
+		
+		return arr;
 	}
 	
 
@@ -41,7 +59,7 @@ public class AddBookCopyModal extends JFrame {
 
 	private void validatNoOfCopiesField(String key, String value, JTextField field) throws ValidationException {
 		validateInputField(key,value, field);
-		String pattern = "^[0-9]*$";
+		String pattern = "^[1-9][0-9]*$";
 
 		if(!value.matches(pattern)){
 			throw new ValidationException(key + " must be number from 0 - 9",field);
@@ -55,12 +73,9 @@ public class AddBookCopyModal extends JFrame {
 		});
 		
 		saveButton.addActionListener((ActionEvent e)-> {
-			String isbn = iIsbn.getText();
 			String numberOfCopies = iNumOfCopies.getText();
 
 			try{
-
-				validateInputField("ISBN",isbn,iIsbn);
 				validatNoOfCopiesField("No of copies",numberOfCopies,iNumOfCopies);
 
 			}catch(ValidationException ex){
@@ -76,10 +91,10 @@ public class AddBookCopyModal extends JFrame {
 				JOptionPane.showMessageDialog(saveButton,ex.getMessage());
 				return;
 			}
-			System.out.println(numberOfCopies);
-			this.controller.createBookCopies(isbn,Integer.parseInt(numberOfCopies));
+			this.controller.createBookCopies(String.valueOf(iIsbn.getSelectedItem()),Integer.parseInt(numberOfCopies));
 			// close the modal
 			this.dispose();
+			JOptionPane.showMessageDialog(saveButton, "Added Book Successfully");
 		});
 		
 	}
@@ -114,10 +129,14 @@ public class AddBookCopyModal extends JFrame {
 		lblIsbn.setBounds(xLabel,y,labelWidth, labelHeight);
 		contentPane.add(lblIsbn);
 		
-		iIsbn = new JTextField();
-		iIsbn.setBounds(xInput, y, boxWidth, boxHeight);
+		DefaultComboBoxModel<String> defaultComboBox = new DefaultComboBoxModel<String>(getIsbn());
+        iIsbn = new JComboBox<String>();
+        iIsbn.setMaximumSize(new Dimension(boxWidth, boxHeight));
+        iIsbn.setModel(defaultComboBox);
+        iIsbn.setSelectedIndex(0);
+        iIsbn.setBounds(xInput, y, boxWidth, boxHeight);
 		contentPane.add(iIsbn);
-		iIsbn.setColumns(10);		
+		iIsbn.addActionListener(iIsbn);	
 		
 		JLabel lblCopies = new JLabel("Number Of Copies");
 		lblCopies.setBounds(xLabel, y + yGap,labelWidth, labelHeight);

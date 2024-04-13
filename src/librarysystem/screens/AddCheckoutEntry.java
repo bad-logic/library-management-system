@@ -120,6 +120,7 @@ public class AddCheckoutEntry extends JFrame {
 			}
 			this.controller.addCheckoutRecord(isbn, Integer.parseInt(memberId));
 			this.dispose();
+			JOptionPane.showMessageDialog(checkoutButton, "Added Checkout Boook Successfully");
 		});
 	}
 }

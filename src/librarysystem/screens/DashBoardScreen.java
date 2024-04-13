@@ -70,7 +70,7 @@ public class DashBoardScreen extends JFrame {
 		contentPane.add(topPanel);
 		topPanel.setLayout(null);
 		
-		JLabel mainLabel = new JLabel("MIU Library");
+		JLabel mainLabel = new JLabel("FRS Library");
 		mainLabel.setBounds(375, 10, 196, 40);
 		mainLabel.setForeground(new Color(0, 0, 0));
 		mainLabel.setFont(new Font("Tahoma", Font.BOLD, 32));

@@ -98,6 +98,7 @@ public class AddMemberModal extends JFrame {
 			this.controller.createMember(fName,lName,contact,street,city,state,Integer.parseInt(zip));
 			// close the modal
 			this.dispose();
+			JOptionPane.showMessageDialog(saveButton, "Added Member Successfully");
 		});
 		
 	}

@@ -62,7 +62,7 @@ public class AddBookModal extends JFrame {
 
 	private void validatNoOfCopiesField(String key, String value, JTextField field) throws ValidationException {
 		validateInputField(key,value, field);
-		String pattern = "^[0-9]*$";
+		String pattern = "^[1-9][0-9]*$";
 
 		if(!value.matches(pattern)){
 			throw new ValidationException(key + " must be number from 0 - 9",field);
@@ -86,6 +86,7 @@ public class AddBookModal extends JFrame {
 				validateInputField("ISBN",isbn,iIsbn);
 				validateInputField("Title",title,iTitle);
 				validatNoOfCopiesField("No of copies",numberOfCopies,iNumOfCopies);
+				JOptionPane.showMessageDialog(saveButton, "Added Book Successfully");
 
 			}catch(ValidationException ex){
 				JTextField field = ex.getField();
