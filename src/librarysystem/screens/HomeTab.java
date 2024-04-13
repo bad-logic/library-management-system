@@ -1,16 +1,29 @@
 package librarysystem.screens;
 
+import business.SystemController;
+
 import javax.swing.*;
 import java.awt.*;
 
 public class HomeTab extends JPanel {
+    SystemController controller;
 
     HomeTab(){
+        this.controller = new SystemController();
         this.init();
+    }
+
+    private int[] getStats(){
+        int memCount = controller.allMember().size();
+        int authorCount = controller.allAuthors().size();
+        int bookCount = controller.allBook().size();
+
+        return new int[]{memCount, authorCount, bookCount};
     }
 
     void init(){
 
+        int[] stats = this.getStats();
         JPanel memberStatPanel = new JPanel();
         memberStatPanel.setBackground(new Color(121, 76, 138));
         memberStatPanel.setBounds(10, 42, 230, 170);
@@ -23,7 +36,7 @@ public class HomeTab extends JPanel {
         memberSubLabel.setBounds(60, 121, 104, 19);
         memberStatPanel.add(memberSubLabel);
 
-        JLabel memberMainTitle = new JLabel("9999");
+        JLabel memberMainTitle = new JLabel(String.valueOf(stats[0]));
         memberMainTitle.setFont(new Font("Tahoma", Font.BOLD, 40));
         memberMainTitle.setBackground(new Color(240, 240, 240));
         memberMainTitle.setForeground(new Color(255, 255, 255));
@@ -42,7 +55,7 @@ public class HomeTab extends JPanel {
         authorSubLabel.setFont(new Font("Tahoma", Font.BOLD, 20));
         authorStatPanel.add(authorSubLabel);
 
-        JLabel authorMainTitle = new JLabel("9999");
+        JLabel authorMainTitle = new JLabel(String.valueOf(stats[1]));
         authorMainTitle.setForeground(new Color(255, 255, 255));
         authorMainTitle.setFont(new Font("Tahoma", Font.BOLD, 40));
         authorMainTitle.setBounds(66, 51, 102, 35);
@@ -60,7 +73,7 @@ public class HomeTab extends JPanel {
         bookSubLabel.setFont(new Font("Tahoma", Font.BOLD, 20));
         bookStatPanel.add(bookSubLabel);
 
-        JLabel bookMainTitle = new JLabel("9999");
+        JLabel bookMainTitle = new JLabel(String.valueOf(stats[2]));
         bookMainTitle.setForeground(new Color(255, 255, 255));
         bookMainTitle.setFont(new Font("Tahoma", Font.BOLD, 40));
         bookMainTitle.setBounds(62, 53, 102, 36);
