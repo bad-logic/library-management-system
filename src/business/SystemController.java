@@ -159,16 +159,19 @@ public class SystemController implements ControllerInterface {
 	}
 	
 	@Override
-	public void addCheckoutRecord(String isbn,int memberId) {
+	public void addCheckoutRecord(String isbn,int memberId) throws LoginException {
 		DataAccess da = new DataAccessFacade();
 		HashMap<Integer, LibraryMember> mem = da.readMemberMap();
 		HashMap<String,Book> books = da.readBooksMap();
+		System.out.println("Member Exists:" + mem.containsKey(memberId));
+		System.out.println("Book Exists:" + books.containsKey(isbn));
+
 		if(mem.containsKey(memberId) && books.containsKey(isbn)) {
 			Book book = books.get(isbn);
 			// set isAvailable false to one of the copies of the book
 			int count = 0;
 			for (BookCopy b : book.getCopies()){
-				if(count>0) return;
+				if(count>0) break;
 				if(b.isAvailable()){
 					b.changeAvailability();
 					count++;
@@ -182,6 +185,8 @@ public class SystemController implements ControllerInterface {
 			da.addBook(book);
 			// update the member with checkout record
 			da.addMember(memb);
+		}else{
+			throw new LoginException("Invalid Book or Member");
 		}
 	}
 	
