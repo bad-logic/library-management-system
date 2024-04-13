@@ -97,12 +97,25 @@ public class BookCheckoutTab extends JPanel {
 
     void init(){
         JButton checkoutButton = new JButton("Checkout");
-        checkoutButton.setBounds(650, 40, 130, 21);
+        checkoutButton.setBounds(514, 40, 130, 21);
         checkoutButton.setFont(new Font("Tahoma", Font.PLAIN, 14));
         this.add(checkoutButton);
+
+        JButton reloadButton = new JButton("Reload");
+        reloadButton.setBounds(654, 40, 130, 21);
+        reloadButton.setFont(new Font("Tahoma", Font.PLAIN, 14));
+        this.add(reloadButton);
+
+
+        // Disable buttons when member is not selected
         if(this.memberId == 0){
             checkoutButton.setEnabled(false);
+            reloadButton.setEnabled(false);
         }
+
+        reloadButton.addActionListener((ActionEvent e) -> {
+            this.reloadTable();
+        });
 
         JLabel lblMember = new JLabel("Select Member");
         lblMember.setBounds(20, 40,150, 35);
@@ -119,6 +132,7 @@ public class BookCheckoutTab extends JPanel {
         membersSelectBox.addActionListener((ActionEvent e) ->{
             this.memberId = Integer.parseInt(String.valueOf(membersSelectBox.getSelectedItem()).split("->")[0]);
             checkoutButton.setEnabled(true);
+            reloadButton.setEnabled(true);
             System.out.println("member: " + this.memberId);
             this.reloadTable();
         });
@@ -127,7 +141,6 @@ public class BookCheckoutTab extends JPanel {
                // @TODO open new modal to add checkout records
                 AddCheckoutEntry.INSTANCE.init(this.memberId);
                 Util.centerFrameOnDesktop(AddCheckoutEntry.INSTANCE);
-//                AddCheckoutEntry.INSTANCE.setMemberId(this.memberId);
                 AddCheckoutEntry.INSTANCE.setVisible(true);
         });
 
