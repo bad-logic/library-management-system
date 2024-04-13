@@ -186,7 +186,7 @@ public class DashBoardScreen extends JFrame {
 		}
 		
 		if(auth[0] == Auth.LIBRARIAN) {
-			return new String[] {"Home", "Checkout"};
+			return new String[] {"Home", "Book" ,"Checkout"};
 		}
 		
 		return new String[] {"Home", "Member", "Author", "Book"}; 
