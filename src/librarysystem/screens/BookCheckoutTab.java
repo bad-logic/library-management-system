@@ -15,6 +15,7 @@ public class BookCheckoutTab extends JPanel {
 
     private final SystemController controller;
     private JTable table;
+    private int memberId = 0;
 
     private static final String[] headers = new String[] {
             "S.N","Book", "copyNum", "dueDate", "dateOfCheckout", "Fine"
@@ -35,8 +36,8 @@ public class BookCheckoutTab extends JPanel {
         return ids;
     }
 
-    private Object[][] getTableRows(int memberId){
-        CheckoutRecord record = this.controller.getMembersCheckoutRecord(memberId);
+    private Object[][] getTableRows(){
+        CheckoutRecord record = this.controller.getMembersCheckoutRecord(this.memberId);
 
         System.out.println("checkout record: " + record);
 
@@ -87,9 +88,9 @@ public class BookCheckoutTab extends JPanel {
         this.add(tablePanel);
     }
 
-    private void reloadTable(int memberId){
+    private void reloadTable(){
         table.setModel(new DefaultTableModel(
-                this.getTableRows(memberId),
+                this.getTableRows(),
                 BookCheckoutTab.headers
         ));
     }
@@ -99,6 +100,9 @@ public class BookCheckoutTab extends JPanel {
         checkoutButton.setBounds(650, 40, 130, 21);
         checkoutButton.setFont(new Font("Tahoma", Font.PLAIN, 14));
         this.add(checkoutButton);
+        if(this.memberId == 0){
+            checkoutButton.setEnabled(false);
+        }
 
         JLabel lblMember = new JLabel("Select Member");
         lblMember.setBounds(20, 40,150, 35);
@@ -113,19 +117,18 @@ public class BookCheckoutTab extends JPanel {
         this.add(membersSelectBox);
 
         membersSelectBox.addActionListener((ActionEvent e) ->{
-            int memberId = Integer.parseInt(String.valueOf(membersSelectBox.getSelectedItem()).split("->")[0]);
-            System.out.println("member: " + memberId);
-            this.reloadTable(memberId);
+            this.memberId = Integer.parseInt(String.valueOf(membersSelectBox.getSelectedItem()).split("->")[0]);
+            checkoutButton.setEnabled(true);
+            System.out.println("member: " + this.memberId);
+            this.reloadTable();
         });
 
-        checkoutButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
+        checkoutButton.addActionListener((ActionEvent e) -> {
                // @TODO open new modal to add checkout records
-                AddCheckoutEntry.INSTANCE.init();
+                AddCheckoutEntry.INSTANCE.init(this.memberId);
                 Util.centerFrameOnDesktop(AddCheckoutEntry.INSTANCE);
+//                AddCheckoutEntry.INSTANCE.setMemberId(this.memberId);
                 AddCheckoutEntry.INSTANCE.setVisible(true);
-            }
         });
 
         this.setUpTable();
