@@ -107,7 +107,7 @@ public class AddBookModal extends JFrame {
 			}
 
 			String maxCheckoutLength = String.valueOf(iMaxCheckoutLength.getSelectedItem());
-			this.controller.createBook(isbn,title,Integer.parseInt(maxCheckoutLength),authorIdList);
+			this.controller.createBook(isbn,title,Integer.parseInt(maxCheckoutLength), Integer.parseInt(numberOfCopies), authorIdList);
 			// close the modal
 			this.dispose();
 		});
