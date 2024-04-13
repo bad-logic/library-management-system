@@ -26,15 +26,15 @@ public class SystemController implements ControllerInterface {
 		try{
 			key = Integer.parseInt(id);
 		}catch (Exception ex){
-			throw new LoginException("ID " + id + " not found");
+			throw new LoginException("Incorrect User ID or Password");
 		}
 
 		if(!map.containsKey(key)) {
-			throw new LoginException("ID " + id + " not found");
+			throw new LoginException("Incorrect User ID or Password");
 		}
 		String passwordFound = map.get(key).getPassword();
 		if(!passwordFound.equals(password)) {
-			throw new LoginException("Password incorrect");
+			throw new LoginException("Incorrect User ID or Password");
 		}
 		currentAuth = map.get(key).getAuthorization();
 	}
@@ -132,8 +132,12 @@ public class SystemController implements ControllerInterface {
 	}
 	
 	@Override
-	public void createBook(String isbn, String title, int maxCheckoutLength, int copyCount, List<String> authorId) {
+	public void createBook(String isbn, String title, int maxCheckoutLength, int copyCount, List<String> authorId) throws ValidationException{
 		DataAccess da = new DataAccessFacade();
+		HashMap<String,Book> booksMap = da.readBooksMap();
+		if(booksMap.containsKey(isbn)){
+			throw new ValidationException("ISBN Already exists");
+		}
 		List<Author> aths = new ArrayList<>();
 		HashMap<Integer,Author> aMap = da.readAuthorsMap();
 		for(String id: authorId) {
@@ -159,7 +163,7 @@ public class SystemController implements ControllerInterface {
 	}
 	
 	@Override
-	public void addCheckoutRecord(String isbn,int memberId) throws LoginException {
+	public void addCheckoutRecord(String isbn,int memberId) throws ValidationException {
 		DataAccess da = new DataAccessFacade();
 		HashMap<Integer, LibraryMember> mem = da.readMemberMap();
 		HashMap<String,Book> books = da.readBooksMap();
@@ -168,25 +172,26 @@ public class SystemController implements ControllerInterface {
 
 		if(mem.containsKey(memberId) && books.containsKey(isbn)) {
 			Book book = books.get(isbn);
-			// set isAvailable false to one of the copies of the book
-			int count = 0;
-			for (BookCopy b : book.getCopies()){
-				if(count>0) break;
-				if(b.isAvailable()){
-					b.changeAvailability();
-					count++;
-				}
+
+			// get available copy of the book
+			BookCopy bc = book.getNextAvailableCopy();
+			if(bc==null){
+				throw new ValidationException("This book is not available for checkout");
 			}
 
-			LibraryMember memb = mem.get(memberId);
-			memb.addCheckoutRecord(book);
+			// update its availability
+			bc.changeAvailability();
 
-			// update the book
+			// add checkout record
+			LibraryMember memb = mem.get(memberId);
+			memb.addCheckoutRecord(bc);
+
+			// update the book to the file
 			da.addBook(book);
-			// update the member with checkout record
+			// update the member with checkout record to the file
 			da.addMember(memb);
 		}else{
-			throw new LoginException("Invalid Book or Member");
+			throw new ValidationException("Invalid Book or Member");
 		}
 	}
 	

@@ -96,6 +96,7 @@ public class AddMemberModal extends JFrame {
 
 			String state = String.valueOf(iState.getSelectedItem());
 			this.controller.createMember(fName,lName,contact,street,city,state,Integer.parseInt(zip));
+			JOptionPane.showMessageDialog(this,"Member added successfully!!!");
 			// close the modal
 			this.dispose();
 		});

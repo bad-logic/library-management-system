@@ -91,6 +91,7 @@ public class AddBookCopyModal extends JFrame {
 			}
 			System.out.println("isbn: " + isbn + "copies: " + numberOfCopies);
 			this.controller.createBookCopies(isbn,Integer.parseInt(numberOfCopies));
+			JOptionPane.showMessageDialog(this,"Copies added successfully!!!");
 			// close the modal
 			this.dispose();
 		});
@@ -126,11 +127,6 @@ public class AddBookCopyModal extends JFrame {
 		JLabel lblIsbn = new JLabel("Select a book");
 		lblIsbn.setBounds(xLabel,y,labelWidth, labelHeight);
 		contentPane.add(lblIsbn);
-
-//		iIsbn = new JTextField();
-//		iIsbn.setBounds(xInput, y, boxWidth, boxHeight);
-//		contentPane.add(iIsbn);
-//		iIsbn.setColumns(10);
 
 		DefaultComboBoxModel<String> defaultBooksComboBox = new DefaultComboBoxModel<String>(this.getBookOptions());
 		iIsbn = new JComboBox<String>();
