@@ -14,8 +14,7 @@ import java.awt.event.ActionListener;
 import java.util.List;
 
 public class BookTab extends JPanel {
-	private SystemController controller;
-	private JPanel tablePanel;
+	private final SystemController controller;
     private JTable table;
 	
 	 private static final String[] headers = new String[] {
@@ -52,7 +51,7 @@ public class BookTab extends JPanel {
     }
     
     void setTable(){
-        tablePanel = new JPanel();
+        JPanel tablePanel = new JPanel();
         tablePanel.setBounds(10, 80, 774, 422);
         tablePanel.setLayout(null);
 
@@ -60,14 +59,14 @@ public class BookTab extends JPanel {
         scrollPane.setBounds(0, 0, 774, 422);
         tablePanel.add(scrollPane);
         System.out.println(this.getTableRows());
-        JTable table = new JTable() {
+        table = new JTable() {
         	public boolean editCellAt(int row, int column, java.util.EventObject e) {
                 return false;
              }
         };
         table.setModel(new DefaultTableModel(
                 this.getTableRows(),
-                this.headers
+                BookTab.headers
         ));
 
         scrollPane.setViewportView(table);

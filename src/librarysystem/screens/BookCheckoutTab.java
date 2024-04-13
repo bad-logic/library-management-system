@@ -13,7 +13,7 @@ import java.util.List;
 
 public class BookCheckoutTab extends JPanel {
 
-    private SystemController controller;
+    private final SystemController controller;
     private JTable table;
 
     private static final String[] headers = new String[] {

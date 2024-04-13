@@ -127,7 +127,7 @@ public class SystemController implements ControllerInterface {
 	public void createMember(String firstName, String lastName, String contact,String street, String city,String state, int zipCode) {
 		DataAccess da = new DataAccessFacade();
 		Address add = new Address(street,city,state, Integer.toString(zipCode));
-		LibraryMember mem = new LibraryMember(firstName, lastName,contact, add);
+		LibraryMember mem = new LibraryMember(firstName, lastName, contact, add);
 		da.addMember(mem);
 	}
 	
@@ -155,7 +155,6 @@ public class SystemController implements ControllerInterface {
 			book.addCopy(copyCount);			
 			da.addBook(book);
 		}
-		
 		
 	}
 	
