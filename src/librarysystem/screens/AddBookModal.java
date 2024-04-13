@@ -32,9 +32,7 @@ public class AddBookModal extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JTextField iIsbn;
 	private JTextField iTitle;
-//	private JComboBox<String> iAuthors;
 	private JComboBox<String> iAuthors;
-//	private JTextField iMaxCheckoutLength;
 	private JComboBox<String> iMaxCheckoutLength;
 	private JTextField iNumOfCopies;
 	private JButton saveButton;
@@ -52,7 +50,6 @@ public class AddBookModal extends JFrame {
 			authorList.add(author.getAuthorId() + "->" + author.getFirstName() + " " + author.getLastName());
 		}
 	}
-	
 
 	private void validateInputField(String key, String value,JTextField field) throws ValidationException{
 		if(value == null || value.isEmpty() || value.isBlank()) {
@@ -60,12 +57,12 @@ public class AddBookModal extends JFrame {
 		}
 	}
 
-	private void validatNoOfCopiesField(String key, String value, JTextField field) throws ValidationException {
+	private void validateNoOfCopiesField(String key, String value, JTextField field) throws ValidationException {
 		validateInputField(key,value, field);
 		String pattern = "^[0-9]*$";
 
 		if(!value.matches(pattern)){
-			throw new ValidationException(key + " must be number from 0 - 9",field);
+			throw new ValidationException(key + " must be a valid number",field);
 		}
 	}
 	
@@ -85,7 +82,13 @@ public class AddBookModal extends JFrame {
 
 				validateInputField("ISBN",isbn,iIsbn);
 				validateInputField("Title",title,iTitle);
-				validatNoOfCopiesField("No of copies",numberOfCopies,iNumOfCopies);
+
+				if (authorValue == null || authorValue.isEmpty() || authorValue.isBlank() ) {
+					JOptionPane.showMessageDialog(saveButton, "Author field is required");
+					return;
+				}
+
+				validateNoOfCopiesField("Copies",numberOfCopies,iNumOfCopies);
 
 			}catch(ValidationException ex){
 				JTextField field = ex.getField();
@@ -99,11 +102,6 @@ public class AddBookModal extends JFrame {
 				});
 				JOptionPane.showMessageDialog(saveButton,ex.getMessage());
 				return;
-			}
-			
-			
-			if (authorValue == null || authorValue.isEmpty() || authorValue.isBlank() ) {
-				JOptionPane.showMessageDialog(saveButton, "Author field is required");
 			}
 
 			String maxCheckoutLength = String.valueOf(iMaxCheckoutLength.getSelectedItem());

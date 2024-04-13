@@ -38,11 +38,15 @@ public class BookCheckoutTab extends JPanel {
     private Object[][] getTableRows(int memberId){
         CheckoutRecord record = this.controller.getMembersCheckoutRecord(memberId);
 
+        System.out.println("checkout record: " + record);
+
         if(record == null){
             return new Object[0][0];
         }
+
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern(Util.DATE_PATTERN);
         List<CheckoutEntry> entries = record.getRecords();
+        System.out.println("checkout entries: " + entries.size());
         Object[][] rows = new Object[entries.size()][5];
         int count = 0;
         for(CheckoutEntry entry : entries){
@@ -55,6 +59,7 @@ public class BookCheckoutTab extends JPanel {
             };
             count++;
         }
+
         return rows;
     }
 
