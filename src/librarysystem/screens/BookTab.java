@@ -6,6 +6,7 @@ import javax.swing.table.DefaultTableModel;
 import business.Book;
 import business.BookCopy;
 import business.SystemController;
+import dataaccess.Auth;
 import librarysystem.Util;
 
 import java.awt.*;
@@ -73,50 +74,49 @@ public class BookTab extends JPanel {
         this.add(tablePanel);
     }
 
-    void init(){    	
-//        JLabel memberMainTitle = new JLabel("Book Tab");
-//        memberMainTitle.setFont(new Font("Tahoma", Font.BOLD, 40));
-//        this.add(memberMainTitle);
-        
-        JButton addBookButton = new JButton("Add Book");
-        addBookButton.setBounds(374, 31, 130, 21);
-        addBookButton.setFont(new Font("Tahoma", Font.PLAIN, 14));
-        this.add(addBookButton);
-        
-        JButton addCopyBookButton = new JButton("Add Book Copy");
-        addCopyBookButton.setBounds(514, 31, 130, 21);
-        addCopyBookButton.setFont(new Font("Tahoma", Font.PLAIN, 14));
-        this.add(addCopyBookButton);
+    void init(){
+
+        if(SystemController.currentAuth.length == 2 || SystemController.currentAuth[0] == Auth.ADMIN){
+            JButton addBookButton = new JButton("Add Book");
+            addBookButton.setBounds(374, 31, 130, 21);
+            addBookButton.setFont(new Font("Tahoma", Font.PLAIN, 14));
+            this.add(addBookButton);
+
+            JButton addCopyBookButton = new JButton("Add Book Copy");
+            addCopyBookButton.setBounds(514, 31, 130, 21);
+            addCopyBookButton.setFont(new Font("Tahoma", Font.PLAIN, 14));
+            this.add(addCopyBookButton);
+
+            addBookButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    AddBookModal.INSTANCE.init();
+                    Util.centerFrameOnDesktop(AddBookModal.INSTANCE);
+                    AddBookModal.INSTANCE.setVisible(true);
+                }
+            });
+
+            addCopyBookButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    AddBookCopyModal.INSTANCE.init();
+                    Util.centerFrameOnDesktop(AddBookCopyModal.INSTANCE);
+                    AddBookCopyModal.INSTANCE.setVisible(true);
+                }
+            });
+
+        }
 
         JButton reloadButton = new JButton("Reload");
         reloadButton.setBounds(654, 31, 130, 21);
         reloadButton.setFont(new Font("Tahoma", Font.PLAIN, 14));
         this.add(reloadButton);
 
-        addBookButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                AddBookModal.INSTANCE.init();
-                Util.centerFrameOnDesktop(AddBookModal.INSTANCE);
-                AddBookModal.INSTANCE.setVisible(true);
-            }
-        });
-        
-        addCopyBookButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                AddBookCopyModal.INSTANCE.init();
-                Util.centerFrameOnDesktop(AddBookCopyModal.INSTANCE);
-                AddBookCopyModal.INSTANCE.setVisible(true);
-            }
-        });
-
         reloadButton.addActionListener((ActionEvent e) -> {
                 this.reloadTable();
         });
 
         this.setTable();
-
     }
     
     
