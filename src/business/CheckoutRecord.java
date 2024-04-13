@@ -9,17 +9,17 @@ public class CheckoutRecord implements Serializable{
     private List<CheckoutEntry> records;
     private LibraryMember member;
 
-    public CheckoutRecord(LibraryMember mem, Book book){
+    public CheckoutRecord(LibraryMember mem, BookCopy copy){
         this.member = mem;
         records = new ArrayList<CheckoutEntry>();
-        addRecord(book);
+        addRecord(copy);
     }
 
     public int getMemberId(){
         return member.getMemberId();
     }
 
-    public void addRecord(Book book){
+    public void addRecord(BookCopy book){
         records.add(new CheckoutEntry(book));
     }
 

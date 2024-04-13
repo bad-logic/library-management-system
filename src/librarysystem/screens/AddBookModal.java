@@ -105,7 +105,13 @@ public class AddBookModal extends JFrame {
 			}
 
 			String maxCheckoutLength = String.valueOf(iMaxCheckoutLength.getSelectedItem());
-			this.controller.createBook(isbn,title,Integer.parseInt(maxCheckoutLength), Integer.parseInt(numberOfCopies), authorIdList);
+			try{
+
+				this.controller.createBook(isbn,title,Integer.parseInt(maxCheckoutLength), Integer.parseInt(numberOfCopies), authorIdList);
+			}catch(ValidationException ex){
+				JOptionPane.showMessageDialog(saveButton,ex.getMessage());
+				return;
+			}
 			// close the modal
 			this.dispose();
 		});
@@ -224,6 +230,7 @@ public class AddBookModal extends JFrame {
 		iNumOfCopies= new JTextField();
 		iNumOfCopies.setBounds(xInput, y + 7*yGap, boxWidth, boxHeight);
 		contentPane.add(iNumOfCopies);
+		iNumOfCopies.setText("1");
 		iNumOfCopies.setColumns(10);
 		
 		

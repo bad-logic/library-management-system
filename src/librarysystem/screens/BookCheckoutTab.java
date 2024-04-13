@@ -17,7 +17,7 @@ public class BookCheckoutTab extends JPanel {
     private JTable table;
 
     private static final String[] headers = new String[] {
-            "S.N","Book", "dueDate", "dateOfCheckout", "Fine"
+            "S.N","Book", "copyNum", "dueDate", "dateOfCheckout", "Fine"
     };
 
     BookCheckoutTab(){
@@ -50,9 +50,10 @@ public class BookCheckoutTab extends JPanel {
         Object[][] rows = new Object[entries.size()][5];
         int count = 0;
         for(CheckoutEntry entry : entries){
-            Book b  = entry.getBook();
+            BookCopy bc = entry.getBookCopy();
+            Book b  = bc.getBook();
             rows[count] = new String[] {
-                    String.valueOf(count + 1),b.getTitle(),
+                    String.valueOf(count + 1),b.getTitle(),String.valueOf(bc.getCopyNum()),
                     entry.getDueDate().format(formatter),
                     entry.getDateOfCheckout().format(formatter),
                     String.valueOf(entry.getFine())

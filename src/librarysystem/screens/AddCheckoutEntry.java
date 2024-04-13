@@ -1,9 +1,6 @@
 package librarysystem.screens;
 
-import business.Book;
-import business.LibraryMember;
-import business.LoginException;
-import business.SystemController;
+import business.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -115,13 +112,10 @@ public class AddCheckoutEntry extends JFrame {
 
 			System.out.println("isbn: " +isbn + " memberId: " +memberId);
 
-			if(!this.controller.booksHashMap().get(isbn).isAvailable()){
-				JOptionPane.showMessageDialog(this, "This book is not available for checkout");
-				return;
-			}
 			try{
 				this.controller.addCheckoutRecord(isbn, Integer.parseInt(memberId));
-			}catch (LoginException ex){
+				JOptionPane.showMessageDialog(this,"Checkout entry added successfully!!!");
+			}catch (ValidationException ex){
 				JOptionPane.showMessageDialog(this, ex.getMessage());
 				return;
 			}

@@ -23,11 +23,11 @@ final public class LibraryMember extends Person implements Serializable {
 		return memberId;
 	}
 
-	public void addCheckoutRecord(Book book){
+	public void addCheckoutRecord(BookCopy copy){
 		if(this.checkoutRecord == null){
-			this.checkoutRecord = new CheckoutRecord(this, book);
+			this.checkoutRecord = new CheckoutRecord(this, copy);
 		}else{
-			this.checkoutRecord.addRecord(book);
+			this.checkoutRecord.addRecord(copy);
 		}
 	}
 
