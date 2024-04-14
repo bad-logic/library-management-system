@@ -27,7 +27,7 @@ public class AuthorTab extends JPanel {
         int count = 0;
         for(Author author : authors){
             Address add  = author.getAddress();
-            rows[count] = new String[] {String.valueOf(author.getAuthorId()), author.fullName(), author.getTelephone(), author.getAddress().toString(), author.getBio()};
+            rows[count] = new String[] {String.valueOf(author.getAuthorId()), author.fullName(), author.getTelephone(), add.getCity()+", "+add.getState(), author.getBio()};
             count++;
         }
         return rows;
