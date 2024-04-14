@@ -23,5 +23,4 @@ public class Main {
             Util.centerFrameOnDesktop(f);
         }
 
-
 }

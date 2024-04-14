@@ -1,25 +1,13 @@
 package librarysystem.screens;
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.EventQueue;
+import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
+import javax.swing.*;
 import javax.swing.border.LineBorder;
 
 import business.Author;
@@ -38,17 +26,23 @@ public class AddBookModal extends JFrame {
 	private JButton saveButton;
 	private JButton cancelButton;
 	private JTextArea textArea;
-	private List<String> authorList = new ArrayList<>();
 	private List<String> authorIdList = new ArrayList<>();
 
 	private SystemController controller;
 
 	private AddBookModal(){
 		this.controller = new SystemController();
+	}
+
+	private String[] getAuthorsList(){
 		List<Author> authors = this.controller.allAuthors();
+		String[] list = new String[authors.size()];
+		int i = 0;
 		for(Author author: authors) {
-			authorList.add(author.getAuthorId() + "->" + author.getFirstName() + " " + author.getLastName());
+			list[i] = (author.getAuthorId() + "->" + author.getFirstName() + " " + author.getLastName());
+			i++;
 		}
+		return list;
 	}
 
 	private void validateInputField(String key, String value,JTextField field) throws ValidationException{
@@ -105,7 +99,15 @@ public class AddBookModal extends JFrame {
 			}
 
 			String maxCheckoutLength = String.valueOf(iMaxCheckoutLength.getSelectedItem());
-			this.controller.createBook(isbn,title,Integer.parseInt(maxCheckoutLength), Integer.parseInt(numberOfCopies), authorIdList);
+			try{
+
+				this.controller.createBook(isbn,title,Integer.parseInt(maxCheckoutLength), Integer.parseInt(numberOfCopies), authorIdList);
+				JOptionPane.showMessageDialog(saveButton,"Book Added Successfully");
+				authorIdList.clear();
+			}catch(ValidationException ex){
+				JOptionPane.showMessageDialog(saveButton,ex.getMessage());
+				return;
+			}
 			// close the modal
 			this.dispose();
 		});
@@ -159,47 +161,31 @@ public class AddBookModal extends JFrame {
 		JLabel lblAuthors = new JLabel("Authors");
 		lblAuthors.setBounds(xLabel, y + 2*yGap,labelWidth, labelHeight);
 		contentPane.add(lblAuthors);
-		
-		textArea = new JTextArea(5, 105);
-		JScrollPane scrollPane = new JScrollPane(textArea); 
-		textArea.setBounds(xInput, y + 3*yGap, boxWidth, 105);
-		textArea.setEditable(false);
+
+		textArea = new JTextArea(5, 150);
+		textArea.setBounds(xInput - 50, y + 3*yGap, 200, 105);
+		textArea.setEditable(false);;
 		contentPane.add(textArea);
-		
-		String[] options = new String[authorList.size()];
-		options = authorList.toArray(options);
-        
-		DefaultComboBoxModel<String> comboBox = new DefaultComboBoxModel<String>(options);
+
+
+		DefaultComboBoxModel<String> comboBox = new DefaultComboBoxModel<String>(this.getAuthorsList());
 		iAuthors = new JComboBox<String>();
 		iAuthors.setMaximumSize(new Dimension(boxWidth, boxHeight));
 		iAuthors.setModel(comboBox);
 		iAuthors.setSelectedIndex(-1);
 		iAuthors.setBounds(xInput, y + 2*yGap, boxWidth, boxHeight);
 		contentPane.add(iAuthors);
-		StringBuilder str = new StringBuilder("");
-		iAuthors.addActionListener(
-				new ActionListener() {
-					
-					@Override
-					public void actionPerformed(ActionEvent e) {
-						String selectedAuthor = (String)iAuthors.getSelectedItem();					
-						
-						String[] selectedAuthorArr = selectedAuthor.split("->");
-						
-						if (authorIdList.size() == 0) {
-							str.append(selectedAuthor + "\n");
-							authorIdList.add(selectedAuthorArr[0]);
-						} else {
-							if (!authorIdList.contains(selectedAuthorArr[0])) {
-								str.append(selectedAuthor + "\n");
-								authorIdList.add(selectedAuthorArr[0]);
-							}
-						}
-						
-						textArea.setText(str.toString());
-						
-					}
+
+		iAuthors.addActionListener((ActionEvent e) ->{
+				String selectedAuthor = String.valueOf(iAuthors.getSelectedItem());
+				String selectedAuthorId = selectedAuthor.split("->")[0];
+
+				if (!authorIdList.contains(selectedAuthorId)) {
+					authorIdList.add(selectedAuthorId);
+					String newText = textArea.getText().isEmpty() ? selectedAuthor : "\n"+selectedAuthor;
+					textArea.setText(textArea.getText() + newText);
 				}
+			}
 				
 		);
 		
@@ -224,6 +210,7 @@ public class AddBookModal extends JFrame {
 		iNumOfCopies= new JTextField();
 		iNumOfCopies.setBounds(xInput, y + 7*yGap, boxWidth, boxHeight);
 		contentPane.add(iNumOfCopies);
+		iNumOfCopies.setText("1");
 		iNumOfCopies.setColumns(10);
 		
 		
@@ -237,18 +224,5 @@ public class AddBookModal extends JFrame {
 		contentPane.add(saveButton);
 		
 		this.setEventListener();
-	}
-
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					AddBookModal frame = new AddBookModal();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
 	}
 }

@@ -5,10 +5,7 @@ import javax.swing.table.DefaultTableModel;
 
 import business.Address;
 import business.Author;
-import business.LibraryMember;
 import business.SystemController;
-
-import java.awt.*;
 import java.util.List;
 
 public class AuthorTab extends JPanel {
@@ -30,7 +27,7 @@ public class AuthorTab extends JPanel {
         int count = 0;
         for(Author author : authors){
             Address add  = author.getAddress();
-            rows[count] = new String[] {String.valueOf(author.getAuthorId()), author.fullName(), author.getTelephone(), author.getAddress().toString(), author.getBio()};
+            rows[count] = new String[] {String.valueOf(author.getAuthorId()), author.fullName(), author.getTelephone(), add.getCity()+", "+add.getState(), author.getBio()};
             count++;
         }
         return rows;
