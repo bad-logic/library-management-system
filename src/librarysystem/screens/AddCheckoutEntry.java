@@ -1,15 +1,11 @@
 package librarysystem.screens;
 
-import business.Book;
-import business.LibraryMember;
-import business.LoginException;
-import business.SystemController;
+import business.*;
 
 import javax.swing.*;
 import java.awt.*;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
 
 
 public class AddCheckoutEntry extends JFrame {
@@ -21,16 +17,6 @@ public class AddCheckoutEntry extends JFrame {
 
 	private AddCheckoutEntry(){
 		this.controller = new SystemController();
-	}
-
-	private String[] getMemberOptions(){
-		List<LibraryMember> lists =  this.controller.allMember();
-		String[] ids = new String[lists.size()];
-		for(int i = 0; i < lists.size(); i++){
-			LibraryMember mem = lists.get(i);
-			ids[i] = mem.getMemberId()+"->"+mem.getFirstName()+" "+mem.getLastName();
-		}
-		return ids;
 	}
 
 	private String[] getBookOptions(){
@@ -49,13 +35,13 @@ public class AddCheckoutEntry extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public void init() {
+	public void init(int memberId) {
 		this.setResizable(false);
 		this.setLocationRelativeTo(null);
 		
 		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		
-		this.setBounds(300,300, 450, 300);
+		this.setBounds(300,300, 450, 250);
 		
 		JPanel contentPane = new JPanel();
 		contentPane.setForeground(new Color(255, 255, 255));
@@ -68,20 +54,8 @@ public class AddCheckoutEntry extends JFrame {
 		int y = 30;
 		int yGap = 40;
 
-		JLabel lblMember = new JLabel("Select Member");
-		lblMember.setBounds(xLabel, y,150, 35);
-		this.add(lblMember);
-
-		DefaultComboBoxModel<String> defaultMembersComboBox = new DefaultComboBoxModel<String>(this.getMemberOptions());
-		JComboBox<String> membersSelectBox = new JComboBox<String>();
-		membersSelectBox.setMaximumSize(new Dimension(150, 35));
-		membersSelectBox.setModel(defaultMembersComboBox);
-		membersSelectBox.setSelectedIndex(-1);
-		membersSelectBox.setBounds(xInput, y, 150, 35);
-		this.add(membersSelectBox);
-
 		JLabel lblBook = new JLabel("Select Book");
-		lblBook.setBounds(xLabel, y + yGap,150, 35);
+		lblBook.setBounds(xLabel, y,150, 35);
 		this.add(lblBook);
 
 		DefaultComboBoxModel<String> defaultBooksComboBox = new DefaultComboBoxModel<String>(this.getBookOptions());
@@ -89,20 +63,15 @@ public class AddCheckoutEntry extends JFrame {
 		booksSelectBox.setMaximumSize(new Dimension(150, 35));
 		booksSelectBox.setModel(defaultBooksComboBox);
 		booksSelectBox.setSelectedIndex(-1);
-		booksSelectBox.setBounds(xInput, y + yGap, 150, 35);
+		booksSelectBox.setBounds(xInput, y , 150, 35);
 		this.add(booksSelectBox);
 
 
 		JButton checkoutButton = new JButton("Checkout");
-		checkoutButton.setBounds(xInput - 50, y + 3 * yGap, 117, 29);
+		checkoutButton.setBounds(xInput - 50, y + 2 * yGap, 117, 29);
 		contentPane.add(checkoutButton);
 
 		checkoutButton.addActionListener(e -> {
-			Object memberIdObj = membersSelectBox.getSelectedItem();
-			if(memberIdObj == null){
-				JOptionPane.showMessageDialog(this, "Please select a member");
-				return;
-			}
 
 			Object isbnObj = booksSelectBox.getSelectedItem();
 			if(isbnObj == null){
@@ -111,17 +80,13 @@ public class AddCheckoutEntry extends JFrame {
 			}
 
 			String isbn = String.valueOf(isbnObj).split("->")[0];
-			String memberId = String.valueOf(memberIdObj).split("->")[0];
 
 			System.out.println("isbn: " +isbn + " memberId: " +memberId);
 
-			if(!this.controller.booksHashMap().get(isbn).isAvailable()){
-				JOptionPane.showMessageDialog(this, "This book is not available for checkout");
-				return;
-			}
 			try{
-				this.controller.addCheckoutRecord(isbn, Integer.parseInt(memberId));
-			}catch (LoginException ex){
+				this.controller.addCheckoutRecord(isbn, memberId);
+				JOptionPane.showMessageDialog(this,"Checkout entry added successfully!!!");
+			}catch (ValidationException ex){
 				JOptionPane.showMessageDialog(this, ex.getMessage());
 				return;
 			}

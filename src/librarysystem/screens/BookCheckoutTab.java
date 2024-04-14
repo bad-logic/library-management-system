@@ -7,7 +7,6 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
@@ -15,9 +14,10 @@ public class BookCheckoutTab extends JPanel {
 
     private final SystemController controller;
     private JTable table;
+    private int memberId = 0;
 
     private static final String[] headers = new String[] {
-            "S.N","Book", "dueDate", "dateOfCheckout", "Fine"
+            "S.N","Book", "copyNum", "dueDate", "dateOfCheckout", "Fine"
     };
 
     BookCheckoutTab(){
@@ -35,8 +35,8 @@ public class BookCheckoutTab extends JPanel {
         return ids;
     }
 
-    private Object[][] getTableRows(int memberId){
-        CheckoutRecord record = this.controller.getMembersCheckoutRecord(memberId);
+    private Object[][] getTableRows(){
+        CheckoutRecord record = this.controller.getMembersCheckoutRecord(this.memberId);
 
         System.out.println("checkout record: " + record);
 
@@ -50,9 +50,10 @@ public class BookCheckoutTab extends JPanel {
         Object[][] rows = new Object[entries.size()][5];
         int count = 0;
         for(CheckoutEntry entry : entries){
-            Book b  = entry.getBook();
+            BookCopy bc = entry.getBookCopy();
+            Book b  = bc.getBook();
             rows[count] = new String[] {
-                    String.valueOf(count + 1),b.getTitle(),
+                    String.valueOf(count + 1),b.getTitle(),String.valueOf(bc.getCopyNum()),
                     entry.getDueDate().format(formatter),
                     entry.getDateOfCheckout().format(formatter),
                     String.valueOf(entry.getFine())
@@ -86,18 +87,34 @@ public class BookCheckoutTab extends JPanel {
         this.add(tablePanel);
     }
 
-    private void reloadTable(int memberId){
+    private void reloadTable(){
         table.setModel(new DefaultTableModel(
-                this.getTableRows(memberId),
+                this.getTableRows(),
                 BookCheckoutTab.headers
         ));
     }
 
     void init(){
         JButton checkoutButton = new JButton("Checkout");
-        checkoutButton.setBounds(650, 40, 130, 21);
+        checkoutButton.setBounds(514, 40, 130, 21);
         checkoutButton.setFont(new Font("Tahoma", Font.PLAIN, 14));
         this.add(checkoutButton);
+
+        JButton reloadButton = new JButton("Reload");
+        reloadButton.setBounds(654, 40, 130, 21);
+        reloadButton.setFont(new Font("Tahoma", Font.PLAIN, 14));
+        this.add(reloadButton);
+
+
+        // Disable buttons when member is not selected
+        if(this.memberId == 0){
+            checkoutButton.setEnabled(false);
+            reloadButton.setEnabled(false);
+        }
+
+        reloadButton.addActionListener((ActionEvent e) -> {
+            this.reloadTable();
+        });
 
         JLabel lblMember = new JLabel("Select Member");
         lblMember.setBounds(20, 40,150, 35);
@@ -112,19 +129,18 @@ public class BookCheckoutTab extends JPanel {
         this.add(membersSelectBox);
 
         membersSelectBox.addActionListener((ActionEvent e) ->{
-            int memberId = Integer.parseInt(String.valueOf(membersSelectBox.getSelectedItem()).split("->")[0]);
-            System.out.println("member: " + memberId);
-            this.reloadTable(memberId);
+            this.memberId = Integer.parseInt(String.valueOf(membersSelectBox.getSelectedItem()).split("->")[0]);
+            checkoutButton.setEnabled(true);
+            reloadButton.setEnabled(true);
+            System.out.println("member: " + this.memberId);
+            this.reloadTable();
         });
 
-        checkoutButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
+        checkoutButton.addActionListener((ActionEvent e) -> {
                // @TODO open new modal to add checkout records
-                AddCheckoutEntry.INSTANCE.init();
+                AddCheckoutEntry.INSTANCE.init(this.memberId);
                 Util.centerFrameOnDesktop(AddCheckoutEntry.INSTANCE);
                 AddCheckoutEntry.INSTANCE.setVisible(true);
-            }
         });
 
         this.setUpTable();

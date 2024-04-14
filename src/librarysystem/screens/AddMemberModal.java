@@ -96,6 +96,7 @@ public class AddMemberModal extends JFrame {
 
 			String state = String.valueOf(iState.getSelectedItem());
 			this.controller.createMember(fName,lName,contact,street,city,state,Integer.parseInt(zip));
+			JOptionPane.showMessageDialog(this,"Member added successfully!!!");
 			// close the modal
 			this.dispose();
 		});
@@ -208,16 +209,4 @@ public class AddMemberModal extends JFrame {
 		this.setEventListener();
 	}
 
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					AddMemberModal frame = new AddMemberModal();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 }
