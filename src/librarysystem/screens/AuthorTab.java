@@ -5,10 +5,7 @@ import javax.swing.table.DefaultTableModel;
 
 import business.Address;
 import business.Author;
-import business.LibraryMember;
 import business.SystemController;
-
-import java.awt.*;
 import java.util.List;
 
 public class AuthorTab extends JPanel {

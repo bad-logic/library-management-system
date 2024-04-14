@@ -18,7 +18,6 @@ import javax.swing.ListSelectionModel;
 import javax.swing.AbstractListModel;
 import java.awt.CardLayout;
 import javax.swing.JButton;
-import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 
@@ -32,24 +31,6 @@ public class DashBoardScreen extends JFrame {
 	public DashBoardScreen() {
 		init();
 	}
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					DashBoardScreen frame = new DashBoardScreen();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-	
-	
 
 	/**
 	 * Create the frame.
