@@ -1,9 +1,13 @@
+### How to run the application
 
 #### Populate with some seed data
 - Run Seeder [File](/src/dataaccess/Seeder.java) .
 
+#### Run the [File](/src/Main.java)
 
-### USERS
+##### login with below credentials
+
+##### USERS
 
 | userID   |      password      |  role |
 |----------|:-------------:|------:|
